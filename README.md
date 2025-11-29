@@ -1021,14 +1021,13 @@ coffee-disease-detection/
 
 ---
 
-## BAB IV
-## JADWAL PENELITIAN
+## DAFTAR PUSTAKA
 
-Penelitian ini direncanakan berlangsung selama **6 bulan** (24 minggu) dengan tahapan sebagai berikut:
+### Referensi Utama
 
-| No | Kegiatan | Bulan 1 | Bulan 2 | Bulan 3 | Bulan 4 | Bulan 5 | Bulan 6 |
-|----|----------|---------|---------|---------|---------|---------|---------|
-| 1 | **Persiapan Penelitian** | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
+Badan Pusat Statistik. (2023). *Statistik Kopi Indonesia 2023*. Jakarta: BPS.
+
+Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining* (pp. 785-794). ACM.
 |   | - Studi literatur | ████░░░░ |  |  |  |  |  |
 |   | - Penyusunan proposal | ░░░░████ |  |  |  |  |  |
 | 2 | **Pengumpulan Data** | ░░░░████ | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
@@ -1101,71 +1100,9 @@ Penelitian ini direncanakan berlangsung selama **6 bulan** (24 minggu) dengan ta
 
 ---
 
-## BAB V
-## ANGGARAN BIAYA (OPSIONAL)
+## DAFTAR PUSTAKA
 
-Estimasi biaya penelitian ini sangat minimal karena menggunakan sumber daya open-source dan cloud computing gratis:
-
-### 5.1 Rincian Biaya
-
-| No | Item | Deskripsi | Satuan | Jumlah | Harga Satuan | Total |
-|----|------|-----------|--------|--------|--------------|-------|
-| **A** | **Pengumpulan Data** |  |  |  |  | **Rp 1.500.000** |
-| 1 | Survey lapangan | Transportasi + akomodasi ke perkebunan (Malang, Jember) | Perjalanan | 2 | Rp 500.000 | Rp 1.000.000 |
-| 2 | Konsultasi expert | Honorarium validasi label (agronomist) | Sesi | 2 | Rp 250.000 | Rp 500.000 |
-| **B** | **Komputasi & Software** |  |  |  |  | **Rp 0** |
-| 3 | Google Colab Pro | Cloud GPU (optional, gratis cukup) | Bulan | 6 | Rp 0 | Rp 0 |
-| 4 | Software libraries | TensorFlow, XGBoost, Scikit-Learn (open-source) | - | - | Rp 0 | Rp 0 |
-| **C** | **Dokumentasi & Publikasi** |  |  |  |  | **Rp 500.000** |
-| 5 | Penulisan & editing | Proofreading laporan akhir | Dokumen | 1 | Rp 200.000 | Rp 200.000 |
-| 6 | Printing & binding | Laporan akhir (3 eksemplar) | Eksemplar | 3 | Rp 100.000 | Rp 300.000 |
-| **D** | **Lain-lain** |  |  |  |  | **Rp 500.000** |
-| 7 | Konsumsi | Selama pengerjaan penelitian | Bulan | 6 | Rp 0 | Rp 0 |
-| 8 | Internet & listrik | Koneksi dan daya selama penelitian | Bulan | 6 | Rp 0 | Rp 0 |
-| 9 | Cadangan | Untuk keperluan tak terduga | - | - | - | Rp 500.000 |
-| | | | | | **TOTAL** | **Rp 2.500.000** |
-
-### 5.2 Justifikasi Biaya
-
-**Pengumpulan Data (Rp 1.500.000):**
-- Survey lapangan diperlukan untuk mendapatkan data real-world yang representatif kondisi perkebunan Indonesia.
-- Konsultasi expert penting untuk memastikan akurasi labeling, mengurangi noise data.
-
-**Komputasi (Rp 0):**
-- Google Colab menyediakan akses GPU gratis (Tesla T4) yang cukup untuk penelitian ini.
-- Semua library yang digunakan adalah open-source dan gratis.
-- Tidak memerlukan pembelian hardware khusus.
-
-**Dokumentasi (Rp 500.000):**
-- Proofreading memastikan laporan berkualitas tinggi dan bebas kesalahan.
-- Printing diperlukan untuk submission formal.
-
-**Lain-lain (Rp 500.000):**
-- Buffer untuk keperluan tak terduga (misalnya: revisi dataset, konsultasi tambahan).
-
-### 5.3 Alternatif Pendanaan
-
-Penelitian ini dapat dilakukan dengan **biaya minimal (< Rp 1.000.000)** jika:
-- Menggunakan dataset publik 100% (tanpa survey lapangan)
-- Self-validation labeling (tanpa konsultasi expert berbayar)
-- Dokumentasi digital only (tanpa printing)
-
-**Total Biaya Minimal**: **Rp 500.000** (cadangan saja)
-
----
-
-### 3.5 Teknik Evaluasi
-
-#### 3.5.1 Metrik Evaluasi Utama
-
-**1. Confusion Matrix**
-
-Matriks konfusi menggambarkan distribusi prediksi model terhadap label aktual:
-
-|  | Predicted: Healthy | Predicted: CLR | Predicted: Cercospora | Predicted: Phoma |
-|---|---|---|---|---|
-| **Actual: Healthy** | TN (True Negative) | FP | FP | FP |
-| **Actual: CLR** | FN | TP (True Positive) | FP | FP |
+### Referensi Utama
 | **Actual: Cercospora** | FN | FP | TP | FP |
 | **Actual: Phoma** | FN | FP | FP | TP |
 
@@ -1451,6 +1388,8 @@ $$
 
 ## DAFTAR PUSTAKA
 
+### Referensi Utama
+
 ### Buku dan Laporan Pemerintah
 
 Badan Pusat Statistik. (2023). *Statistik Kopi Indonesia 2023*. Jakarta: BPS.
@@ -1525,176 +1464,9 @@ Too, E. C., Yujian, L., Njuki, S., & Yingchun, L. (2019). A comparative study of
 
 ---
 
-## LAMPIRAN
-
-### Lampiran A: Contoh Citra Dataset
-
-*[Placeholder: 4 sample images untuk setiap kelas - Healthy, CLR, Cercospora, Phoma]*
-
-**Gambar A.1**: Contoh citra daun kopi sehat
-- Karakteristik: Hijau tua mengkilap, tidak ada bercak, tekstur halus
-
-**Gambar A.2**: Contoh citra Coffee Leaf Rust (CLR)
-- Karakteristik: Bercak kuning-oranye berbentuk bulat, spora karat pada permukaan bawah
-
-**Gambar A.3**: Contoh citra Cercospora Leaf Spot
-- Karakteristik: Bercak coklat "brown eye spot" dengan pusat abu-abu
-
-**Gambar A.4**: Contoh citra Phoma Leaf Spot
-- Karakteristik: Bercak hitam tidak beraturan, tepi tegas, bagian tengah berlubang
-
----
-
-### Lampiran B: Arsitektur Model MobileNetV2
-
-```
-Input Layer: 224×224×3
-    ↓
-Conv2D (32 filters, 3×3, stride 2)
-    ↓
-[19 Inverted Residual Blocks]
-    ├─ Expansion (1×1 Conv, ReLU6)
-    ├─ Depthwise (3×3 Conv)
-    ├─ Projection (1×1 Conv, Linear)
-    └─ Residual Connection (if dimensions match)
-    ↓
-Conv2D (1280 filters, 1×1)
-    ↓
-Global Average Pooling
-    ↓
-Feature Vector: 1280-D
-    ↓
-[XGBoost Classifier]
-    ├─ n_estimators: 300 (trees)
-    ├─ max_depth: 7
-    ├─ learning_rate: 0.1
-    ├─ subsample: 0.8
-    └─ regularization: L1+L2
-    ↓
-Output: 4 Class Probabilities
-```
-
----
-
-### Lampiran C: Pseudocode Pipeline
-
-```python
-# Pipeline Sistem Diagnosis Penyakit Daun Kopi
-
-# 1. Load Pre-trained MobileNetV2
-mobilenet = load_model('mobilenetv2_imagenet_weights')
-mobilenet.trainable = False  # Freeze layers
-
-# 2. Feature Extraction
-def extract_features(image_path):
-    image = load_image(image_path)
-    image = preprocess(image, size=(224, 224))
-    features = mobilenet.predict(image)
-    return features  # 1280-D vector
-
-# 3. Train XGBoost
-X_train = [extract_features(img) for img in train_images]
-y_train = train_labels
-
-xgb_model = XGBClassifier(
-    n_estimators=300,
-    max_depth=7,
-    learning_rate=0.1,
-    subsample=0.8,
-    reg_alpha=0.5,
-    reg_lambda=1.0
-)
-xgb_model.fit(X_train, y_train)
-
-# 4. Prediction
-def predict_disease(image_path):
-    features = extract_features(image_path)
-    prediction = xgb_model.predict(features)
-    probabilities = xgb_model.predict_proba(features)
-    
-    class_names = ['Healthy', 'CLR', 'Cercospora', 'Phoma']
-    result = {
-        'class': class_names[prediction[0]],
-        'confidence': max(probabilities[0]),
-        'probabilities': dict(zip(class_names, probabilities[0]))
-    }
-    return result
-
-# 5. Evaluation
-y_pred = [predict_disease(img)['class'] for img in test_images]
-accuracy = calculate_accuracy(y_test, y_pred)
-f1_score = calculate_f1(y_test, y_pred)
-confusion_matrix = calculate_cm(y_test, y_pred)
-```
-
----
-
-### Lampiran D: Hyperparameter Tuning Results
-
-| Hyperparameter | Nilai yang Diuji | Best Value |
-|----------------|------------------|------------|
-| n_estimators | [100, 300, 500] | TBD |
-| max_depth | [3, 5, 7, 9] | TBD |
-| learning_rate | [0.01, 0.05, 0.1, 0.2] | TBD |
-| subsample | [0.7, 0.8, 0.9, 1.0] | TBD |
-| colsample_bytree | [0.7, 0.8, 0.9, 1.0] | TBD |
-| gamma | [0, 0.1, 0.5, 1] | TBD |
-| reg_alpha (L1) | [0, 0.1, 0.5, 1] | TBD |
-| reg_lambda (L2) | [0.5, 1, 2, 5] | TBD |
-
-*Catatan: TBD = To Be Determined (akan diisi setelah eksperimen selesai)*
-
----
-
-### Lampiran E: Environment Setup
-
-**File: `requirements.txt`**
-```
-tensorflow==2.12.0
-xgboost==1.7.5
-scikit-learn==1.2.2
-numpy==1.23.5
-pandas==1.5.3
-opencv-python==4.7.0.72
-Pillow==9.4.0
-matplotlib==3.7.1
-seaborn==0.12.2
-plotly==5.14.1
-jupyter==1.0.0
-```
-
-**Setup Commands:**
-```bash
-# Google Colab
-!pip install -r requirements.txt
-
-# Local Environment
-conda create -n coffee-disease python=3.9
-conda activate coffee-disease
-pip install -r requirements.txt
-```
-
----
-
-### Lampiran F: Biodata Peneliti
-
-**Nama**: [Nama Lengkap Peneliti]  
-**NIM/NPM**: [Nomor Induk]  
-**Program Studi**: Teknik Informatika / Ilmu Komputer  
-**Universitas**: [Nama Universitas]  
-**Email**: [email@domain.com]  
-**Area Riset**: Deep Learning, Computer Vision, Agricultural AI  
-
-**Pembimbing**:  
-**Nama Pembimbing 1**: [Nama Dosen Pembimbing]  
-**Jabatan**: [Gelar dan Jabatan]  
-**Area Keahlian**: Machine Learning, Computer Vision  
-
----
-
 **Catatan Penutup:**
 
-Proposal ini merupakan dokumen hidup yang dapat direvisi sesuai perkembangan penelitian. Semua data eksperimen, kode sumber, dan model yang dihasilkan akan didokumentasikan secara transparan untuk mendukung reproducibility dan open science.
+Proposal ini merupakan dokumen penelitian yang disusun untuk merancang sistem diagnosis penyakit daun kopi berbasis AI menggunakan pendekatan hybrid MobileNetV2-XGBoost. Metodologi dirancang untuk menghasilkan model yang akurat, efisien, dan dapat diimplementasikan untuk membantu petani kopi Indonesia dalam mendeteksi penyakit daun secara dini.
 
-*Proposal ini disusun pada: 29 November 2025*  
-*Versi: 2.0 (Comprehensive)*
+*Proposal disusun pada: 29 November 2025*  
+*Versi: 2.0 - BAB I-III*
