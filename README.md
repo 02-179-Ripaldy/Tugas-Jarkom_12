@@ -108,91 +108,78 @@ Penelitian ini mengisi gap yang telah diidentifikasi dengan mengombinasikan bebe
 
 ### 2.3 Kerangka Pemikiran
 
-Kerangka pemikiran penelitian ini dapat digambarkan dalam alur berikut:
+Kerangka pemikiran penelitian ini menggambarkan alur logis dari permasalahan menuju solusi yang ditawarkan:
 
 ```
-MASALAH PENELITIAN
-├─ Diagnosis manual penyakit daun kopi tidak akurat & lambat
-├─ CNN tunggal: overfitting pada dataset kecil & komputasi berat
-├─ Performa drop signifikan pada kondisi lapangan
-└─ Belum ada sistem diagnosis mobile untuk petani Indonesia
-
-↓
-
-SOLUSI: MODEL HYBRID
-│
-├─ MobileNetV2 (Feature Extractor)
-│  ├─ Pre-trained ImageNet
-│  ├─ Efficient architecture (3.4M params)
-│  ├─ Ekstrak fitur visual 1280 dimensi
-│  └─ Transfer learning untuk dataset kecil
-│
-│  +
-│
-└─ XGBoost (Classifier)
-   ├─ Gradient boosting ensemble
-   ├─ Regularization kuat (L1/L2)
-   ├─ Efektif pada fitur dimensi tinggi
-   └─ Mencegah overfitting
-
-↓
-
-ALUR KERJA SISTEM
-
-INPUT: Citra daun kopi (224×224 RGB)
-   ↓
-PREPROCESSING: Resize, normalisasi, augmentasi
-   ↓
-FEATURE EXTRACTION: MobileNetV2 (frozen conv layers)
-   → Output: Feature vector 1280 dimensi
-   ↓
-CLASSIFICATION: XGBoost (hyperparameter tuned)
-   → Output: Probabilitas 4 kelas penyakit
-   ↓
-OUTPUT: Diagnosis (Sehat/CLR/Cercospora/Phoma) + Confidence
-
-↓
-
-EVALUASI
-├─ Metrik: Akurasi, Presisi, Recall, F1-Score
-├─ Validasi: 5-Fold Cross-Validation
-├─ Perbandingan: ResNet50 end-to-end & MobileNetV2 end-to-end
-└─ Uji lapangan: Citra real-world dengan variasi kondisi
-
-↓
-
-HASIL YANG DIHARAPKAN
-├─ Akurasi ≥90% dengan dataset publik (1.800 citra)
-├─ Generalisasi baik pada kondisi lapangan beragam
-├─ Efisiensi tinggi (inferensi <2 detik, model <50 MB)
-├─ Mengatasi overfitting dibanding CNN tunggal
-└─ Prototipe siap deployment untuk aplikasi mobile
+┌─────────────────────────────────────────────────────────────────┐
+│                       PERMASALAHAN                              │
+│                                                                 │
+│  Diagnosis penyakit daun kopi masih manual, tidak akurat,       │
+│  dan lambat, sehingga penanganan terlambat dan kerugian         │
+│  ekonomi meningkat. Model CNN tunggal rentan overfitting        │
+│  pada dataset kecil dan tidak efisien untuk mobile.             │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    LANDASAN TEORI                               │
+│                                                                 │
+│  ┌───────────────────┐         ┌──────────────────┐             │
+│  │ Computer Vision   │         │ Machine Learning │             │
+│  │ & Deep Learning   │    +    │ (Ensemble)       │             │
+│  └───────────────────┘         └──────────────────┘             │
+│           │                             │                       │
+│           ↓                             ↓                       │
+│  ┌───────────────────┐         ┌──────────────────┐             │
+│  │  Transfer Learning│         │ Gradient Boosting│             │
+│  │  (MobileNetV2)    │         │  (XGBoost)       │             │
+│  └───────────────────┘         └──────────────────┘             │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│              PENDEKATAN HYBRID (SOLUSI)                         │
+│                                                                 │
+│          MobileNetV2                    XGBoost                 │
+│      (Feature Extractor)     ──────>  (Classifier)              │
+│                                                                 │
+│  Faktor Pendukung:                                              │
+│  • Dataset: RoboFlow (1.800 citra, 4 kelas)                     │
+│  • Preprocessing: Augmentasi & normalisasi                      │
+│  • Hyperparameter: Grid search & cross-validation               │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                 SISTEM DIAGNOSIS PENYAKIT                       │
+│                                                                 │
+│  Input: Citra Daun Kopi  →  Proses: Model Hybrid  →  Output:    │
+│                                                     Diagnosis + │
+│                                                     Confidence  │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    EVALUASI MODEL                               │
+│                                                                 │
+│  • Metrik Akurasi: Accuracy, Precision, Recall, F1-Score        │
+│  • Validasi: 5-Fold Cross-Validation                            │
+│  • Perbandingan: Baseline (MobileNetV2 E2E, ResNet50 E2E)       │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                  HASIL YANG DIHARAPKAN                          │
+│                                                                 │
+│  • Akurasi ≥ 90%                                                │
+│  • Model efisien (ukuran <20 MB, inferensi <2 detik)            │
+│  • Mengatasi overfitting (train-test gap minimal)               │
+│  • Sistem diagnosis siap implementasi untuk petani              │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-**Justifikasi Pendekatan Hybrid:**
+**Penjelasan Kerangka Pemikiran:**
 
-1. **Transfer Learning (MobileNetV2)**:
-   - Pre-trained weights dari ImageNet (1,2 juta citra) memberikan representasi fitur visual general yang kuat.
-   - Freezing convolutional layers mencegah overfitting pada dataset kecil.
-   - Ekstraksi fitur otomatis menghilangkan kebutuhan feature engineering manual.
+Penelitian ini berangkat dari permasalahan diagnosis penyakit daun kopi yang masih manual dan tidak akurat, menyebabkan penanganan terlambat. Berdasarkan landasan teori Computer Vision, Deep Learning, dan Machine Learning, penelitian ini mengusulkan pendekatan hybrid yang mengombinasikan kekuatan Transfer Learning (MobileNetV2) untuk ekstraksi fitur visual dan Ensemble Learning (XGBoost) untuk klasifikasi optimal. 
 
-2. **Ensemble Learning (XGBoost)**:
-   - Boosting ensemble mempelajari pola kompleks dari fitur MobileNetV2.
-   - Regularization (L1/L2) dan tree pruning mencegah overfitting.
-   - Efektif pada dataset kecil-menengah tanpa memerlukan jutaan sampel.
+MobileNetV2 dipilih karena arsitekturnya yang efisien dengan pre-trained weights ImageNet sehingga dapat mengatasi keterbatasan dataset kecil melalui transfer learning. Fitur visual berdimensi tinggi (1280-D) yang diekstrak kemudian diklasifikasikan menggunakan XGBoost yang memiliki regularization kuat untuk mencegah overfitting dan efektif pada dataset berukuran menengah. 
 
-3. **Keunggulan Hybrid**:
-   - **Akurasi**: CNN mengekstrak fitur visual, XGBoost mengoptimalkan klasifikasi.
-   - **Efisiensi**: Hanya fine-tune classifier (XGBoost), bukan seluruh CNN.
-   - **Regularization**: Ganda (dropout MobileNetV2 + regularization XGBoost).
-   - **Interpretability**: XGBoost feature importance menunjukkan fitur visual mana yang penting.
-   - **Flexibility**: Mudah menambah kelas baru tanpa retrain full CNN.
-
-4. **Diferensiasi dengan CNN End-to-End**:
-   - **Baseline (ResNet50 end-to-end)**: Rentan overfitting, memerlukan dataset besar, komputasi berat.
-   - **Hybrid (MobileNetV2-XGBoost)**: Efisien, regularization kuat, cocok dataset menengah, hasil lebih stabil.
-
-Kerangka pemikiran ini memandu desain eksperimen untuk memvalidasi hipotesis bahwa pendekatan hybrid MobileNetV2-XGBoost dapat mencapai akurasi tinggi (≥90%) dengan efisiensi komputasi baik, bahkan pada dataset publik berukuran menengah (1.800 citra).
+Faktor pendukung meliputi dataset publik RoboFlow dengan 1.800 citra berlabel, teknik preprocessing (augmentasi dan normalisasi), serta optimasi hyperparameter melalui grid search dan cross-validation. Sistem diagnosis yang dihasilkan akan dievaluasi menggunakan metrik akurasi standar dan dibandingkan dengan baseline model CNN end-to-end. Hasil akhir yang diharapkan adalah sistem diagnosis akurat (≥90%), efisien untuk deployment mobile, dan mampu membantu petani dalam deteksi dini penyakit daun kopi.
 
 ---
 
