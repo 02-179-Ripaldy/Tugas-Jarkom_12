@@ -201,7 +201,7 @@ Penelitian ini merupakan penelitian terapan (*applied research*) dengan pendekat
 
 ### 3.2 Tempat dan Waktu Penelitian
 
-Penelitian ini dilaksanakan di dua lokasi utama. Pertama, pengembangan dan pelatihan model dilakukan menggunakan platform Google Colab, yaitu platform cloud-based computing yang menyediakan akses gratis ke GPU NVIDIA Tesla T4 dengan 16 GB VRAM. Pemilihan Google Colab didasarkan pada pertimbangan efisiensi biaya karena tidak memerlukan investasi hardware mahal, kemudahan akses komputasi GPU untuk mempercepat proses feature extraction menggunakan MobileNetV2, serta memudahkan replikasi penelitian oleh peneliti lain. Kedua, analisis data dan dokumentasi penelitian dilakukan di Laboratorium Komputer Universitas [Nama Universitas] yang dilengkapi dengan workstation untuk analisis statistik dan visualisasi hasil.
+Penelitian ini dilaksanakan secara fleksibel menggunakan platform komputasi berbasis cloud (*cloud-based computing*) yang tidak terikat pada lokasi fisik tertentu. Pengembangan dan pelatihan model dilakukan menggunakan **Google Colab**, yaitu platform cloud computing yang menyediakan akses gratis ke GPU NVIDIA Tesla T4 dengan 16 GB VRAM. Pemilihan Google Colab sebagai platform utama didasarkan pada beberapa pertimbangan, yaitu aksesibilitas tinggi karena dapat diakses dari mana saja dengan koneksi internet, efisiensi biaya karena tidak memerlukan investasi hardware mahal, ketersediaan GPU gratis untuk mempercepat proses feature extraction menggunakan MobileNetV2, serta kemudahan replikasi penelitian oleh peneliti lain karena berbasis cloud. Seluruh proses penelitian mulai dari preprocessing data, ekstraksi fitur, training model, hingga evaluasi performa dilakukan melalui platform ini. Dokumentasi penelitian dan penulisan laporan dilakukan menggunakan perangkat pribadi dengan spesifikasi standar yang terhubung dengan Google Drive untuk penyimpanan data dan hasil penelitian.
 
 Waktu pelaksanaan penelitian adalah selama 6 bulan, dimulai dari bulan Januari hingga Juni 2025. Periode ini mencakup tahapan studi literatur, pengumpulan dan preprocessing data, pengembangan model, evaluasi performa, hingga penyusunan laporan akhir. Jadwal detail pelaksanaan penelitian dengan pembagian aktivitas per minggu dapat dilihat pada bagian timeline penelitian di bawah ini.
 
@@ -209,13 +209,7 @@ Waktu pelaksanaan penelitian adalah selama 6 bulan, dimulai dari bulan Januari h
 
 #### 3.3.1 Sumber Data Primer
 
-Data penelitian menggunakan dataset publik **RoboFlow Coffee Leaf Disease Dataset** yang dapat diakses melalui platform RoboFlow Universe:
-- **Sumber**: https://universe.roboflow.com/coffee-disease-detection
-- **Jenis Tanaman**: Kopi Arabika (*Coffea arabica*)
-- **Jumlah Total**: 1.800 citra daun kopi
-- **Status Anotasi**: Sudah dilabeli oleh expert (agronomist dan plant pathologist)
-- **Lisensi**: CC BY 4.0 (dapat digunakan untuk riset akademik)
-- **Format**: JPEG dan PNG dengan resolusi bervariasi
+Data penelitian menggunakan dataset publik **RoboFlow Coffee Leaf Disease Dataset** yang dapat diakses melalui platform RoboFlow Universe (https://universe.roboflow.com/coffee-disease-detection). Dataset ini terdiri dari 1.800 citra daun kopi Arabika (*Coffea arabica*) yang telah dianotasi dan dilabeli oleh expert di bidang agronomi dan fitopatologi untuk memastikan akurasi klasifikasi penyakit. Dataset tersedia dengan lisensi CC BY 4.0 sehingga dapat digunakan secara legal untuk keperluan riset akademik dan pengembangan model machine learning. Citra dalam dataset disimpan dalam format JPEG dan PNG dengan resolusi yang bervariasi, mencerminkan kondisi pengambilan gambar yang beragam dari berbagai sumber dan perangkat, sehingga memberikan representasi yang realistis untuk pengembangan model yang robust terhadap variasi input.
 
 #### 3.3.2 Distribusi Kelas
 
