@@ -212,6 +212,15 @@ Waktu pelaksanaan penelitian adalah selama 6 bulan, dimulai dari bulan Januari h
 Data penelitian menggunakan dataset publik **RoboFlow Coffee Leaf Disease Dataset** yang dapat diakses melalui platform RoboFlow Universe (https://universe.roboflow.com/coffee-disease-detection). Dataset ini terdiri dari 1.800 citra daun kopi Arabika (*Coffea arabica*) yang telah dianotasi dan dilabeli oleh expert di bidang agronomi dan fitopatologi untuk memastikan akurasi klasifikasi penyakit. Dataset tersedia dengan lisensi CC BY 4.0 sehingga dapat digunakan secara legal untuk keperluan riset akademik dan pengembangan model machine learning. Citra dalam dataset disimpan dalam format JPEG dan PNG dengan resolusi yang bervariasi, mencerminkan kondisi pengambilan gambar yang beragam dari berbagai sumber dan perangkat, sehingga memberikan representasi yang realistis untuk pengembangan model yang robust terhadap variasi input.
 
 #### 3.3.2 Distribusi Kelas
+| Kelas                      | Deskripsi                    | Jumlah Citra | Persentase |
+| -------------------------- | ---------------------------- | ------------ | ---------- |
+| **Healthy**                | Daun sehat tanpa gejala      | 500          | 27,8%      |
+| **Coffee Leaf Rust (CLR)** | Bercak kuning-oranye karat   | 540          | 30,0%      |
+| **Cercospora Leaf Spot**   | Bercak coklat "brown eye"    | 400          | 22,2%      |
+| **Phoma Leaf Spot**        | Bercak hitam tidak beraturan | 360          | 20,0%      |
+| **TOTAL**                  |                              | **1.800**    | **100%**   |
+
+Distribusi kelas pada dataset penelitian ini dapat dilihat pada Tabel berikut, yang merangkum jumlah citra dan persentase untuk masing-masing kategori penyakit daun kopi:
 
 | Kelas                      | Deskripsi                    | Jumlah Citra | Persentase |
 | -------------------------- | ---------------------------- | ------------ | ---------- |
@@ -221,7 +230,7 @@ Data penelitian menggunakan dataset publik **RoboFlow Coffee Leaf Disease Datase
 | **Phoma Leaf Spot**        | Bercak hitam tidak beraturan | 360          | 20,0%      |
 | **TOTAL**                  |                              | **1.800**    | **100%**   |
 
-Dataset ini relatif seimbang (*balanced*) dengan perbedaan maksimal 10% antar kelas, sehingga tidak memerlukan teknik *oversampling* atau *undersampling*.
+Tabel di atas menunjukkan bahwa dataset yang digunakan dalam penelitian ini tergolong seimbang (*balanced*), dengan perbedaan jumlah citra antar kelas tidak melebihi 10%. Kondisi ini sangat ideal karena meminimalkan risiko bias model terhadap kelas mayoritas, sehingga tidak diperlukan teknik penyeimbangan data seperti *oversampling* atau *undersampling*.
 
 #### 3.3.3 Spesifikasi Data
 
