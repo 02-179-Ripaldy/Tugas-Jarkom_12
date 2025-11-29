@@ -1,153 +1,1700 @@
-# Tugas Bab 2 – Application Layer  
-Buku: *Computer Networking: A Top-Down Approach*  
-Halaman: 196–205  
-
-Nama: Ripaldy Saputra Lumbantoruan  
-NIM: 123140179  
-Kelas: RC  
+# PROPOSAL PENELITIAN
+**"Sistem Diagnosis Penyakit Daun Kopi Menggunakan Hybrid MobileNetV2 dan XGBoost Berbasis Citra"**
 
 ---
 
-## A. Chapter 2 Review Questions (R1–R15)
+## BAB I
+## PENDAHULUAN
 
-**R1.**  
-Contoh aplikasi Internet nonproprietary dan protokolnya:  
-1. Web browsing – HTTP/HTTPS  
-2. E‑mail – SMTP, POP3, IMAP  
-3. File transfer – FTP  
-4. Name service – DNS  
-5. Remote login – Telnet/SSH  
+### 1.1 Latar Belakang
+Tanaman kopi merupakan salah satu komoditas perkebunan strategis di Indonesia. Data Badan Pusat Statistik (2023) menunjukkan bahwa luas areal perkebunan kopi mencapai lebih dari 1,23 juta hektar dengan produksi tahunan sekitar 773 ribu ton, menjadikan Indonesia sebagai produsen kopi keempat terbesar di dunia. Jenis kopi yang dominan dibudidayakan adalah Coffea arabica (Arabika) dan Coffea canephora (Robusta). Namun, produktivitas perkebunan kopi nasional masih tergolong rendah, yaitu rata-rata 700 kg/ha, jauh di bawah potensi produktivitas optimal 1.500-2.000 kg/ha (Direktorat Jenderal Perkebunan, 2022).
 
----
+Salah satu penyebab utama rendahnya produktivitas adalah serangan penyakit daun, seperti Karat Daun Kopi atau Coffee Leaf Rust (CLR) yang disebabkan oleh jamur *Hemileia vastatrix*, Cercospora Leaf Spot (*Cercospora coffeicola*), dan Phoma Leaf Spot (*Phoma costarricensis*). Menurut Kementerian Pertanian (2022), serangan CLR dapat menurunkan hasil panen hingga 30–40 persen pada perkebunan kopi rakyat, bahkan pada kasus berat dapat mencapai 50 persen. Kerugian ekonomi akibat penyakit daun kopi diperkirakan mencapai miliaran rupiah per tahun, terutama di sentra produksi kopi Jawa Timur, Lampung, dan Sumatera Selatan.
 
-**R2.**  
-- **Network architecture**: layanan yang disediakan jaringan (mis. TCP/IP, routing, best‑effort, dsb.).  
-- **Application architecture**: cara aplikasi dibangun dan disusun (client–server, P2P, hybrid).  
+Selama ini, diagnosis penyakit daun kopi masih mengandalkan pengamatan visual manual oleh petani atau penyuluh pertanian lapangan. Metode konvensional ini rentan terhadap kesalahan identifikasi karena bergantung pada pengalaman dan pengetahuan individu, serta memerlukan waktu yang lama untuk konfirmasi laboratorium. Akibatnya, penanganan penyakit sering terlambat dilakukan, infeksi menyebar lebih luas, dan kerugian ekonomi meningkat signifikan. Kondisi ini menegaskan perlunya sistem diagnosis otomatis yang mampu melakukan deteksi penyakit daun kopi secara cepat, akurat, dan efisien, terutama di tingkat petani.
 
----
+Perkembangan pesat teknologi kecerdasan buatan (Artificial Intelligence), khususnya pada bidang Computer Vision dan Deep Learning, membuka peluang besar untuk mengembangkan sistem deteksi penyakit tanaman berbasis citra digital. Studi Ferentinos (2018) pada 25 spesies tanaman dengan 58 kelas penyakit menunjukkan bahwa Convolutional Neural Network (CNN) mampu mendeteksi penyakit tanaman dengan akurasi hingga 99,53%, namun membutuhkan sumber daya komputasi yang sangat besar dan waktu training yang lama. Ramcharan dkk. (2019) dalam penelitiannya pada penyakit tanaman pisang menemukan bahwa performa CNN dapat menurun drastis hingga 15-20% ketika diuji pada citra lapangan dengan variasi pencahayaan, latar belakang kompleks, dan sudut pengambilan yang tidak terkontrol. Sementara itu, penelitian Prasetyo dan Rahmadani (2022) yang menerapkan arsitektur ResNet50 untuk klasifikasi penyakit daun kopi mengalami masalah overfitting dengan gap akurasi training-testing mencapai 18%, terutama akibat keterbatasan jumlah dan keragaman dataset.
 
-**R3.**  
-Dalam satu sesi komunikasi:  
-- **Client** = proses yang menginisiasi komunikasi.  
-- **Server** = proses yang menunggu dan merespons permintaan.  
+Untuk mengatasi berbagai kelemahan model CNN tunggal tersebut, penelitian ini menawarkan pendekatan hybrid yang mengombinasikan MobileNetV2 sebagai ekstraktor fitur visual dan XGBoost sebagai classifier. MobileNetV2 dipilih karena arsitekturnya yang ringan (hanya 3,4 juta parameter) dengan efisiensi tinggi melalui mekanisme depthwise separable convolution dan inverted residual blocks, sehingga dapat mengekstraksi fitur visual secara efektif bahkan pada perangkat dengan keterbatasan komputasi. Sementara itu, XGBoost dipilih karena kemampuannya dalam mengelola fitur berdimensi tinggi, regularisasi yang kuat untuk mencegah overfitting, serta performa yang konsisten pada dataset berukuran kecil hingga menengah. Kombinasi hybrid CNN-XGBoost telah terbukti efektif pada berbagai domain klasifikasi citra (Wang et al., 2021; Zhang et al., 2023), namun penerapannya masih sangat jarang dieksplorasi dalam konteks diagnosis penyakit daun kopi, khususnya di Indonesia. Oleh karena itu, penelitian ini memiliki nilai kebaruan dan kontribusi penting bagi pengembangan teknologi pertanian presisi berbasis AI.
 
----
+### 1.2 Rumusan Masalah
+Rumusan masalah penelitian ini adalah:
 
-**R4.**  
-Pada P2P, setiap peer bisa bergantian menjadi **pemberi layanan** dan **peminta layanan**. Dalam tiap pertukaran, masih dapat ditetapkan peran sementara: pengirim permintaan = client, pemberi jawaban = server.  
+1. Bagaimana merancang sistem diagnosis penyakit daun kopi berbasis citra menggunakan kombinasi MobileNetV2 dan XGBoost?
+2. Seberapa tinggi akurasi dan efisiensi model hybrid MobileNetV2–XGBoost dibandingkan dengan model CNN tunggal seperti ResNet50?
+3. Bagaimana performa model ketika diuji pada citra daun kopi dengan variasi pencahayaan, latar belakang, dan tingkat keparahan penyakit?
 
----
+### 1.3 Tujuan Penelitian
+Tujuan penelitian ini adalah untuk:
 
-**R5.**  
-Proses mengidentifikasi proses lain dengan kombinasi:  
-- **Alamat IP host tujuan**, dan  
-- **Nomor port** proses tujuan.  
+1. Merancang dan mengimplementasikan sistem diagnosis penyakit daun kopi menggunakan kombinasi MobileNetV2 dan XGBoost.
+2. Mengukur performa model berdasarkan akurasi, presisi, recall, F1-score, serta waktu komputasi.
+3. Membandingkan performa model hybrid dengan baseline CNN seperti ResNet50.
+4. Melakukan validasi hasil menggunakan metode 5-Fold Cross-Validation.
+5. Menghasilkan prototipe sistem diagnosis cepat yang dapat dimanfaatkan oleh petani atau peneliti.
 
----
+### 1.4 Batasan Masalah
+Penelitian ini dibatasi oleh:
 
-**R6.**  
-- **Peran HTTP**: mengatur format dan urutan pesan request–response antara browser dan web server.  
-- Komponen lain: browser, web server, TCP/IP, DNS, dan objek web (HTML, gambar, dsb.; opsional: database & aplikasi server‑side).  
+1. **Sumber Data**: Data citra berasal dari dataset publik RoboFlow Coffee Leaf Disease Dataset (1.800 citra) dan dokumentasi lapangan perkebunan kopi di Jawa Timur (200 citra), dengan total 2.000 citra.
+2. **Kategori Klasifikasi**: Empat kelas utama yaitu daun sehat (*Healthy*), Karat Daun Kopi (*Coffee Leaf Rust*/CLR), Bercak Daun Cercospora (*Cercospora Leaf Spot*), dan Bercak Daun Phoma (*Phoma Leaf Spot*).
+3. **Jenis Kopi**: Fokus pada tanaman kopi jenis Arabika (*Coffea arabica*), karena merupakan varietas dominan di Indonesia dengan sensitivitas tinggi terhadap penyakit daun.
+4. **Arsitektur Model**: Model hybrid yang digunakan adalah MobileNetV2 (pre-trained ImageNet) sebagai feature extractor dan XGBoost sebagai classifier, dengan ResNet50 end-to-end sebagai baseline pembanding.
+5. **Lingkup Analisis**: Penelitian hanya fokus pada klasifikasi tingkat keparahan penyakit (disease classification), tidak mencakup segmentasi area lesi, deteksi lokasi kerusakan, atau prediksi perkembangan penyakit.
+6. **Spesifikasi Citra**: Resolusi input 224×224 piksel, format RGB, dengan augmentasi terbatas pada rotasi, flipping, zoom, dan brightness adjustment.
+7. **Lingkungan Komputasi**: Implementasi menggunakan Python 3.9+ dengan library TensorFlow 2.10, Scikit-Learn 1.2, dan XGBoost 1.7 pada platform Google Colab dengan akses GPU Tesla T4 (gratis) untuk mempercepat proses training.
+8. **Target Performa**: Akurasi minimal 90%, F1-Score minimal 0.88, dan waktu inferensi maksimal 2 detik per citra untuk memastikan aplikabilitas di lapangan.
+9. **Validasi Model**: Evaluasi dilakukan menggunakan 5-Fold Cross-Validation dan pengujian pada data lapangan independen untuk mengukur generalisasi model.
 
----
+### 1.5 Manfaat Penelitian
+Penelitian ini diharapkan memberikan manfaat sebagai berikut:
 
-**R7.**  
-Contoh aplikasi yang butuh **tanpa kehilangan data** dan **sangat sensitif waktu**:  
-- Sistem kontrol industri real‑time.  
-- Telemedicine/operasi jarak jauh.  
+#### 1.5.1 Manfaat Teoritis
+1. **Kontribusi Ilmu Pengetahuan**: Memperkaya literatur ilmiah tentang penerapan arsitektur hybrid CNN-XGBoost untuk klasifikasi penyakit tanaman, khususnya dalam konteks pertanian tropis.
+2. **Metodologi Penelitian**: Menjadi referensi akademik bagi penelitian lanjutan yang mengintegrasikan deep learning sebagai feature extractor dengan machine learning ensemble sebagai classifier untuk meningkatkan akurasi dan efisiensi komputasi.
+3. **Validasi Pendekatan Hybrid**: Memberikan bukti empiris tentang efektivitas kombinasi transfer learning (MobileNetV2) dengan gradient boosting (XGBoost) dalam mengatasi keterbatasan dataset dan risiko overfitting.
 
----
+#### 1.5.2 Manfaat Praktis
+1. **Bagi Petani Kopi**: 
+   - Menyediakan alat diagnosis cepat dan akurat yang dapat diakses melalui smartphone atau perangkat mobile.
+   - Membantu deteksi dini penyakit daun sehingga penanganan dapat dilakukan lebih cepat dan tepat sasaran.
+   - Mengurangi ketergantungan pada penyuluh pertanian dan konfirmasi laboratorium yang membutuhkan waktu lama.
 
-**R8.**  
-Empat kelas layanan transport dan dukungannya:  
+2. **Bagi Penyuluh Pertanian**: 
+   - Menjadi tools pendukung keputusan (decision support system) untuk validasi diagnosis lapangan.
+   - Meningkatkan efektivitas program penyuluhan dan pendampingan petani.
 
-1. **Reliable data transfer** – hanya **TCP**.  
-2. **Throughput guarantee** – tidak diberikan oleh TCP maupun UDP.  
-3. **Timing/delay guarantee** – tidak diberikan oleh TCP maupun UDP.  
-4. **Security** – dicapai dengan protokol tambahan (mis. TLS di atas TCP), bukan oleh TCP/UDP murni.  
+3. **Bagi Pengembang Teknologi Pertanian**: 
+   - Menyediakan prototipe sistem yang dapat dikembangkan menjadi aplikasi mobile berbasis AI.
+   - Memberikan baseline performa untuk pengembangan sistem monitoring kesehatan tanaman terintegrasi.
 
----
-
-**R9.**  
-- **TLS** bekerja **di atas TCP**, secara praktis dianggap di lapisan aplikasi.  
-- Pengembang memakai **library TLS** untuk “membungkus” koneksi TCP (bukan memodifikasi TCP), lalu mengirim data melalui sesi TLS tersebut.  
-
----
-
-**R10.**  
-**Handshaking protocol**: pertukaran pesan awal untuk menyepakati parameter dan membentuk hubungan sebelum data aplikasi dikirim (contoh: three‑way handshake TCP).  
-
----
-
-**R11.**  
-- **Stateless protocol**: server tidak menyimpan state antar permintaan.  
-- **IMAP**: **stateful** (menyimpan status folder, flag pesan, dsb. selama sesi).  
-- **SMTP**: menyimpan state hanya selama satu sesi pengiriman; antar sesi dianggap tidak menyimpan state jangka panjang.  
+4. **Bagi Kebijakan Pertanian**: 
+   - Mendukung program pertanian digital dan smart farming yang digalakkan oleh Kementerian Pertanian.
+   - Memberikan data dan insight untuk sistem early warning penyebaran penyakit tanaman kopi di tingkat regional.
 
 ---
 
-**R12.**  
-- Website melacak pengguna dengan: cookies, session ID, local storage, atau teknik fingerprinting.  
-- Cookies **tidak selalu wajib**, tetapi paling umum digunakan.  
+## BAB II
+## TINJAUAN PUSTAKA
 
----
+### 2.1 Landasan Teori
 
-**R13.**  
-- Web cache menyimpan objek populer lebih dekat ke client. Saat cache hit, objek dikirim dari cache sehingga delay turun.  
-- Pengurangan delay hanya signifikan untuk **objek yang sering diminta dan cacheable**, bukan semua objek.  
+#### 2.1.1 Tanaman Kopi
+Tanaman kopi (*Coffea* spp.) merupakan tanaman perkebunan dari famili Rubiaceae yang berperan sangat penting dalam perekonomian Indonesia. Dua spesies utama yang dibudidayakan secara komersial adalah *Coffea arabica* (kopi Arabika) yang mencakup 60-65% produksi nasional dan *Coffea canephora* (kopi Robusta) sekitar 35-40%. Kopi Arabika umumnya ditanam pada ketinggian 1.000-2.000 mdpl dengan karakteristik rasa yang lebih kompleks, sementara Robusta lebih toleran terhadap dataran rendah dan memiliki kandungan kafein lebih tinggi.
 
----
+Daun kopi merupakan organ vital yang berperan dalam proses fotosintesis untuk menghasilkan energi bagi pertumbuhan dan pembentukan buah. Daun sehat memiliki karakteristik berwarna hijau tua mengkilap, dengan panjang 10-15 cm dan lebar 4-6 cm, serta tekstur permukaan halus. Kesehatan daun sangat menentukan produktivitas tanaman, karena penurunan luas daun aktif sebesar 25% dapat mengurangi hasil panen hingga 20-30%. Penyakit daun yang menyerang jaringan fotosintesis akan menghambat produksi karbohidrat, melemahkan tanaman, dan pada akhirnya menurunkan kualitas serta kuantitas biji kopi yang dihasilkan.
 
-**R14.**  
-Contoh permintaan Telnet ke server web:  
+#### 2.1.2 Penyakit Daun Kopi
+Penyakit daun merupakan ancaman utama produktivitas perkebunan kopi di Indonesia. Berikut adalah tiga penyakit daun kopi yang menjadi fokus penelitian ini:
 
-```http
-GET /index.html HTTP/1.1
-Host: www.contoh.com
-If-Modified-Since: Wed, 21 Oct 2015 07:28:00 GMT
-Connection: close
+**a. Karat Daun Kopi (Coffee Leaf Rust - CLR)**
+- **Penyebab**: Jamur *Hemileia vastatrix*
+- **Gejala Visual**: Bercak kuning-oranye berbentuk bulat berdiameter 1-5 mm pada permukaan bawah daun, dikelilingi zona klorosis (menguning). Pada stadium lanjut, bercak menyatu membentuk area nekrotik luas.
+- **Pola Penyebaran**: Dimulai dari daun bagian bawah, menyebar ke atas melalui spora yang terbawa angin dan percikan air hujan.
+- **Dampak**: Penyakit paling destruktif, dapat menyebabkan defoliasi (gugur daun) hingga 50%, menurunkan hasil panen 30-40%, bahkan pada serangan berat dapat mencapai 80%.
+- **Kerugian Ekonomi**: Estimasi Rp 2-3 triliun per tahun di Indonesia.
+
+**b. Bercak Daun Cercospora (Cercospora Leaf Spot)**
+- **Penyebab**: Jamur *Cercospora coffeicola*
+- **Gejala Visual**: Bercak coklat kemerahan dengan tepi lebih gelap dan pusat berwarna abu-abu, berdiameter 2-10 mm. Sering disebut "brown eye spot" karena pola konsentrisnya.
+- **Pola Penyebaran**: Berkembang pada kondisi kelembaban tinggi (>80%) dan suhu 20-28°C.
+- **Dampak**: Menurunkan luas daun efektif 15-25%, mengurangi kualitas biji kopi, dan menyebabkan defoliasi prematur pada infeksi berat.
+- **Kerugian Ekonomi**: Penurunan produktivitas 10-20% dan penurunan kualitas grade biji hingga 30%.
+
+**c. Bercak Daun Phoma (Phoma Leaf Spot)**
+- **Penyebab**: Jamur *Phoma costarricensis*
+- **Gejala Visual**: Bercak coklat gelap hingga hitam berbentuk tidak beraturan, ukuran 3-15 mm, dengan tepi tegas. Pada stadium lanjut, bagian tengah bercak mengering dan berlubang.
+- **Pola Penyebaran**: Menyerang tanaman yang stress akibat kekurangan nutrisi atau kondisi lingkungan ekstrem.
+- **Dampak**: Menurunkan hasil panen 10-15%, meningkatkan kerentanan terhadap infeksi sekunder.
+- **Kerugian Ekonomi**: Kerugian tahunan sekitar Rp 500 miliar di sentra kopi nasional.
+
+Ketiga penyakit ini sering muncul bersamaan (infeksi kompleks), mempersulit diagnosis visual manual dan membutuhkan pendekatan deteksi otomatis berbasis AI untuk identifikasi yang akurat dan cepat.
+
+#### 2.1.3 Computer Vision
+Computer Vision adalah cabang ilmu komputer dan kecerdasan buatan yang mempelajari bagaimana sistem komputer dapat memperoleh pemahaman tingkat tinggi dari citra atau video digital. Teknologi ini memungkinkan mesin untuk "melihat" dan menginterpretasikan informasi visual layaknya manusia, bahkan dengan tingkat akurasi yang lebih tinggi dalam tugas-tugas spesifik.
+
+Dalam konteks pertanian, Computer Vision telah diaplikasikan untuk berbagai tujuan:
+- **Deteksi dan Klasifikasi Penyakit Tanaman**: Mengidentifikasi jenis penyakit berdasarkan gejala visual pada daun, batang, atau buah.
+- **Monitoring Pertumbuhan Tanaman**: Mengukur tinggi, luas daun, dan biomassa secara non-destruktif.
+- **Estimasi Hasil Panen**: Menghitung jumlah buah atau prediksi produktivitas berdasarkan analisis citra.
+- **Deteksi Hama**: Identifikasi keberadaan dan jenis hama secara real-time.
+- **Sortir dan Grading Hasil Panen**: Klasifikasi otomatis berdasarkan ukuran, warna, dan kualitas.
+
+Keunggulan Computer Vision untuk deteksi penyakit tanaman meliputi:
+1. **Kecepatan**: Diagnosis dalam hitungan detik dibandingkan observasi manual yang membutuhkan waktu lama.
+2. **Konsistensi**: Tidak dipengaruhi faktor subjektif manusia seperti kelelahan atau bias pengalaman.
+3. **Skalabilitas**: Dapat memproses ribuan citra dalam waktu singkat untuk monitoring area luas.
+4. **Aksesibilitas**: Dapat diimplementasikan pada perangkat mobile untuk digunakan petani di lapangan.
+5. **Deteksi Dini**: Mampu mendeteksi gejala penyakit pada stadium awal yang sulit diamati mata manusia.
+
+#### 2.1.4 Convolutional Neural Network (CNN)
+Convolutional Neural Network (CNN) adalah arsitektur deep learning yang dirancang khusus untuk memproses data dengan struktur grid seperti citra. CNN terinspirasi dari sistem visual korteks pada mamalia dan telah menjadi standar de facto untuk tugas-tugas computer vision sejak keberhasilan AlexNet pada kompetisi ImageNet 2012.
+
+**Arsitektur Dasar CNN:**
+
+1. **Convolutional Layer**: 
+   - Mengekstraksi fitur lokal menggunakan filter/kernel yang bergerak melintasi citra.
+   - Layer awal mendeteksi fitur sederhana (tepi, sudut, tekstur).
+   - Layer dalam mendeteksi fitur kompleks (bentuk, pola, objek).
+   - Parameter: jumlah filter, ukuran kernel (3×3, 5×5), stride, padding.
+
+2. **Activation Function (ReLU)**:
+   - Memperkenalkan non-linearitas: $f(x) = \max(0, x)$
+   - Memungkinkan model mempelajari pola kompleks.
+
+3. **Pooling Layer**:
+   - Mengurangi dimensi spatial (downsampling) untuk efisiensi komputasi.
+   - Max Pooling: mengambil nilai maksimum dari region.
+   - Average Pooling: mengambil nilai rata-rata.
+   - Memberikan invarian terhadap translasi kecil.
+
+4. **Fully Connected Layer**:
+   - Menggabungkan fitur dari semua lokasi spatial.
+   - Menghasilkan probabilitas kelas output.
+
+**Keunggulan CNN untuk Klasifikasi Citra:**
+- **Parameter Sharing**: Filter yang sama digunakan di seluruh citra, mengurangi jumlah parameter drastis dibanding neural network biasa.
+- **Spatial Hierarchy**: Membangun representasi fitur secara hierarkis dari sederhana ke kompleks.
+- **Translation Invariance**: Mampu mengenali objek terlepas dari posisinya dalam citra.
+- **Automatic Feature Learning**: Tidak memerlukan feature engineering manual.
+
+**Tantangan CNN:**
+- Membutuhkan dataset besar (ribuan hingga jutaan citra) untuk training efektif.
+- Komputasi intensif, memerlukan GPU untuk training model dalam.
+- Rentan overfitting pada dataset kecil.
+- Model besar (ResNet, VGG) tidak efisien untuk deployment pada perangkat mobile.
+
+Untuk mengatasi tantangan tersebut, dikembangkan arsitektur efisien seperti MobileNet yang menjadi basis penelitian ini.
+
+#### 2.1.5 MobileNetV2
+MobileNetV2 adalah arsitektur CNN efisien yang dikembangkan oleh Google (Sandler et al., 2018) untuk aplikasi mobile dan embedded vision. Arsitektur ini merupakan perbaikan dari MobileNetV1 dengan performa lebih baik namun tetap mempertahankan efisiensi komputasi.
+
+**Inovasi Utama MobileNetV2:**
+
+1. **Depthwise Separable Convolution**:
+   - Memisahkan konvolusi spatial dan channel-wise.
+   - **Depthwise Convolution**: Setiap channel diproses terpisah dengan filter 3×3.
+   - **Pointwise Convolution**: Filter 1×1 untuk menggabungkan informasi antar channel.
+   - **Efisiensi**: Mengurangi komputasi hingga 8-9× dibanding konvolusi standar.
+
+2. **Inverted Residual Block**:
+   - **Ekspansi**: Memperlebar channel menggunakan konvolusi 1×1 (expansion factor = 6).
+   - **Depthwise**: Ekstraksi fitur spatial pada dimensi tinggi.
+   - **Proyeksi**: Kompresi kembali ke dimensi rendah dengan konvolusi 1×1.
+   - **Linear Bottleneck**: Tidak menggunakan aktivasi ReLU pada layer proyeksi untuk mempertahankan informasi.
+
+3. **Residual Connection**:
+   - Menghubungkan input dan output block untuk memfasilitasi gradient flow.
+   - Hanya diterapkan jika dimensi input = output.
+
+**Spesifikasi Teknis:**
+- **Jumlah Parameter**: 3,4 juta (94% lebih kecil dari ResNet50)
+- **Operasi**: 300 juta MAdd (multiply-add operations)
+- **Input**: 224×224×3 RGB image
+- **Output Feature**: 1280 dimensi dari Global Average Pooling layer
+- **Jumlah Layer**: 53 layer (19 inverted residual blocks)
+- **Akurasi ImageNet**: 72% top-1, 91% top-5
+
+**Perbandingan dengan Arsitektur Lain:**
+
+| Arsitektur | Parameter | Akurasi (ImageNet) | Kecepatan Inferensi | Ukuran Model |
+|------------|-----------|-------------------|---------------------|---------------|
+| MobileNetV2 | 3,4M | 72% | **Tercepat** | 14 MB |
+| MobileNetV3 | 5,4M | 75% | Cepat | 20 MB |
+| ResNet50 | 25,6M | 76% | Sedang | 98 MB |
+| EfficientNetB0 | 5,3M | 77% | Sedang | 29 MB |
+| VGG16 | 138M | 71% | Lambat | 528 MB |
+
+**Alasan Pemilihan MobileNetV2:**
+1. **Efisiensi Komputasi**: Cocok untuk implementasi pada perangkat dengan keterbatasan resource (laptop standar, smartphone).
+2. **Keseimbangan Performa**: Akurasi kompetitif dengan ukuran model sangat kecil.
+3. **Transfer Learning**: Pre-trained weights dari ImageNet dapat digunakan untuk mempercepat training dan meningkatkan akurasi pada dataset kecil.
+4. **Feature Extraction**: Layer Global Average Pooling menghasilkan representasi fitur 1280 dimensi yang kaya informasi untuk klasifikasi lanjutan dengan XGBoost.
+5. **Proven Track Record**: Telah terbukti efektif pada berbagai aplikasi pertanian (Hughes & Salathé, 2015; Mohanty et al., 2016).
+6. **Dokumentasi & Support**: Library TensorFlow/Keras menyediakan implementasi siap pakai dengan pre-trained weights.
+
+#### 2.1.6 XGBoost (Extreme Gradient Boosting)
+XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikembangkan oleh Chen & Guestrin (2016). XGBoost mengimplementasikan gradient boosting decision tree dengan optimasi canggih yang membuatnya menjadi salah satu algoritma paling powerful untuk tugas klasifikasi dan regresi.
+
+**Prinsip Kerja XGBoost:**
+
+1. **Gradient Boosting Framework**:
+   - Membangun model secara sekuensial, setiap model baru memperbaiki kesalahan model sebelumnya.
+   - Fungsi objektif: $Obj(\theta) = \sum_{i=1}^{n} L(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)$
+   - $L$: Loss function (mengukur error prediksi)
+   - $\Omega$: Regularization term (mencegah overfitting)
+
+2. **Tree Boosting Process**:
+   - Inisialisasi prediksi awal (biasanya rata-rata kelas).
+   - Untuk setiap iterasi $t$:
+     - Hitung gradient dan hessian dari loss function.
+     - Bangun decision tree yang memprediksi residual.
+     - Update model: $\hat{y}^{(t)} = \hat{y}^{(t-1)} + \eta \cdot f_t(x)$
+     - $\eta$ adalah learning rate untuk mengontrol kontribusi setiap tree.
+
+3. **Regularization**:
+   - **L1 (Lasso)**: $\alpha \sum_{j=1}^{T} |w_j|$
+   - **L2 (Ridge)**: $\lambda \sum_{j=1}^{T} w_j^2$
+   - Mencegah overfitting dengan memberikan penalti pada kompleksitas model.
+
+**Hyperparameter Penting:**
+
+| Parameter | Fungsi | Rentang Optimal |
+|-----------|--------|----------------|
+| `n_estimators` | Jumlah boosting rounds (trees) | 100-1000 |
+| `max_depth` | Kedalaman maksimal tree | 3-10 |
+| `learning_rate` (η) | Kecepatan learning | 0.01-0.3 |
+| `subsample` | Fraksi sampel untuk setiap tree | 0.6-1.0 |
+| `colsample_bytree` | Fraksi fitur untuk setiap tree | 0.6-1.0 |
+| `gamma` | Minimum loss reduction untuk split | 0-5 |
+| `reg_alpha` | L1 regularization | 0-1 |
+| `reg_lambda` | L2 regularization | 0-1 |
+
+**Keunggulan XGBoost:**
+
+1. **Performa Tinggi**:
+   - Konsisten menjadi algoritma pemenang di kompetisi machine learning (Kaggle).
+   - Efektif pada berbagai jenis data dan ukuran dataset.
+
+2. **Regularization Kuat**:
+   - Implementasi L1/L2 regularization mencegah overfitting.
+   - Pruning: Memangkas cabang tree yang tidak memberikan gain signifikan.
+
+3. **Handling Missing Values**:
+   - Otomatis menangani data missing tanpa imputation manual.
+   - Mempelajari arah optimal untuk missing values.
+
+4. **Feature Importance**:
+   - Menyediakan informasi fitur mana yang paling berkontribusi pada prediksi.
+   - Membantu interpretability model.
+
+5. **Efisiensi Komputasi**:
+   - **Parallelization**: Training multi-threaded untuk percepatan.
+   - **Cache Optimization**: Mengurangi akses memori.
+   - **Out-of-Core Computing**: Dapat menangani dataset yang tidak muat di RAM.
+
+6. **Fleksibilitas**:
+   - Mendukung custom loss function dan evaluation metrics.
+   - Dapat diintegrasikan dengan pipeline machine learning.
+
+**Alasan Pemilihan XGBoost sebagai Classifier:**
+
+1. **Efektif pada Fitur Dimensi Tinggi**: MobileNetV2 menghasilkan 1280 fitur, XGBoost mampu mengelola dimensi tinggi tanpa curse of dimensionality.
+2. **Dataset Kecil-Menengah**: XGBoost berkinerja sangat baik pada dataset 2.000 citra, lebih baik dari fine-tuning full CNN yang rentan overfitting.
+3. **Regularization**: Mengurangi risiko overfitting yang sering terjadi pada CNN tunggal dengan dataset terbatas.
+4. **Interpretability**: Feature importance dapat mengidentifikasi region citra mana yang paling informatif.
+5. **Training Cepat**: Training XGBoost pada 1280 fitur jauh lebih cepat dibanding fine-tuning CNN layers.
+6. **Hyperparameter Tuning**: Grid search XGBoost lebih feasible dibanding neural architecture search pada CNN.
+7. **Proven Hybrid Approach**: Studi Wang et al. (2021) menunjukkan CNN-XGBoost unggul 3-5% dibanding CNN end-to-end pada medical imaging.
+
+### 2.2 Penelitian Terdahulu
+Berikut adalah tinjauan komprehensif penelitian terdahulu yang relevan dengan deteksi penyakit tanaman menggunakan deep learning dan machine learning:
+
+| No | Peneliti & Tahun | Metode | Dataset | Akurasi | Kelebihan | Kekurangan |
+|----|------------------|--------|---------|---------|-----------|------------|
+| 1 | Ferentinos (2018) | CNN (AlexNet, VGG, GoogLeNet) | 87.848 citra, 25 tanaman, 58 kelas penyakit | 99,53% | - Akurasi sangat tinggi<br>- Benchmark komprehensif | - Dataset sangat besar (sulit direplikasi)<br>- Membutuhkan GPU Tesla K80<br>- Tidak efisien untuk mobile |
+| 2 | Ramcharan et al. (2019) | MobileNetV2 end-to-end | 11.670 citra tanaman pisang, 5 kelas | 89% (lab)<br>73% (field) | - Efisien untuk mobile<br>- Real-world testing | - Performa drop signifikan di lapangan<br>- Sensitif terhadap variasi pencahayaan |
+| 3 | Mohanty et al. (2016) | AlexNet, GoogLeNet | PlantVillage 54.306 citra, 38 kelas | 99,35% | - Dataset publik<br>- Arsitektur state-of-art | - Overfitting pada background uniform<br>- Gagal pada citra lapangan kompleks |
+| 4 | Prasetyo & Rahmadani (2022) | ResNet50 fine-tuning | 1.200 citra daun kopi, 4 kelas | 88% (train)<br>70% (test) | - Fokus pada kopi Indonesia<br>- Transfer learning | - Overfitting berat (gap 18%)<br>- Dataset terbatas<br>- Model besar (98 MB) |
+| 5 | Wang et al. (2021) | ResNet50 + XGBoost | 10.000 citra medis, 7 kelas tumor | 94,2% | - Hybrid approach efektif<br>- Regularization kuat<br>- Reduksi overfitting | - Domain medis (bukan pertanian)<br>- Dataset sangat besar |
+| 6 | Zhang et al. (2023) | EfficientNet + Random Forest | 8.500 citra sayuran, 12 kelas | 91,8% | - Ensemble learning<br>- Feature selection otomatis | - Waktu training lama<br>- Hyperparameter kompleks |
+| 7 | Saleem et al. (2020) | VGG16 + SVM | 4.000 citra tomat, 10 kelas | 87,3% | - SVM efektif pada fitur CNN<br>- Dataset menengah | - VGG terlalu besar (528 MB)<br>- Akurasi moderat |
+| 8 | Kamilaris & Prenafeta-Boldú (2018) | Survey 40+ paper | Meta-analysis | Rata-rata 85-95% | - Comprehensive review<br>- Best practices | - Tidak ada implementasi baru<br>- Gap research masih banyak |
+
+**Analisis Gap Penelitian:**
+
+1. **Dataset Size Issue**: Penelitian dengan akurasi tinggi (Ferentinos, Mohanty) memerlukan dataset sangat besar (>50.000 citra), tidak realistis untuk kasus spesifik kopi Indonesia.
+
+2. **Overfitting Problem**: Model CNN besar (ResNet50, VGG) rentan overfitting pada dataset kecil-menengah (<5.000 citra), seperti dialami Prasetyo & Rahmadani.
+
+3. **Field Performance Gap**: Model yang excellent di laboratorium sering gagal di lapangan akibat variasi pencahayaan, latar belakang, dan kondisi daun (Ramcharan et al.).
+
+4. **Computational Efficiency**: Model besar tidak efisien untuk deployment mobile yang dibutuhkan petani di lapangan.
+
+5. **Limited Hybrid Approach**: Kombinasi CNN feature extraction + ML classifier (XGBoost, RF, SVM) masih jarang diterapkan pada penyakit tanaman, padahal terbukti efektif di domain lain (medis, industri).
+
+6. **Indonesian Coffee Context**: Sangat sedikit penelitian yang fokus pada penyakit kopi di Indonesia dengan kondisi lapangan lokal.
+
+**Posisi Penelitian Ini:**
+
+Penelitian ini mengisi gap dengan mengombinasikan:
+- **MobileNetV2** (efisien, cocok mobile) sebagai feature extractor.
+- **XGBoost** (regularization kuat, efektif dataset menengah) sebagai classifier.
+- **Fokus kopi Indonesia** dengan validasi lapangan.
+- **Dataset realistis** (2.000 citra) yang dapat direplikasi.
+- **Pendekatan hybrid** yang belum banyak dieksplorasi untuk penyakit kopi.
+
+Kombinasi ini diharapkan memberikan keseimbangan optimal antara akurasi, efisiensi, dan aplikabilitas praktis di lapangan.
+
+### 2.3 Kerangka Pemikiran
+
+Kerangka pemikiran penelitian ini dapat digambarkan dalam alur berikut:
 
 ```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        MASALAH PENELITIAN                            │
+├─────────────────────────────────────────────────────────────────────┤
+│ 1. Diagnosis manual penyakit daun kopi tidak akurat & lambat       │
+│ 2. CNN tunggal: overfitting pada dataset kecil & komputasi berat   │
+│ 3. Performa drop signifikan pada kondisi lapangan                  │
+│ 4. Belum ada sistem diagnosis mobile untuk petani Indonesia         │
+└─────────────────────────────────────────────────────────────────────┘
+                                  ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│                     SOLUSI: MODEL HYBRID                             │
+├─────────────────────────────────────────────────────────────────────┤
+│         MobileNetV2 (Feature Extractor)                             │
+│         ├─ Pre-trained ImageNet                                     │
+│         ├─ Efficient architecture (3.4M params)                     │
+│         ├─ Ekstrak fitur visual 1280 dimensi                        │
+│         └─ Transfer learning untuk dataset kecil                    │
+│                           +                                          │
+│         XGBoost (Classifier)                                        │
+│         ├─ Gradient boosting ensemble                               │
+│         ├─ Regularization kuat (L1/L2)                              │
+│         ├─ Efektif pada fitur dimensi tinggi                        │
+│         └─ Mencegah overfitting                                     │
+└─────────────────────────────────────────────────────────────────────┘
+                                  ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│                      ALUR KERJA SISTEM                               │
+├─────────────────────────────────────────────────────────────────────┤
+│ INPUT: Citra daun kopi (224×224 RGB)                               │
+│   ↓                                                                  │
+│ PREPROCESSING: Resize, normalisasi, augmentasi                     │
+│   ↓                                                                  │
+│ FEATURE EXTRACTION: MobileNetV2 (frozen conv layers)               │
+│   → Output: Feature vector 1280 dimensi                             │
+│   ↓                                                                  │
+│ CLASSIFICATION: XGBoost (hyperparameter tuned)                     │
+│   → Output: Probabilitas 4 kelas penyakit                           │
+│   ↓                                                                  │
+│ OUTPUT: Diagnosis (Sehat/CLR/Cercospora/Phoma) + Confidence        │
+└─────────────────────────────────────────────────────────────────────┘
+                                  ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│                          EVALUASI                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│ • Metrik: Akurasi, Presisi, Recall, F1-Score                       │
+│ • Validasi: 5-Fold Cross-Validation                                │
+│ • Perbandingan: ResNet50 end-to-end & MobileNetV2 end-to-end       │
+│ • Uji lapangan: Citra real-world dengan variasi kondisi            │
+└─────────────────────────────────────────────────────────────────────┘
+                                  ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│                    HASIL YANG DIHARAPKAN                             │
+├─────────────────────────────────────────────────────────────────────┤
+│ ✓ Akurasi ≥90% dengan dataset realistis (2.000 citra)              │
+│ ✓ Generalisasi baik pada kondisi lapangan beragam                  │
+│ ✓ Efisiensi tinggi (inferensi <2 detik, model <50 MB)              │
+│ ✓ Mengatasi overfitting dibanding CNN tunggal                       │
+│ ✓ Prototipe siap deployment untuk aplikasi mobile                  │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
-Jika objek belum berubah sejak tanggal itu, server merespons dengan status `304 Not Modified`.  
+**Justifikasi Pendekatan Hybrid:**
+
+1. **Transfer Learning (MobileNetV2)**:
+   - Pre-trained weights dari ImageNet (1,2 juta citra) memberikan representasi fitur visual general yang kuat.
+   - Freezing convolutional layers mencegah overfitting pada dataset kecil.
+   - Ekstraksi fitur otomatis menghilangkan kebutuhan feature engineering manual.
+
+2. **Ensemble Learning (XGBoost)**:
+   - Boosting ensemble mempelajari pola kompleks dari fitur MobileNetV2.
+   - Regularization (L1/L2) dan tree pruning mencegah overfitting.
+   - Efektif pada dataset kecil-menengah tanpa memerlukan jutaan sampel.
+
+3. **Keunggulan Hybrid**:
+   - **Akurasi**: CNN mengekstrak fitur visual, XGBoost mengoptimalkan klasifikasi.
+   - **Efisiensi**: Hanya fine-tune classifier (XGBoost), bukan seluruh CNN.
+   - **Regularization**: Ganda (dropout MobileNetV2 + regularization XGBoost).
+   - **Interpretability**: XGBoost feature importance menunjukkan fitur visual mana yang penting.
+   - **Flexibility**: Mudah menambah kelas baru tanpa retrain full CNN.
+
+4. **Diferensiasi dengan CNN End-to-End**:
+   - **Baseline (ResNet50 end-to-end)**: Rentan overfitting, memerlukan dataset besar, komputasi berat.
+   - **Hybrid (MobileNetV2-XGBoost)**: Efisien, regularization kuat, cocok dataset menengah, hasil lebih stabil.
+
+Kerangka pemikiran ini memandu desain eksperimen untuk memvalidasi hipotesis bahwa pendekatan hybrid MobileNetV2-XGBoost dapat mencapai akurasi tinggi (≥90%) dengan efisiensi komputasi baik, bahkan pada dataset realistis berukuran menengah (2.000 citra).
 
 ---
 
-**R15.**  
-- **HTTP body**: bebas (dapat berupa teks/biner), ditandai dengan `Content-Type`.  
-- **HTTP header**: wajib teks ASCII dengan format baris `Nama-Header: nilai` dan diakhiri baris kosong.  
-- Client dan server harus memakai versi HTTP yang sama/kompatibel agar format pesan dipahami dengan benar.  
-- Data sebarang dikirim lewat SMTP dengan **MIME**, yang mengenkode biner (mis. Base64) menjadi teks dan menandai tipe kontennya.  
+## BAB III
+## METODOLOGI PENELITIAN
+
+### 3.1 Jenis dan Pendekatan Penelitian
+Penelitian ini merupakan penelitian terapan dengan pendekatan kuantitatif yang berfokus pada pengembangan dan evaluasi model diagnosis berbasis citra.
+
+### 3.2 Data Penelitian
+
+#### 3.2.1 Sumber Data
+Data penelitian terdiri dari dua sumber utama:
+
+1. **Dataset Publik**: RoboFlow Coffee Leaf Disease Dataset
+   - Sumber: [https://universe.roboflow.com/coffee-disease-detection](https://universe.roboflow.com/coffee-disease-detection)
+   - Jumlah: 1.800 citra daun kopi Arabika
+   - Anotasi: Sudah dilabeli oleh expert
+   - Lisensi: CC BY 4.0 (dapat digunakan untuk riset)
+
+2. **Data Lapangan**: Dokumentasi perkebunan kopi Jawa Timur
+   - Lokasi: Perkebunan Kalisongo, Malang & Perkebunan Kayumas, Jember
+   - Jumlah: 200 citra
+   - Perangkat: Smartphone Xiaomi Redmi Note 10 (48 MP)
+   - Kondisi: Pencahayaan natural, background lapangan
+
+**Total Dataset**: 2.000 citra
+
+#### 3.2.2 Distribusi Kelas
+
+| Kelas | Deskripsi | Jumlah Citra | Persentase |
+|-------|-----------|--------------|------------|
+| **Healthy** | Daun sehat tanpa gejala | 550 | 27,5% |
+| **Coffee Leaf Rust (CLR)** | Bercak kuning-oranye karat | 600 | 30,0% |
+| **Cercospora Leaf Spot** | Bercak coklat "brown eye" | 450 | 22,5% |
+| **Phoma Leaf Spot** | Bercak hitam tidak beraturan | 400 | 20,0% |
+| **TOTAL** | | **2.000** | **100%** |
+
+*Catatan*: Dataset relatif seimbang (balanced), perbedaan maksimal 10% antar kelas.
+
+#### 3.2.3 Spesifikasi Citra
+
+- **Format**: JPEG dan PNG
+- **Resolusi Asli**: Bervariasi (800×600 hingga 4000×3000 piksel)
+- **Resolusi Setelah Preprocessing**: 224×224 piksel (standar MobileNetV2)
+- **Color Space**: RGB (3 channel)
+- **Ukuran File**: 50-500 KB per citra
+- **Variasi**:
+  - Pencahayaan: terang, sedang, redup
+  - Background: uniform (lab), kompleks (lapangan)
+  - Sudut: frontal, miring 15-30°
+  - Tingkat infeksi: ringan, sedang, berat
+
+#### 3.2.4 Split Dataset
+
+Dataset dibagi menjadi tiga subset dengan stratified sampling untuk mempertahankan distribusi kelas:
+
+| Subset | Jumlah Citra | Persentase | Fungsi |
+|--------|--------------|------------|--------|
+| **Training** | 1.400 | 70% | Melatih model (MobileNetV2 + XGBoost) |
+| **Validation** | 300 | 15% | Tuning hyperparameter & early stopping |
+| **Testing** | 300 | 15% | Evaluasi final performa model |
+
+*Stratified Sampling*: Setiap subset memiliki proporsi kelas yang sama dengan dataset keseluruhan.
+
+#### 3.2.5 Pra-pemrosesan Citra
+
+**Tahap 1: Cleaning & Filtering**
+- Hapus citra duplikat menggunakan hash comparison
+- Hapus citra blur (menggunakan Laplacian variance threshold < 100)
+- Hapus citra dengan lebih dari 50% area non-daun
+- Hapus citra corrupted atau format error
+
+**Tahap 2: Resizing**
+- Resize semua citra ke 224×224 piksel menggunakan bilinear interpolation
+- Pertahankan aspect ratio dengan padding jika perlu
+
+**Tahap 3: Normalisasi**
+- Normalisasi nilai piksel dari rentang [0, 255] ke [0, 1]
+- Formula: $x_{norm} = \frac{x}{255}$
+- Standardisasi menggunakan mean dan std ImageNet:
+  - Mean: [0.485, 0.456, 0.406] untuk channel R, G, B
+  - Std: [0.229, 0.224, 0.225] untuk channel R, G, B
+
+**Tahap 4: Augmentasi Data (Hanya untuk Training Set)**
+
+Untuk meningkatkan keragaman data dan mencegah overfitting, diterapkan augmentasi real-time menggunakan `ImageDataGenerator` (Keras):
+
+| Teknik Augmentasi | Parameter | Alasan |
+|-------------------|-----------|--------|
+| **Rotation** | ±20° | Simulasi variasi sudut pengambilan foto |
+| **Horizontal Flip** | 50% probability | Daun dapat terbalik horizontal di alam |
+| **Vertical Flip** | 50% probability | Variasi orientasi daun |
+| **Zoom** | 0.8-1.2× | Simulasi jarak pengambilan berbeda |
+| **Width Shift** | ±10% | Variasi posisi daun dalam frame |
+| **Height Shift** | ±10% | Variasi posisi vertikal |
+| **Brightness** | 0.8-1.2× | Simulasi kondisi pencahayaan berbeda |
+| **Shear** | ±10° | Simulasi perspektif miring |
+
+*Catatan*: Augmentasi TIDAK diterapkan pada validation dan testing set untuk evaluasi yang fair.
+
+**Implementasi Augmentasi:**
+```python
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=20,
+    horizontal_flip=True,
+    vertical_flip=True,
+    zoom_range=0.2,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    brightness_range=[0.8, 1.2],
+    shear_range=0.1,
+    fill_mode='nearest'
+)
+
+val_test_datagen = ImageDataGenerator(rescale=1./255)
+```
+
+### 3.3 Tahapan Penelitian
+
+Penelitian ini dilaksanakan dalam tujuh tahap utama yang terstruktur dan sistematis:
+
+#### **Tahap 1: Pengumpulan dan Persiapan Data**
+
+**1.1 Pengumpulan Data**
+- Download dataset publik dari RoboFlow (1.800 citra)
+- Dokumentasi lapangan di perkebunan Jawa Timur (200 citra)
+- Total: 2.000 citra daun kopi
+
+**1.2 Labeling dan Validasi**
+- Verifikasi label oleh 2 expert (agronomist + plant pathologist)
+- Konsensus untuk kasus ambigu (misalnya: infeksi ganda)
+- Tool: LabelImg untuk re-checking
+
+**1.3 Eksplorasi Data Awal**
+- Analisis distribusi kelas (class imbalance check)
+- Visualisasi sampel per kelas
+- Statistik deskriptif (ukuran, resolusi, brightness, contrast)
+
+**Output Tahap 1**: Dataset tervalidasi dengan label akurat
 
 ---
 
-## B. Socket Programming Assignments (P30–P32)
+#### **Tahap 2: Pra-pemrosesan Data**
 
-**P30.**  
-- Browser modern otomatis membuka beberapa koneksi TCP paralel ke satu situs; pada beberapa browser jumlahnya dapat diatur.  
-- **Keuntungan**: unduhan objek paralel → halaman lebih cepat termuat.  
-- **Kerugian**: beban resource di client/server naik, potensi kemacetan jaringan dan ketidakadilan pemakaian bandwidth.  
+**2.1 Data Cleaning**
+- Deteksi dan hapus duplikat (hash-based)
+- Deteksi blur menggunakan Laplacian variance
+- Filter citra dengan kualitas rendah
+
+**2.2 Preprocessing Pipeline**
+```python
+# Pseudocode preprocessing
+for image in dataset:
+    image = resize(image, (224, 224))
+    image = normalize(image, mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225])
+    if image in training_set:
+        image = apply_augmentation(image)
+    save(image)
+```
+
+**2.3 Split Dataset**
+- Stratified split: 70% train, 15% validation, 15% test
+- Random seed = 42 (for reproducibility)
+
+**Output Tahap 2**: Dataset siap latih (preprocessed & augmented)
+
+---
+
+#### **Tahap 3: Ekstraksi Fitur Menggunakan MobileNetV2**
+
+**3.1 Load Pre-trained Model**
+```python
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.models import Model
+
+# Load MobileNetV2 dengan weights ImageNet
+base_model = MobileNetV2(
+    input_shape=(224, 224, 3),
+    include_top=False,  # Buang classification head
+    weights='imagenet',  # Pre-trained ImageNet
+    pooling='avg'  # Global Average Pooling
+)
+
+# Freeze semua convolutional layers
+for layer in base_model.layers:
+    layer.trainable = False
+```
+
+**3.2 Feature Extraction Process**
+- Input: Citra 224×224×3
+- Proses: Forward pass melalui MobileNetV2 (19 inverted residual blocks)
+- Output: Feature vector 1280 dimensi dari Global Average Pooling layer
+
+**3.3 Ekstraksi untuk Semua Dataset**
+```python
+# Ekstrak fitur untuk training, validation, testing set
+X_train_features = base_model.predict(X_train_images)
+X_val_features = base_model.predict(X_val_images)
+X_test_features = base_model.predict(X_test_images)
+
+# Simpan fitur ke disk (untuk efisiensi)
+import numpy as np
+np.save('features_train.npy', X_train_features)
+np.save('features_val.npy', X_val_features)
+np.save('features_test.npy', X_test_features)
+```
+
+**Spesifikasi Output:**
+- Shape: (n_samples, 1280)
+- Tipe: float32
+- Range: Tidak bounded (output Global Average Pooling)
+
+**Output Tahap 3**: Feature vectors 1280-D untuk semua citra
 
 ---
 
-**P31.**  
-Perbandingan API **byte‑stream (TCP)** vs **message‑oriented (UDP)**:  
+#### **Tahap 4: Klasifikasi Menggunakan XGBoost**
 
-- **Kelebihan byte‑stream**:  
-  - Sederhana dan fleksibel untuk data besar; aplikasi cukup menganggap data sebagai aliran byte.  
-- **Kekurangan byte‑stream**:  
-  - Aplikasi harus mengelola sendiri batas pesan (panjang, delimiter, dsb.).  
+**4.1 Konfigurasi XGBoost**
+```python
+import xgboost as xgb
+from sklearn.model_selection import GridSearchCV
 
-API yang mengenali batas pesan memudahkan aplikasi (tiap `recv` dapat berisi satu pesan logis), tetapi kurang fleksibel dan dibatasi ukuran pesan.  
+# Hyperparameter search space
+param_grid = {
+    'n_estimators': [100, 300, 500],
+    'max_depth': [3, 5, 7, 9],
+    'learning_rate': [0.01, 0.05, 0.1, 0.2],
+    'subsample': [0.7, 0.8, 0.9, 1.0],
+    'colsample_bytree': [0.7, 0.8, 0.9, 1.0],
+    'gamma': [0, 0.1, 0.5, 1],
+    'reg_alpha': [0, 0.1, 0.5, 1],  # L1 regularization
+    'reg_lambda': [0.5, 1, 2, 5]     # L2 regularization
+}
+
+# XGBoost classifier
+xgb_model = xgb.XGBClassifier(
+    objective='multi:softmax',  # Multi-class classification
+    num_class=4,                # 4 kelas penyakit
+    eval_metric='mlogloss',     # Multi-class log loss
+    random_state=42,
+    n_jobs=-1                   # Parallelization
+)
+```
+
+**4.2 Hyperparameter Tuning**
+```python
+# Grid Search dengan 5-Fold Cross-Validation
+grid_search = GridSearchCV(
+    estimator=xgb_model,
+    param_grid=param_grid,
+    cv=5,                       # 5-fold CV
+    scoring='f1_macro',         # Optimasi F1-Score
+    n_jobs=-1,
+    verbose=2
+)
+
+# Training dengan fitur MobileNetV2
+grid_search.fit(
+    X_train_features, y_train,
+    eval_set=[(X_val_features, y_val)],
+    early_stopping_rounds=50,   # Stop jika tidak ada improvement
+    verbose=False
+)
+
+# Best hyperparameters
+best_params = grid_search.best_params_
+best_model = grid_search.best_estimator_
+```
+
+**4.3 Training Final Model**
+- Train model dengan best hyperparameters pada train + validation set
+- Monitoring: training loss, validation loss, accuracy
+- Early stopping jika overfitting terdeteksi
+
+**Output Tahap 4**: Trained XGBoost classifier dengan hyperparameter optimal
 
 ---
 
-**P32.**  
-- **Apache Web Server**: web server HTTP open‑source yang sangat populer.  
-- **Biaya**: gratis (lisensi Apache).  
-- **Fungsi utama**:  
-  - Menyajikan konten statis dan dinamis.  
-  - Mendukung HTTPS/TLS, virtual hosting, modul ekstensi (PHP, proxy, rewrite, logging, autentikasi, cache, dsb.).  
-  - Dapat berperan sebagai reverse proxy dan load balancer.  
+#### **Tahap 5: Evaluasi Performa Model**
+
+**5.1 Prediksi pada Test Set**
+```python
+# Prediksi kelas
+y_pred = best_model.predict(X_test_features)
+
+# Prediksi probabilitas
+y_pred_proba = best_model.predict_proba(X_test_features)
+```
+
+**5.2 Kalkulasi Metrik Evaluasi**
+```python
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.metrics import confusion_matrix, classification_report
+
+# Metrik per-class
+precision, recall, f1, support = precision_recall_fscore_support(
+    y_test, y_pred, average=None
+)
+
+# Metrik overall
+accuracy = accuracy_score(y_test, y_pred)
+precision_macro = precision_recall_fscore_support(y_test, y_pred, average='macro')[0]
+recall_macro = precision_recall_fscore_support(y_test, y_pred, average='macro')[1]
+f1_macro = precision_recall_fscore_support(y_test, y_pred, average='macro')[2]
+
+# Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+```
+
+**5.3 Visualisasi Hasil**
+- Confusion Matrix heatmap
+- ROC Curve per kelas (One-vs-Rest)
+- Precision-Recall Curve
+- Feature Importance dari XGBoost
+
+**Output Tahap 5**: Comprehensive evaluation report
 
 ---
+
+#### **Tahap 6: Validasi dengan 5-Fold Cross-Validation**
+
+**6.1 K-Fold Cross-Validation**
+```python
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+
+# Stratified K-Fold (mempertahankan proporsi kelas)
+skfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+# Cross-validation scores
+cv_scores = cross_val_score(
+    best_model,
+    X_train_features,
+    y_train,
+    cv=skfold,
+    scoring='f1_macro',
+    n_jobs=-1
+)
+
+print(f"CV F1-Scores: {cv_scores}")
+print(f"Mean F1: {cv_scores.mean():.4f} (+/- {cv_scores.std():.4f})")
+```
+
+**6.2 Analisis Stabilitas**
+- Cek variance antar fold (jika variance tinggi → model tidak stabil)
+- Identifikasi fold dengan performa terendah
+- Analisis kesalahan pada fold tersebut
+
+**Output Tahap 6**: Validasi generalisasi model dengan CV metrics
+
+---
+
+#### **Tahap 7: Perbandingan dengan Baseline**
+
+**7.1 Baseline Model 1: MobileNetV2 End-to-End**
+```python
+# Fine-tune MobileNetV2 dengan classification head
+base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(224,224,3))
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dense(128, activation='relu')(x)
+output = Dense(4, activation='softmax')(x)
+
+model_mobilenet = Model(inputs=base_model.input, outputs=output)
+
+# Freeze base layers, train only top layers
+for layer in base_model.layers:
+    layer.trainable = False
+
+model_mobilenet.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model_mobilenet.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=50)
+```
+
+**7.2 Baseline Model 2: ResNet50 End-to-End**
+```python
+from tensorflow.keras.applications import ResNet50
+
+base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(224,224,3))
+# Similar architecture as MobileNetV2
+```
+
+**7.3 Komparasi Performa**
+
+| Model | Akurasi | F1-Score | Waktu Training | Ukuran Model | Waktu Inferensi |
+|-------|---------|----------|----------------|--------------|------------------|
+| **MobileNetV2-XGBoost (Ours)** | TBD | TBD | TBD | TBD | TBD |
+| MobileNetV2 End-to-End | TBD | TBD | TBD | 14 MB | TBD |
+| ResNet50 End-to-End | TBD | TBD | TBD | 98 MB | TBD |
+
+**7.4 Analisis Komparatif**
+- Perbandingan akurasi, precision, recall, F1-score
+- Perbandingan efisiensi (waktu, memori, ukuran model)
+- Analisis overfitting (train-test gap)
+- Performa pada kondisi challenging (pencahayaan rendah, background kompleks)
+
+**Output Tahap 7**: Laporan komparasi komprehensif dengan baseline models
+
+---
+
+### Diagram Alir Penelitian
+
+```
+[START]
+   ↓
+[Pengumpulan Data: 2.000 citra]
+   ↓
+[Labeling & Validasi Expert]
+   ↓
+[Data Cleaning & Preprocessing]
+   ↓
+[Split: 70% Train | 15% Val | 15% Test]
+   ↓
+[Augmentasi Training Set]
+   ↓
+┌─────────────────────────────────┐
+│ FEATURE EXTRACTION              │
+│ MobileNetV2 (Pre-trained)       │
+│ Input: 224×224×3                │
+│ Output: 1280-D features         │
+└─────────────────────────────────┘
+   ↓
+┌─────────────────────────────────┐
+│ CLASSIFICATION                  │
+│ XGBoost Classifier              │
+│ Hyperparameter Tuning (Grid)    │
+│ 5-Fold Cross-Validation         │
+└─────────────────────────────────┘
+   ↓
+[Evaluasi Test Set]
+   ├─ Accuracy, Precision, Recall, F1
+   ├─ Confusion Matrix
+   ├─ ROC Curve
+   └─ Feature Importance
+   ↓
+[Perbandingan dengan Baseline]
+   ├─ MobileNetV2 End-to-End
+   └─ ResNet50 End-to-End
+   ↓
+[Analisis Hasil & Interpretasi]
+   ↓
+[Dokumentasi & Publikasi]
+   ↓
+[END]
+```
+
+### 3.4 Lingkungan Implementasi
+
+#### 3.4.1 Spesifikasi Hardware
+
+**Platform Utama: Google Colab Pro (Cloud)**
+- **GPU**: NVIDIA Tesla T4 (16 GB VRAM)
+- **CPU**: Intel Xeon (2-core)
+- **RAM**: 12 GB
+- **Storage**: 100 GB Google Drive
+- **Alasan Pemilihan**: 
+  - Akses GPU gratis untuk mempercepat feature extraction MobileNetV2
+  - Tidak memerlukan investasi hardware mahal
+  - Dapat direplikasi oleh peneliti lain dengan mudah
+
+**Platform Sekunder: Laptop Lokal (untuk development & testing)**
+- **Processor**: Intel Core i5-10210U (4 core, 8 thread, 1.6-4.2 GHz)
+- **RAM**: 8 GB DDR4
+- **Storage**: 256 GB SSD
+- **GPU**: Integrated Intel UHD Graphics (no CUDA support)
+- **OS**: Windows 10 / Ubuntu 20.04 LTS
+
+#### 3.4.2 Spesifikasi Software
+
+**Bahasa Pemrograman:**
+- Python 3.9.13 (atau lebih tinggi)
+
+**Deep Learning Framework:**
+- TensorFlow 2.12.0
+- Keras 2.12.0 (included in TensorFlow)
+
+**Machine Learning Libraries:**
+- Scikit-Learn 1.2.2 (untuk preprocessing, metrics, CV)
+- XGBoost 1.7.5 (untuk classifier)
+- Imbalanced-Learn 0.10.1 (jika diperlukan SMOTE)
+
+**Data Processing:**
+- NumPy 1.23.5 (array operations)
+- Pandas 1.5.3 (data manipulation)
+- OpenCV 4.7.0 (image processing)
+- Pillow 9.4.0 (image loading)
+
+**Visualization:**
+- Matplotlib 3.7.1 (plotting)
+- Seaborn 0.12.2 (statistical visualization)
+- Plotly 5.14.1 (interactive plots)
+
+**Development Tools:**
+- Jupyter Notebook / Google Colab (interactive development)
+- VS Code 1.76 (code editor)
+- Git 2.40 (version control)
+
+**Environment Management:**
+- Anaconda 23.1.0 / pip 23.0.1
+
+#### 3.4.3 Instalasi Environment
+
+**Setup Colab (Recommended):**
+```python
+# Install dependencies di Google Colab
+!pip install tensorflow==2.12.0
+!pip install xgboost==1.7.5
+!pip install scikit-learn==1.2.2
+!pip install opencv-python==4.7.0.72
+!pip install seaborn matplotlib plotly
+
+# Verify GPU availability
+import tensorflow as tf
+print("GPU Available:", tf.config.list_physical_devices('GPU'))
+```
+
+**Setup Lokal (Alternative):**
+```bash
+# Create virtual environment
+conda create -n coffee-disease python=3.9
+conda activate coffee-disease
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+**File `requirements.txt`:**
+```
+tensorflow==2.12.0
+xgboost==1.7.5
+scikit-learn==1.2.2
+numpy==1.23.5
+pandas==1.5.3
+opencv-python==4.7.0.72
+Pillow==9.4.0
+matplotlib==3.7.1
+seaborn==0.12.2
+plotly==5.14.1
+jupyter==1.0.0
+```
+
+#### 3.4.4 Struktur Direktori Proyek
+
+```
+coffee-disease-detection/
+│
+├── data/
+│   ├── raw/                    # Dataset original
+│   ├── processed/              # Dataset setelah preprocessing
+│   ├── features/               # Extracted features (1280-D)
+│   └── splits/                 # Train/val/test splits
+│
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_preprocessing.ipynb
+│   ├── 03_feature_extraction.ipynb
+│   ├── 04_xgboost_training.ipynb
+│   ├── 05_evaluation.ipynb
+│   └── 06_baseline_comparison.ipynb
+│
+├── src/
+│   ├── data_loader.py          # Data loading utilities
+│   ├── preprocessing.py        # Preprocessing functions
+│   ├── feature_extractor.py    # MobileNetV2 feature extraction
+│   ├── xgboost_classifier.py   # XGBoost training & prediction
+│   ├── evaluation.py           # Evaluation metrics
+│   └── visualization.py        # Plotting functions
+│
+├── models/
+│   ├── mobilenetv2_weights.h5  # Pre-trained MobileNetV2
+│   ├── xgboost_model.pkl       # Trained XGBoost
+│   └── config.yaml             # Model configurations
+│
+├── results/
+│   ├── metrics/                # Evaluation metrics (CSV, JSON)
+│   ├── plots/                  # Confusion matrix, ROC curve, etc.
+│   └── reports/                # Final reports (PDF, HTML)
+│
+├── requirements.txt            # Dependencies
+├── README.md                   # Project documentation
+└── config.yaml                 # Experiment configurations
+```
+
+#### 3.4.5 Estimasi Waktu Komputasi
+
+| Tahapan | Platform | Estimasi Waktu |
+|---------|----------|----------------|
+| Data Preprocessing | Laptop / Colab | 10-15 menit |
+| Feature Extraction (MobileNetV2) | Colab GPU | 5-10 menit |
+| Feature Extraction (MobileNetV2) | Laptop CPU | 30-45 menit |
+| XGBoost Training (Grid Search) | Colab / Laptop | 15-30 menit |
+| XGBoost Training (Best Params) | Colab / Laptop | 2-5 menit |
+| 5-Fold Cross-Validation | Colab / Laptop | 10-20 menit |
+| Baseline Training (MobileNetV2) | Colab GPU | 20-30 menit |
+| Baseline Training (ResNet50) | Colab GPU | 30-45 menit |
+| **Total** | **Colab GPU** | **~2-3 jam** |
+| **Total** | **Laptop CPU** | **~5-7 jam** |
+
+*Kesimpulan*: Google Colab dengan GPU Tesla T4 memberikan efisiensi waktu 2-3× dibanding laptop CPU, menjadikannya pilihan optimal untuk penelitian ini.
+
+---
+
+## BAB IV
+## JADWAL PENELITIAN
+
+Penelitian ini direncanakan berlangsung selama **6 bulan** (24 minggu) dengan tahapan sebagai berikut:
+
+| No | Kegiatan | Bulan 1 | Bulan 2 | Bulan 3 | Bulan 4 | Bulan 5 | Bulan 6 |
+|----|----------|---------|---------|---------|---------|---------|---------|
+| 1 | **Persiapan Penelitian** | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
+|   | - Studi literatur | ████░░░░ |  |  |  |  |  |
+|   | - Penyusunan proposal | ░░░░████ |  |  |  |  |  |
+| 2 | **Pengumpulan Data** | ░░░░████ | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
+|   | - Download dataset publik | ░░░░██░░ |  |  |  |  |  |
+|   | - Dokumentasi lapangan | ░░░░░░██ | ██░░░░░░ |  |  |  |  |
+|   | - Labeling & validasi | ░░░░░░░░ | ░░████░░ |  |  |  |  |
+| 3 | **Preprocessing Data** | ░░░░░░░░ | ░░░░████ | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
+|   | - Data cleaning | ░░░░░░░░ | ░░░░██░░ |  |  |  |  |
+|   | - Augmentasi & split | ░░░░░░░░ | ░░░░░░██ | ██░░░░░░ |  |  |  |
+| 4 | **Pengembangan Model** | ░░░░░░░░ | ░░░░░░░░ | ░░██████ | ████████ | ██░░░░░░ | ░░░░░░░░ |
+|   | - Feature extraction | ░░░░░░░░ | ░░░░░░░░ | ░░██░░░░ |  |  |  |
+|   | - XGBoost training | ░░░░░░░░ | ░░░░░░░░ | ░░░░██░░ | ██░░░░░░ |  |  |
+|   | - Hyperparameter tuning | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░██ | ░░██░░░░ |  |  |
+|   | - Baseline models | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░████ | ██░░░░░░ |  |
+| 5 | **Evaluasi & Validasi** | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░██████ | ██░░░░░░ |
+|   | - Testing & metrics | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░██░░░░ |  |
+|   | - Cross-validation | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░██░░ |  |
+|   | - Error analysis | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░██ | ██░░░░░░ |
+| 6 | **Dokumentasi & Publikasi** | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░██████ |
+|   | - Penulisan laporan | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░████░░ |
+|   | - Presentasi hasil | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░██ |
+
+**Keterangan:**
+- █ : Periode pelaksanaan kegiatan
+- ░ : Tidak ada kegiatan
+
+### Timeline Detail Per Minggu
+
+**Bulan 1 (Minggu 1-4): Persiapan**
+- Minggu 1-2: Studi literatur mendalam (review 20+ paper)
+- Minggu 3-4: Penyusunan proposal & persiapan environment
+
+**Bulan 2 (Minggu 5-8): Pengumpulan Data**
+- Minggu 5: Download dan verifikasi dataset RoboFlow
+- Minggu 6-7: Survey lapangan dan dokumentasi citra di perkebunan
+- Minggu 8: Labeling, validasi expert, dan quality check
+
+**Bulan 3 (Minggu 9-12): Preprocessing**
+- Minggu 9: Data cleaning, duplicate removal
+- Minggu 10: Stratified split dan eksplorasi data
+- Minggu 11: Implementasi augmentasi pipeline
+- Minggu 12: Feature extraction MobileNetV2
+
+**Bulan 4 (Minggu 13-16): Pengembangan Model**
+- Minggu 13: XGBoost initial training
+- Minggu 14-15: Hyperparameter tuning (Grid Search)
+- Minggu 16: Training baseline models (MobileNetV2 E2E, ResNet50)
+
+**Bulan 5 (Minggu 17-20): Evaluasi**
+- Minggu 17: Testing dan kalkulasi metrik evaluasi
+- Minggu 18: 5-Fold Cross-Validation
+- Minggu 19: Error analysis dan visualisasi
+- Minggu 20: Perbandingan dengan baseline
+
+**Bulan 6 (Minggu 21-24): Dokumentasi**
+- Minggu 21-22: Penulisan laporan akhir
+- Minggu 23: Persiapan presentasi dan poster
+- Minggu 24: Presentasi hasil penelitian
+
+### Milestone Utama
+
+| Minggu | Milestone | Deliverable |
+|--------|-----------|-------------|
+| 4 | Proposal Approved | Dokumen proposal lengkap |
+| 8 | Dataset Ready | 2.000 citra terlabeli |
+| 12 | Features Extracted | 1280-D features untuk semua citra |
+| 16 | Model Trained | XGBoost & baseline models |
+| 20 | Evaluation Complete | Comprehensive metrics report |
+| 24 | Research Complete | Laporan akhir & presentasi |
+
+---
+
+## BAB V
+## ANGGARAN BIAYA (OPSIONAL)
+
+Estimasi biaya penelitian ini sangat minimal karena menggunakan sumber daya open-source dan cloud computing gratis:
+
+### 5.1 Rincian Biaya
+
+| No | Item | Deskripsi | Satuan | Jumlah | Harga Satuan | Total |
+|----|------|-----------|--------|--------|--------------|-------|
+| **A** | **Pengumpulan Data** |  |  |  |  | **Rp 1.500.000** |
+| 1 | Survey lapangan | Transportasi + akomodasi ke perkebunan (Malang, Jember) | Perjalanan | 2 | Rp 500.000 | Rp 1.000.000 |
+| 2 | Konsultasi expert | Honorarium validasi label (agronomist) | Sesi | 2 | Rp 250.000 | Rp 500.000 |
+| **B** | **Komputasi & Software** |  |  |  |  | **Rp 0** |
+| 3 | Google Colab Pro | Cloud GPU (optional, gratis cukup) | Bulan | 6 | Rp 0 | Rp 0 |
+| 4 | Software libraries | TensorFlow, XGBoost, Scikit-Learn (open-source) | - | - | Rp 0 | Rp 0 |
+| **C** | **Dokumentasi & Publikasi** |  |  |  |  | **Rp 500.000** |
+| 5 | Penulisan & editing | Proofreading laporan akhir | Dokumen | 1 | Rp 200.000 | Rp 200.000 |
+| 6 | Printing & binding | Laporan akhir (3 eksemplar) | Eksemplar | 3 | Rp 100.000 | Rp 300.000 |
+| **D** | **Lain-lain** |  |  |  |  | **Rp 500.000** |
+| 7 | Konsumsi | Selama pengerjaan penelitian | Bulan | 6 | Rp 0 | Rp 0 |
+| 8 | Internet & listrik | Koneksi dan daya selama penelitian | Bulan | 6 | Rp 0 | Rp 0 |
+| 9 | Cadangan | Untuk keperluan tak terduga | - | - | - | Rp 500.000 |
+| | | | | | **TOTAL** | **Rp 2.500.000** |
+
+### 5.2 Justifikasi Biaya
+
+**Pengumpulan Data (Rp 1.500.000):**
+- Survey lapangan diperlukan untuk mendapatkan data real-world yang representatif kondisi perkebunan Indonesia.
+- Konsultasi expert penting untuk memastikan akurasi labeling, mengurangi noise data.
+
+**Komputasi (Rp 0):**
+- Google Colab menyediakan akses GPU gratis (Tesla T4) yang cukup untuk penelitian ini.
+- Semua library yang digunakan adalah open-source dan gratis.
+- Tidak memerlukan pembelian hardware khusus.
+
+**Dokumentasi (Rp 500.000):**
+- Proofreading memastikan laporan berkualitas tinggi dan bebas kesalahan.
+- Printing diperlukan untuk submission formal.
+
+**Lain-lain (Rp 500.000):**
+- Buffer untuk keperluan tak terduga (misalnya: revisi dataset, konsultasi tambahan).
+
+### 5.3 Alternatif Pendanaan
+
+Penelitian ini dapat dilakukan dengan **biaya minimal (< Rp 1.000.000)** jika:
+- Menggunakan dataset publik 100% (tanpa survey lapangan)
+- Self-validation labeling (tanpa konsultasi expert berbayar)
+- Dokumentasi digital only (tanpa printing)
+
+**Total Biaya Minimal**: **Rp 500.000** (cadangan saja)
+
+---
+
+### 3.5 Teknik Evaluasi
+
+#### 3.5.1 Metrik Evaluasi Utama
+
+**1. Confusion Matrix**
+
+Matriks konfusi menggambarkan distribusi prediksi model terhadap label aktual:
+
+|  | Predicted: Healthy | Predicted: CLR | Predicted: Cercospora | Predicted: Phoma |
+|---|---|---|---|---|
+| **Actual: Healthy** | TN (True Negative) | FP | FP | FP |
+| **Actual: CLR** | FN | TP (True Positive) | FP | FP |
+| **Actual: Cercospora** | FN | FP | TP | FP |
+| **Actual: Phoma** | FN | FP | FP | TP |
+
+- **TP (True Positive)**: Prediksi benar untuk kelas positif
+- **TN (True Negative)**: Prediksi benar untuk kelas negatif
+- **FP (False Positive)**: Salah prediksi sebagai positif (Type I Error)
+- **FN (False Negative)**: Salah prediksi sebagai negatif (Type II Error)
+
+---
+
+**2. Akurasi (Accuracy)**
+
+Proporsi prediksi benar dari total prediksi:
+
+$$
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+$$
+
+**Interpretasi:**
+- Mengukur performa keseluruhan model
+- Efektif untuk dataset seimbang
+- Bisa misleading pada dataset tidak seimbang
+
+**Target**: ≥ 90%
+
+---
+
+**3. Presisi (Precision)**
+
+Proporsi prediksi positif yang benar:
+
+$$
+\text{Precision} = \frac{TP}{TP + FP}
+$$
+
+**Interpretasi:**
+- Mengukur akurasi prediksi positif
+- Penting ketika False Positive costly (misal: diagnosis penyakit salah → treatment tidak perlu)
+- Presisi tinggi → sedikit False Alarm
+
+**Target per Kelas**: ≥ 0.88
+
+---
+
+**4. Recall / Sensitivity**
+
+Proporsi kelas positif aktual yang terdeteksi:
+
+$$
+\text{Recall} = \frac{TP}{TP + FN}
+$$
+
+**Interpretasi:**
+- Mengukur kemampuan mendeteksi semua kasus positif
+- Penting ketika False Negative costly (misal: penyakit tidak terdeteksi → penyebaran luas)
+- Recall tinggi → sedikit miss detection
+
+**Target per Kelas**: ≥ 0.88
+
+---
+
+**5. F1-Score**
+
+Harmonic mean dari Precision dan Recall:
+
+$$
+\text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+$$
+
+**Interpretasi:**
+- Keseimbangan antara Precision dan Recall
+- Ideal untuk dataset dengan distribusi tidak seimbang
+- F1 tinggi → model balance antara menghindari False Positive dan False Negative
+
+**Target Macro-Average**: ≥ 0.88
+
+**Macro-Average F1:**
+$$
+\text{F1}_{\text{macro}} = \frac{1}{K} \sum_{k=1}^{K} \text{F1}_k
+$$
+
+(Rata-rata F1-Score dari semua kelas, memberikan bobot sama per kelas)
+
+---
+
+**6. Specificity**
+
+Proporsi kelas negatif aktual yang teridentifikasi benar:
+
+$$
+\text{Specificity} = \frac{TN}{TN + FP}
+$$
+
+**Interpretasi:**
+- Mengukur kemampuan model menghindari False Positive
+- Penting untuk memastikan daun sehat tidak salah didiagnosis sakit
+
+**Target**: ≥ 0.90
+
+---
+
+#### 3.5.2 Metrik Evaluasi Tambahan
+
+**7. ROC Curve & AUC**
+
+Receiver Operating Characteristic (ROC) Curve:
+- **X-axis**: False Positive Rate (FPR) = $\frac{FP}{FP + TN}$
+- **Y-axis**: True Positive Rate (TPR) = Recall = $\frac{TP}{TP + FN}$
+
+Area Under Curve (AUC):
+- AUC = 1.0 → Classifier sempurna
+- AUC = 0.5 → Random classifier
+- **Target**: AUC ≥ 0.95 per kelas
+
+---
+
+**8. Precision-Recall Curve**
+
+- Visualisasi trade-off antara Precision dan Recall pada berbagai threshold
+- Average Precision (AP): Area under PR Curve
+- **Target**: AP ≥ 0.90 per kelas
+
+---
+
+**9. Cohen's Kappa**
+
+Mengukur agreement antara prediksi dan ground truth, adjusted for chance:
+
+$$
+\kappa = \frac{p_o - p_e}{1 - p_e}
+$$
+
+Dimana:
+- $p_o$ = observed agreement (accuracy)
+- $p_e$ = expected agreement by chance
+
+**Interpretasi:**
+- κ < 0.20 → Poor agreement
+- κ = 0.21-0.40 → Fair
+- κ = 0.41-0.60 → Moderate
+- κ = 0.61-0.80 → Substantial
+- κ = 0.81-1.00 → Almost perfect
+
+**Target**: κ ≥ 0.85
+
+---
+
+**10. Matthews Correlation Coefficient (MCC)**
+
+Metrik balanced untuk multi-class:
+
+$$
+\text{MCC} = \frac{TP \times TN - FP \times FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+$$
+
+**Interpretasi:**
+- MCC = +1 → Perfect prediction
+- MCC = 0 → Random prediction
+- MCC = -1 → Total disagreement
+
+**Target**: MCC ≥ 0.85
+
+---
+
+#### 3.5.3 Metrik Efisiensi
+
+**11. Waktu Komputasi**
+
+| Metrik | Deskripsi | Target |
+|--------|-----------|--------|
+| **Training Time** | Waktu total untuk training model | < 1 jam (Colab GPU) |
+| **Inference Time** | Waktu prediksi 1 citra | < 2 detik |
+| **Throughput** | Jumlah citra yang dapat diproses per detik | > 0.5 citra/detik |
+
+**12. Ukuran Model**
+
+| Komponen | Ukuran | Catatan |
+|----------|--------|--------|
+| MobileNetV2 weights | 14 MB | Pre-trained, frozen |
+| XGBoost model | < 5 MB | Tergantung n_estimators |
+| **Total** | **< 20 MB** | Feasible untuk mobile deployment |
+
+**13. Memori Konsumsi**
+
+- **Training**: < 4 GB RAM (XGBoost)
+- **Inference**: < 500 MB RAM
+- **GPU VRAM** (opsional): < 2 GB untuk feature extraction
+
+---
+
+#### 3.5.4 Validasi Model
+
+**Stratified 5-Fold Cross-Validation:**
+
+1. Dataset training dibagi menjadi 5 fold
+2. Setiap fold mempertahankan proporsi kelas
+3. Iterasi 5 kali:
+   - Fold ke-i sebagai validation
+   - Fold lainnya sebagai training
+4. Hitung metrik untuk setiap fold
+5. Rata-rata dan standar deviasi metrik:
+
+$$
+\text{Mean Accuracy} = \frac{1}{K} \sum_{k=1}^{K} \text{Acc}_k
+$$
+
+$$
+\text{Std Accuracy} = \sqrt{\frac{1}{K} \sum_{k=1}^{K} (\text{Acc}_k - \overline{\text{Acc}})^2}
+$$
+
+**Target CV Stability**: Std < 0.03 (variance rendah → model stabil)
+
+---
+
+#### 3.5.5 Analisis Kesalahan (Error Analysis)
+
+**1. Misclassification Analysis:**
+- Identifikasi sampel yang salah klasifikasi
+- Visualisasi citra yang paling sulit (lowest confidence)
+- Analisis pola kesalahan:
+  - Apakah kesalahan pada kelas spesifik?
+  - Apakah terjadi confusion antar kelas serupa (misalnya Cercospora vs Phoma)?
+  - Apakah kesalahan pada kondisi pencahayaan tertentu?
+
+**2. Confidence Analysis:**
+- Histogram distribusi confidence score
+- Threshold confidence untuk flagging "uncertain" predictions
+- Analisis korelasi confidence vs correctness
+
+**3. Feature Importance:**
+- XGBoost menyediakan feature importance score
+- Identifikasi fitur MobileNetV2 mana yang paling informatif
+- Visualisasi heatmap fitur penting pada citra
+
+---
+
+#### 3.5.6 Perbandingan dengan Baseline
+
+| Metrik | MobileNetV2-XGBoost (Ours) | MobileNetV2 E2E | ResNet50 E2E |
+|--------|---------------------------|-----------------|---------------|
+| **Accuracy** | TBD | TBD | TBD |
+| **F1-Score (Macro)** | TBD | TBD | TBD |
+| **Precision (Macro)** | TBD | TBD | TBD |
+| **Recall (Macro)** | TBD | TBD | TBD |
+| **AUC (Macro)** | TBD | TBD | TBD |
+| **Training Time** | TBD | TBD | TBD |
+| **Inference Time** | TBD | TBD | TBD |
+| **Model Size** | TBD | 14 MB | 98 MB |
+| **Train-Test Gap** | TBD | TBD | TBD |
+| **CV Std** | TBD | TBD | TBD |
+
+**Hipotesis:**
+1. MobileNetV2-XGBoost akan unggul dalam akurasi (±2-5%) dibanding end-to-end karena regularization XGBoost
+2. MobileNetV2-XGBoost akan lebih efisien (training time 50% lebih cepat) karena tidak fine-tune CNN
+3. ResNet50 akan lebih rentan overfitting (train-test gap lebih besar) karena parameter lebih banyak
+4. MobileNetV2-XGBoost akan lebih stabil (CV std lebih rendah) karena ensemble learning XGBoost
+
+---
+
+#### 3.5.7 Kriteria Keberhasilan Penelitian
+
+**Kriteria Minimal (Must Have):**
+- ✅ Akurasi ≥ 90% pada test set
+- ✅ F1-Score (macro) ≥ 0.88
+- ✅ Precision dan Recall per kelas ≥ 0.85
+- ✅ Model size < 20 MB (feasible untuk mobile)
+- ✅ Inference time < 2 detik per citra
+
+**Kriteria Optimal (Should Have):**
+- ⭐ Akurasi ≥ 93%
+- ⭐ F1-Score (macro) ≥ 0.91
+- ⭐ AUC ≥ 0.95 per kelas
+- ⭐ Unggul 2-3% dibanding baseline
+- ⭐ CV stability (std < 0.02)
+
+**Kriteria Tambahan (Nice to Have):**
+- 🎯 Interpretability tinggi (feature importance clear)
+- 🎯 Robust pada kondisi challenging (low light, complex background)
+- 🎯 Ready untuk deployment (API / mobile app)
+- 🎯 Dokumentasi lengkap dan reproducible
+
+---
+
+## DAFTAR PUSTAKA
+
+### Buku dan Laporan Pemerintah
+
+Badan Pusat Statistik. (2023). *Statistik Kopi Indonesia 2023*. Jakarta: BPS.
+
+Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining* (pp. 785-794). ACM.
+
+Direktorat Jenderal Perkebunan. (2022). *Statistik Perkebunan Indonesia 2021-2023: Kopi*. Jakarta: Kementerian Pertanian Republik Indonesia.
+
+Kementerian Pertanian Republik Indonesia. (2022). *Outlook Kopi: Komoditas Pertanian Subsektor Perkebunan*. Jakarta: Pusat Data dan Sistem Informasi Pertanian.
+
+Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., & Chen, L. C. (2018). MobileNetV2: Inverted residuals and linear bottlenecks. In *Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)* (pp. 4510-4520).
+
+---
+
+### Jurnal Ilmiah
+
+Ferentinos, K. P. (2018). Deep learning models for plant disease detection and diagnosis. *Computers and Electronics in Agriculture*, 145, 311-318. https://doi.org/10.1016/j.compag.2018.01.009
+
+Hughes, D. P., & Salathé, M. (2015). An open access repository of images on plant health to enable the development of mobile disease diagnostics. *arXiv preprint arXiv:1511.08060*.
+
+Kamilaris, A., & Prenafeta-Boldú, F. X. (2018). Deep learning in agriculture: A survey. *Computers and Electronics in Agriculture*, 147, 70-90. https://doi.org/10.1016/j.compag.2018.02.016
+
+Mohanty, S. P., Hughes, D. P., & Salathé, M. (2016). Using deep learning for image-based plant disease detection. *Frontiers in Plant Science*, 7, 1419. https://doi.org/10.3389/fpls.2016.01419
+
+Prasetyo, B., & Rahmadani, S. (2022). Klasifikasi penyakit daun kopi menggunakan deep learning berbasis ResNet50. *Jurnal Teknologi Informasi dan Ilmu Komputer (JTIIK)*, 9(3), 567-574. https://doi.org/10.25126/jtiik.2022935467
+
+Ramcharan, A., McCloskey, P., Baranowski, K., Mbilinyi, N., Mrisho, L., Ndalahwa, M., ... & Hughes, D. P. (2019). A mobile-based deep learning model for cassava disease diagnosis. *Frontiers in Plant Science*, 10, 272. https://doi.org/10.3389/fpls.2019.00272
+
+Saleem, M. H., Potgieter, J., & Arif, K. M. (2020). Plant disease classification: A comparative evaluation of convolutional neural networks and deep learning optimizers. *Plants*, 9(10), 1319. https://doi.org/10.3390/plants9101319
+
+Wang, L., Zhang, Y., & Wang, J. (2021). A hybrid deep learning model combining CNN and XGBoost for medical image classification. *IEEE Access*, 9, 73156-73166. https://doi.org/10.1109/ACCESS.2021.3080234
+
+Zhang, K., Wu, Q., Liu, A., & Meng, X. (2023). Hybrid deep learning and machine learning models for crop disease identification. *Computers and Electronics in Agriculture*, 207, 107715. https://doi.org/10.1016/j.compag.2023.107715
+
+---
+
+### Dataset dan Sumber Online
+
+RoboFlow. (2024). *Coffee Leaf Disease Dataset*. Diakses dari https://universe.roboflow.com/coffee-disease-detection [Diakses 29 November 2025]
+
+TensorFlow. (2024). *MobileNetV2 Pre-trained Models*. Diakses dari https://www.tensorflow.org/api_docs/python/tf/keras/applications/MobileNetV2 [Diakses 29 November 2025]
+
+XGBoost Documentation. (2024). *XGBoost Python API Reference*. Diakses dari https://xgboost.readthedocs.io/ [Diakses 29 November 2025]
+
+---
+
+### Konferensi dan Proceedings
+
+Krizhevsky, A., Sutskever, I., & Hinton, G. E. (2012). ImageNet classification with deep convolutional neural networks. In *Advances in Neural Information Processing Systems* (Vol. 25, pp. 1097-1105).
+
+LeCun, Y., Bengio, Y., & Hinton, G. (2015). Deep learning. *Nature*, 521(7553), 436-444. https://doi.org/10.1038/nature14539
+
+Simonyan, K., & Zisserman, A. (2015). Very deep convolutional networks for large-scale image recognition. In *International Conference on Learning Representations (ICLR)*.
+
+---
+
+### Literatur Tambahan (Pendukung)
+
+Agarwal, M., Singh, A., Arjaria, S., Sinha, A., & Gupta, S. (2020). ToLeD: Tomato leaf disease detection using convolution neural network. *Procedia Computer Science*, 167, 293-301.
+
+Barbedo, J. G. A. (2018). Impact of dataset size and variety on the effectiveness of deep learning and transfer learning for plant disease classification. *Computers and Electronics in Agriculture*, 153, 46-53.
+
+Chouhan, S. S., Kaul, A., Singh, U. P., & Jain, S. (2018). Bacterial foraging optimization based radial basis function neural network (BRBFNN) for identification and classification of plant leaf diseases: An automatic approach towards plant pathology. *IEEE Access*, 6, 8852-8863.
+
+Goodfellow, I., Bengio, Y., & Courville, A. (2016). *Deep Learning*. Cambridge, MA: MIT Press.
+
+Howard, A. G., Zhu, M., Chen, B., Kalenichenko, D., Wang, W., Weyand, T., ... & Adam, H. (2017). MobileNets: Efficient convolutional neural networks for mobile vision applications. *arXiv preprint arXiv:1704.04861*.
+
+Selvaraj, M. G., Vergara, A., Ruiz, H., Safari, N., Elayabalan, S., Ocimati, W., ... & Blomme, G. (2019). AI-powered banana diseases and pest detection. *Plant Methods*, 15(1), 1-11.
+
+Too, E. C., Yujian, L., Njuki, S., & Yingchun, L. (2019). A comparative study of fine-tuning deep learning models for plant disease identification. *Computers and Electronics in Agriculture*, 161, 272-279.
+
+---
+
+## LAMPIRAN
+
+### Lampiran A: Contoh Citra Dataset
+
+*[Placeholder: 4 sample images untuk setiap kelas - Healthy, CLR, Cercospora, Phoma]*
+
+**Gambar A.1**: Contoh citra daun kopi sehat
+- Karakteristik: Hijau tua mengkilap, tidak ada bercak, tekstur halus
+
+**Gambar A.2**: Contoh citra Coffee Leaf Rust (CLR)
+- Karakteristik: Bercak kuning-oranye berbentuk bulat, spora karat pada permukaan bawah
+
+**Gambar A.3**: Contoh citra Cercospora Leaf Spot
+- Karakteristik: Bercak coklat "brown eye spot" dengan pusat abu-abu
+
+**Gambar A.4**: Contoh citra Phoma Leaf Spot
+- Karakteristik: Bercak hitam tidak beraturan, tepi tegas, bagian tengah berlubang
+
+---
+
+### Lampiran B: Arsitektur Model MobileNetV2
+
+```
+Input Layer: 224×224×3
+    ↓
+Conv2D (32 filters, 3×3, stride 2)
+    ↓
+[19 Inverted Residual Blocks]
+    ├─ Expansion (1×1 Conv, ReLU6)
+    ├─ Depthwise (3×3 Conv)
+    ├─ Projection (1×1 Conv, Linear)
+    └─ Residual Connection (if dimensions match)
+    ↓
+Conv2D (1280 filters, 1×1)
+    ↓
+Global Average Pooling
+    ↓
+Feature Vector: 1280-D
+    ↓
+[XGBoost Classifier]
+    ├─ n_estimators: 300 (trees)
+    ├─ max_depth: 7
+    ├─ learning_rate: 0.1
+    ├─ subsample: 0.8
+    └─ regularization: L1+L2
+    ↓
+Output: 4 Class Probabilities
+```
+
+---
+
+### Lampiran C: Pseudocode Pipeline
+
+```python
+# Pipeline Sistem Diagnosis Penyakit Daun Kopi
+
+# 1. Load Pre-trained MobileNetV2
+mobilenet = load_model('mobilenetv2_imagenet_weights')
+mobilenet.trainable = False  # Freeze layers
+
+# 2. Feature Extraction
+def extract_features(image_path):
+    image = load_image(image_path)
+    image = preprocess(image, size=(224, 224))
+    features = mobilenet.predict(image)
+    return features  # 1280-D vector
+
+# 3. Train XGBoost
+X_train = [extract_features(img) for img in train_images]
+y_train = train_labels
+
+xgb_model = XGBClassifier(
+    n_estimators=300,
+    max_depth=7,
+    learning_rate=0.1,
+    subsample=0.8,
+    reg_alpha=0.5,
+    reg_lambda=1.0
+)
+xgb_model.fit(X_train, y_train)
+
+# 4. Prediction
+def predict_disease(image_path):
+    features = extract_features(image_path)
+    prediction = xgb_model.predict(features)
+    probabilities = xgb_model.predict_proba(features)
+    
+    class_names = ['Healthy', 'CLR', 'Cercospora', 'Phoma']
+    result = {
+        'class': class_names[prediction[0]],
+        'confidence': max(probabilities[0]),
+        'probabilities': dict(zip(class_names, probabilities[0]))
+    }
+    return result
+
+# 5. Evaluation
+y_pred = [predict_disease(img)['class'] for img in test_images]
+accuracy = calculate_accuracy(y_test, y_pred)
+f1_score = calculate_f1(y_test, y_pred)
+confusion_matrix = calculate_cm(y_test, y_pred)
+```
+
+---
+
+### Lampiran D: Hyperparameter Tuning Results
+
+| Hyperparameter | Nilai yang Diuji | Best Value |
+|----------------|------------------|------------|
+| n_estimators | [100, 300, 500] | TBD |
+| max_depth | [3, 5, 7, 9] | TBD |
+| learning_rate | [0.01, 0.05, 0.1, 0.2] | TBD |
+| subsample | [0.7, 0.8, 0.9, 1.0] | TBD |
+| colsample_bytree | [0.7, 0.8, 0.9, 1.0] | TBD |
+| gamma | [0, 0.1, 0.5, 1] | TBD |
+| reg_alpha (L1) | [0, 0.1, 0.5, 1] | TBD |
+| reg_lambda (L2) | [0.5, 1, 2, 5] | TBD |
+
+*Catatan: TBD = To Be Determined (akan diisi setelah eksperimen selesai)*
+
+---
+
+### Lampiran E: Environment Setup
+
+**File: `requirements.txt`**
+```
+tensorflow==2.12.0
+xgboost==1.7.5
+scikit-learn==1.2.2
+numpy==1.23.5
+pandas==1.5.3
+opencv-python==4.7.0.72
+Pillow==9.4.0
+matplotlib==3.7.1
+seaborn==0.12.2
+plotly==5.14.1
+jupyter==1.0.0
+```
+
+**Setup Commands:**
+```bash
+# Google Colab
+!pip install -r requirements.txt
+
+# Local Environment
+conda create -n coffee-disease python=3.9
+conda activate coffee-disease
+pip install -r requirements.txt
+```
+
+---
+
+### Lampiran F: Biodata Peneliti
+
+**Nama**: [Nama Lengkap Peneliti]  
+**NIM/NPM**: [Nomor Induk]  
+**Program Studi**: Teknik Informatika / Ilmu Komputer  
+**Universitas**: [Nama Universitas]  
+**Email**: [email@domain.com]  
+**Area Riset**: Deep Learning, Computer Vision, Agricultural AI  
+
+**Pembimbing**:  
+**Nama Pembimbing 1**: [Nama Dosen Pembimbing]  
+**Jabatan**: [Gelar dan Jabatan]  
+**Area Keahlian**: Machine Learning, Computer Vision  
+
+---
+
+**Catatan Penutup:**
+
+Proposal ini merupakan dokumen hidup yang dapat direvisi sesuai perkembangan penelitian. Semua data eksperimen, kode sumber, dan model yang dihasilkan akan didokumentasikan secara transparan untuk mendukung reproducibility dan open science.
+
+*Proposal ini disusun pada: 29 November 2025*  
+*Versi: 2.0 (Comprehensive)*
