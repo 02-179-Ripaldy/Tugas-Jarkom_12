@@ -22,55 +22,28 @@ Rumusan masalah penelitian ini adalah:
 
 1. Bagaimana merancang sistem diagnosis penyakit daun kopi berbasis citra menggunakan kombinasi MobileNetV2 dan XGBoost?
 2. Seberapa tinggi akurasi dan efisiensi model hybrid MobileNetV2–XGBoost dibandingkan dengan model CNN tunggal seperti ResNet50?
-3. Bagaimana performa model ketika diuji pada citra daun kopi dengan variasi pencahayaan, latar belakang, dan tingkat keparahan penyakit?
 
 ### 1.3 Tujuan Penelitian
 Tujuan penelitian ini adalah untuk:
 
 1. Merancang dan mengimplementasikan sistem diagnosis penyakit daun kopi menggunakan kombinasi MobileNetV2 dan XGBoost.
-2. Mengukur performa model berdasarkan akurasi, presisi, recall, F1-score, serta waktu komputasi.
-3. Membandingkan performa model hybrid dengan baseline CNN seperti ResNet50.
-4. Melakukan validasi hasil menggunakan metode 5-Fold Cross-Validation.
-5. Menghasilkan prototipe sistem diagnosis cepat yang dapat dimanfaatkan oleh petani atau peneliti.
+2. Mengukur dan membandingkan performa model hybrid MobileNetV2–XGBoost dengan baseline CNN ResNet50 berdasarkan akurasi, presisi, recall, F1-score, dan waktu komputasi.
 
 ### 1.4 Batasan Masalah
 Penelitian ini dibatasi oleh:
 
-1. **Sumber Data**: Data citra berasal dari dataset publik RoboFlow Coffee Leaf Disease Dataset (1.800 citra) dan dokumentasi lapangan perkebunan kopi di Jawa Timur (200 citra), dengan total 2.000 citra.
-2. **Kategori Klasifikasi**: Empat kelas utama yaitu daun sehat (*Healthy*), Karat Daun Kopi (*Coffee Leaf Rust*/CLR), Bercak Daun Cercospora (*Cercospora Leaf Spot*), dan Bercak Daun Phoma (*Phoma Leaf Spot*).
-3. **Jenis Kopi**: Fokus pada tanaman kopi jenis Arabika (*Coffea arabica*), karena merupakan varietas dominan di Indonesia dengan sensitivitas tinggi terhadap penyakit daun.
-4. **Arsitektur Model**: Model hybrid yang digunakan adalah MobileNetV2 (pre-trained ImageNet) sebagai feature extractor dan XGBoost sebagai classifier, dengan ResNet50 end-to-end sebagai baseline pembanding.
-5. **Lingkup Analisis**: Penelitian hanya fokus pada klasifikasi tingkat keparahan penyakit (disease classification), tidak mencakup segmentasi area lesi, deteksi lokasi kerusakan, atau prediksi perkembangan penyakit.
-6. **Spesifikasi Citra**: Resolusi input 224×224 piksel, format RGB, dengan augmentasi terbatas pada rotasi, flipping, zoom, dan brightness adjustment.
-7. **Lingkungan Komputasi**: Implementasi menggunakan Python 3.9+ dengan library TensorFlow 2.10, Scikit-Learn 1.2, dan XGBoost 1.7 pada platform Google Colab dengan akses GPU Tesla T4 (gratis) untuk mempercepat proses training.
-8. **Target Performa**: Akurasi minimal 90%, F1-Score minimal 0.88, dan waktu inferensi maksimal 2 detik per citra untuk memastikan aplikabilitas di lapangan.
-9. **Validasi Model**: Evaluasi dilakukan menggunakan 5-Fold Cross-Validation dan pengujian pada data lapangan independen untuk mengukur generalisasi model.
+1. **Sumber Data**: Dataset publik RoboFlow Coffee Leaf Disease Dataset dengan total 1.800 citra yang sudah terlabeli.
+2. **Kategori Klasifikasi**: Empat kelas penyakit daun kopi yaitu Healthy, Coffee Leaf Rust, Cercospora Leaf Spot, dan Phoma Leaf Spot.
+3. **Jenis Tanaman**: Fokus pada tanaman kopi Arabika (*Coffea arabica*) sebagai varietas dominan di Indonesia.
+4. **Arsitektur Model**: Pendekatan hybrid MobileNetV2 sebagai feature extractor dan XGBoost sebagai classifier, dengan ResNet50 sebagai baseline pembanding.
+5. **Lingkup Analisis**: Klasifikasi penyakit daun (disease classification) tanpa mencakup segmentasi area lesi atau prediksi perkembangan penyakit.
+6. **Metode Evaluasi**: Pengukuran performa menggunakan metrik akurasi, presisi, recall, F1-score, dan validasi dengan 5-Fold Cross-Validation.
 
 ### 1.5 Manfaat Penelitian
-Penelitian ini diharapkan memberikan manfaat sebagai berikut:
 
-#### 1.5.1 Manfaat Teoritis
-1. **Kontribusi Ilmu Pengetahuan**: Memperkaya literatur ilmiah tentang penerapan arsitektur hybrid CNN-XGBoost untuk klasifikasi penyakit tanaman, khususnya dalam konteks pertanian tropis.
-2. **Metodologi Penelitian**: Menjadi referensi akademik bagi penelitian lanjutan yang mengintegrasikan deep learning sebagai feature extractor dengan machine learning ensemble sebagai classifier untuk meningkatkan akurasi dan efisiensi komputasi.
-3. **Validasi Pendekatan Hybrid**: Memberikan bukti empiris tentang efektivitas kombinasi transfer learning (MobileNetV2) dengan gradient boosting (XGBoost) dalam mengatasi keterbatasan dataset dan risiko overfitting.
+Secara **teoritis**, penelitian ini berkontribusi pada pengembangan literatur ilmiah tentang penerapan arsitektur hybrid CNN-XGBoost untuk klasifikasi penyakit tanaman, khususnya dalam konteks pertanian tropis. Penelitian ini memberikan bukti empiris tentang efektivitas kombinasi transfer learning dengan gradient boosting dalam mengatasi keterbatasan dataset dan risiko overfitting, serta menjadi referensi metodologi bagi penelitian lanjutan di bidang computer vision untuk pertanian presisi.
 
-#### 1.5.2 Manfaat Praktis
-1. **Bagi Petani Kopi**: 
-   - Menyediakan alat diagnosis cepat dan akurat yang dapat diakses melalui smartphone atau perangkat mobile.
-   - Membantu deteksi dini penyakit daun sehingga penanganan dapat dilakukan lebih cepat dan tepat sasaran.
-   - Mengurangi ketergantungan pada penyuluh pertanian dan konfirmasi laboratorium yang membutuhkan waktu lama.
-
-2. **Bagi Penyuluh Pertanian**: 
-   - Menjadi tools pendukung keputusan (decision support system) untuk validasi diagnosis lapangan.
-   - Meningkatkan efektivitas program penyuluhan dan pendampingan petani.
-
-3. **Bagi Pengembang Teknologi Pertanian**: 
-   - Menyediakan prototipe sistem yang dapat dikembangkan menjadi aplikasi mobile berbasis AI.
-   - Memberikan baseline performa untuk pengembangan sistem monitoring kesehatan tanaman terintegrasi.
-
-4. **Bagi Kebijakan Pertanian**: 
-   - Mendukung program pertanian digital dan smart farming yang digalakkan oleh Kementerian Pertanian.
-   - Memberikan data dan insight untuk sistem early warning penyebaran penyakit tanaman kopi di tingkat regional.
+Secara **praktis**, penelitian ini menghasilkan prototipe sistem diagnosis penyakit daun kopi yang cepat dan akurat berbasis AI, yang dapat dimanfaatkan oleh petani untuk deteksi dini penyakit sehingga penanganan dapat dilakukan tepat waktu. Sistem ini juga bermanfaat bagi penyuluh pertanian sebagai decision support system, pengembang teknologi sebagai baseline untuk aplikasi mobile pertanian, serta pembuat kebijakan dalam mendukung program pertanian digital dan sistem early warning penyebaran penyakit tanaman di tingkat regional.
 
 ---
 
@@ -280,7 +253,7 @@ XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikemb
 **Alasan Pemilihan XGBoost sebagai Classifier:**
 
 1. **Efektif pada Fitur Dimensi Tinggi**: MobileNetV2 menghasilkan 1280 fitur, XGBoost mampu mengelola dimensi tinggi tanpa curse of dimensionality.
-2. **Dataset Kecil-Menengah**: XGBoost berkinerja sangat baik pada dataset 2.000 citra, lebih baik dari fine-tuning full CNN yang rentan overfitting.
+2. **Dataset Kecil-Menengah**: XGBoost berkinerja sangat baik pada dataset 1.800 citra, lebih baik dari fine-tuning full CNN yang rentan overfitting.
 3. **Regularization**: Mengurangi risiko overfitting yang sering terjadi pada CNN tunggal dengan dataset terbatas.
 4. **Interpretability**: Feature importance dapat mengidentifikasi region citra mana yang paling informatif.
 5. **Training Cepat**: Training XGBoost pada 1280 fitur jauh lebih cepat dibanding fine-tuning CNN layers.
@@ -321,7 +294,7 @@ Penelitian ini mengisi gap dengan mengombinasikan:
 - **MobileNetV2** (efisien, cocok mobile) sebagai feature extractor.
 - **XGBoost** (regularization kuat, efektif dataset menengah) sebagai classifier.
 - **Fokus kopi Indonesia** dengan validasi lapangan.
-- **Dataset realistis** (2.000 citra) yang dapat direplikasi.
+- **Dataset publik** (1.800 citra RoboFlow) yang dapat direplikasi.
 - **Pendekatan hybrid** yang belum banyak dieksplorasi untuk penyakit kopi.
 
 Kombinasi ini diharapkan memberikan keseimbangan optimal antara akurasi, efisiensi, dan aplikabilitas praktis di lapangan.
@@ -384,7 +357,7 @@ Kerangka pemikiran penelitian ini dapat digambarkan dalam alur berikut:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    HASIL YANG DIHARAPKAN                             │
 ├─────────────────────────────────────────────────────────────────────┤
-│ ✓ Akurasi ≥90% dengan dataset realistis (2.000 citra)              │
+│ ✓ Akurasi ≥90% dengan dataset publik (1.800 citra)                  │
 │ ✓ Generalisasi baik pada kondisi lapangan beragam                  │
 │ ✓ Efisiensi tinggi (inferensi <2 detik, model <50 MB)              │
 │ ✓ Mengatasi overfitting dibanding CNN tunggal                       │
@@ -415,7 +388,7 @@ Kerangka pemikiran penelitian ini dapat digambarkan dalam alur berikut:
    - **Baseline (ResNet50 end-to-end)**: Rentan overfitting, memerlukan dataset besar, komputasi berat.
    - **Hybrid (MobileNetV2-XGBoost)**: Efisien, regularization kuat, cocok dataset menengah, hasil lebih stabil.
 
-Kerangka pemikiran ini memandu desain eksperimen untuk memvalidasi hipotesis bahwa pendekatan hybrid MobileNetV2-XGBoost dapat mencapai akurasi tinggi (≥90%) dengan efisiensi komputasi baik, bahkan pada dataset realistis berukuran menengah (2.000 citra).
+Kerangka pemikiran ini memandu desain eksperimen untuk memvalidasi hipotesis bahwa pendekatan hybrid MobileNetV2-XGBoost dapat mencapai akurasi tinggi (≥90%) dengan efisiensi komputasi baik, bahkan pada dataset publik berukuran menengah (1.800 citra).
 
 ---
 
@@ -435,24 +408,19 @@ Data penelitian terdiri dari dua sumber utama:
    - Jumlah: 1.800 citra daun kopi Arabika
    - Anotasi: Sudah dilabeli oleh expert
    - Lisensi: CC BY 4.0 (dapat digunakan untuk riset)
+   - Kondisi: Variasi pencahayaan, background, sudut pengambilan
 
-2. **Data Lapangan**: Dokumentasi perkebunan kopi Jawa Timur
-   - Lokasi: Perkebunan Kalisongo, Malang & Perkebunan Kayumas, Jember
-   - Jumlah: 200 citra
-   - Perangkat: Smartphone Xiaomi Redmi Note 10 (48 MP)
-   - Kondisi: Pencahayaan natural, background lapangan
-
-**Total Dataset**: 2.000 citra
+**Total Dataset**: 1.800 citra
 
 #### 3.2.2 Distribusi Kelas
 
 | Kelas | Deskripsi | Jumlah Citra | Persentase |
 |-------|-----------|--------------|------------|
-| **Healthy** | Daun sehat tanpa gejala | 550 | 27,5% |
-| **Coffee Leaf Rust (CLR)** | Bercak kuning-oranye karat | 600 | 30,0% |
-| **Cercospora Leaf Spot** | Bercak coklat "brown eye" | 450 | 22,5% |
-| **Phoma Leaf Spot** | Bercak hitam tidak beraturan | 400 | 20,0% |
-| **TOTAL** | | **2.000** | **100%** |
+| **Healthy** | Daun sehat tanpa gejala | 500 | 27,8% |
+| **Coffee Leaf Rust (CLR)** | Bercak kuning-oranye karat | 540 | 30,0% |
+| **Cercospora Leaf Spot** | Bercak coklat "brown eye" | 400 | 22,2% |
+| **Phoma Leaf Spot** | Bercak hitam tidak beraturan | 360 | 20,0% |
+| **TOTAL** | | **1.800** | **100%** |
 
 *Catatan*: Dataset relatif seimbang (balanced), perbedaan maksimal 10% antar kelas.
 
@@ -475,9 +443,9 @@ Dataset dibagi menjadi tiga subset dengan stratified sampling untuk mempertahank
 
 | Subset | Jumlah Citra | Persentase | Fungsi |
 |--------|--------------|------------|--------|
-| **Training** | 1.400 | 70% | Melatih model (MobileNetV2 + XGBoost) |
-| **Validation** | 300 | 15% | Tuning hyperparameter & early stopping |
-| **Testing** | 300 | 15% | Evaluasi final performa model |
+| **Training** | 1.260 | 70% | Melatih model (MobileNetV2 + XGBoost) |
+| **Validation** | 270 | 15% | Tuning hyperparameter & early stopping |
+| **Testing** | 270 | 15% | Evaluasi final performa model |
 
 *Stratified Sampling*: Setiap subset memiliki proporsi kelas yang sama dengan dataset keseluruhan.
 
@@ -544,9 +512,8 @@ Penelitian ini dilaksanakan dalam tujuh tahap utama yang terstruktur dan sistema
 #### **Tahap 1: Pengumpulan dan Persiapan Data**
 
 **1.1 Pengumpulan Data**
-- Download dataset publik dari RoboFlow (1.800 citra)
-- Dokumentasi lapangan di perkebunan Jawa Timur (200 citra)
-- Total: 2.000 citra daun kopi
+- Download dataset publik dari RoboFlow Coffee Leaf Disease Dataset
+- Total: 1.800 citra daun kopi yang sudah terlabeli
 
 **1.2 Labeling dan Validasi**
 - Verifikasi label oleh 2 expert (agronomist + plant pathologist)
@@ -824,7 +791,7 @@ base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(224,22
 ```
 [START]
    ↓
-[Pengumpulan Data: 2.000 citra]
+[Pengumpulan Data: 1.800 citra RoboFlow]
    ↓
 [Labeling & Validasi Expert]
    ↓
@@ -1031,9 +998,8 @@ Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *P
 |   | - Studi literatur | ████░░░░ |  |  |  |  |  |
 |   | - Penyusunan proposal | ░░░░████ |  |  |  |  |  |
 | 2 | **Pengumpulan Data** | ░░░░████ | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
-|   | - Download dataset publik | ░░░░██░░ |  |  |  |  |  |
-|   | - Dokumentasi lapangan | ░░░░░░██ | ██░░░░░░ |  |  |  |  |
-|   | - Labeling & validasi | ░░░░░░░░ | ░░████░░ |  |  |  |  |
+|   | - Download dataset publik | ░░░░████ |  |  |  |  |  |
+|   | - Eksplorasi & validasi | ░░░░░░░░ | ████░░░░ |  |  |  |  |
 | 3 | **Preprocessing Data** | ░░░░░░░░ | ░░░░████ | ████░░░░ | ░░░░░░░░ | ░░░░░░░░ | ░░░░░░░░ |
 |   | - Data cleaning | ░░░░░░░░ | ░░░░██░░ |  |  |  |  |
 |   | - Augmentasi & split | ░░░░░░░░ | ░░░░░░██ | ██░░░░░░ |  |  |  |
@@ -1061,9 +1027,9 @@ Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *P
 - Minggu 3-4: Penyusunan proposal & persiapan environment
 
 **Bulan 2 (Minggu 5-8): Pengumpulan Data**
-- Minggu 5: Download dan verifikasi dataset RoboFlow
-- Minggu 6-7: Survey lapangan dan dokumentasi citra di perkebunan
-- Minggu 8: Labeling, validasi expert, dan quality check
+- Minggu 5: Download dan verifikasi dataset RoboFlow (1.800 citra)
+- Minggu 6-7: Eksplorasi data awal dan analisis distribusi kelas
+- Minggu 8: Validasi kualitas dataset dan quality check
 
 **Bulan 3 (Minggu 9-12): Preprocessing**
 - Minggu 9: Data cleaning, duplicate removal
@@ -1092,7 +1058,7 @@ Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In *P
 | Minggu | Milestone | Deliverable |
 |--------|-----------|-------------|
 | 4 | Proposal Approved | Dokumen proposal lengkap |
-| 8 | Dataset Ready | 2.000 citra terlabeli |
+| 8 | Dataset Ready | 1.800 citra RoboFlow tervalidasi |
 | 12 | Features Extracted | 1280-D features untuk semua citra |
 | 16 | Model Trained | XGBoost & baseline models |
 | 20 | Evaluation Complete | Comprehensive metrics report |
