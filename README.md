@@ -201,18 +201,9 @@ Penelitian ini merupakan penelitian terapan (*applied research*) dengan pendekat
 
 ### 3.2 Tempat dan Waktu Penelitian
 
-**Tempat Penelitian:**
-- **Pengembangan Model**: Google Colab (cloud-based platform) dengan akses GPU Tesla T4
-- **Analisis Data**: Laboratorium Komputer, Universitas [Nama Universitas]
+Penelitian ini dilaksanakan di dua lokasi utama. Pertama, pengembangan dan pelatihan model dilakukan menggunakan platform Google Colab, yaitu platform cloud-based computing yang menyediakan akses gratis ke GPU NVIDIA Tesla T4 dengan 16 GB VRAM. Pemilihan Google Colab didasarkan pada pertimbangan efisiensi biaya karena tidak memerlukan investasi hardware mahal, kemudahan akses komputasi GPU untuk mempercepat proses feature extraction menggunakan MobileNetV2, serta memudahkan replikasi penelitian oleh peneliti lain. Kedua, analisis data dan dokumentasi penelitian dilakukan di Laboratorium Komputer Universitas [Nama Universitas] yang dilengkapi dengan workstation untuk analisis statistik dan visualisasi hasil.
 
-**Waktu Penelitian:**
-- Durasi: 6 bulan (Januari - Juni 2025)
-- Timeline lengkap terdapat pada Lampiran A
-
-**Alasan Pemilihan Google Colab:**
-- Akses gratis ke GPU untuk mempercepat proses feature extraction
-- Tidak memerlukan investasi hardware mahal
-- Memudahkan replikasi penelitian oleh peneliti lain
+Waktu pelaksanaan penelitian adalah selama 6 bulan, dimulai dari bulan Januari hingga Juni 2025. Periode ini mencakup tahapan studi literatur, pengumpulan dan preprocessing data, pengembangan model, evaluasi performa, hingga penyusunan laporan akhir. Jadwal detail pelaksanaan penelitian dengan pembagian aktivitas per minggu dapat dilihat pada bagian timeline penelitian di bawah ini.
 
 ### 3.3 Sumber Data / Data Penelitian
 
