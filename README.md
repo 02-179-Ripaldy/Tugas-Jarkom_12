@@ -65,81 +65,40 @@ Daun kopi merupakan organ vital yang berperan dalam proses fotosintesis untuk me
 Penyakit daun merupakan ancaman utama produktivitas perkebunan kopi di Indonesia. Berikut adalah tiga penyakit daun kopi yang menjadi fokus penelitian ini:
 
 **a. Karat Daun Kopi (Coffee Leaf Rust - CLR)**
-- **Penyebab**: Jamur *Hemileia vastatrix*
-- **Gejala Visual**: Bercak kuning-oranye berbentuk bulat berdiameter 1-5 mm pada permukaan bawah daun, dikelilingi zona klorosis (menguning). Pada stadium lanjut, bercak menyatu membentuk area nekrotik luas.
-- **Pola Penyebaran**: Dimulai dari daun bagian bawah, menyebar ke atas melalui spora yang terbawa angin dan percikan air hujan.
-- **Dampak**: Penyakit paling destruktif, dapat menyebabkan defoliasi (gugur daun) hingga 50%, menurunkan hasil panen 30-40%, bahkan pada serangan berat dapat mencapai 80%.
-- **Kerugian Ekonomi**: Estimasi Rp 2-3 triliun per tahun di Indonesia.
+
+Karat Daun Kopi (Coffee Leaf Rust) disebabkan oleh jamur *Hemileia vastatrix* yang menunjukkan gejala visual berupa bercak kuning-oranye berbentuk bulat berdiameter 1-5 mm pada permukaan bawah daun, dikelilingi zona klorosis (menguning). Pada stadium lanjut, bercak menyatu membentuk area nekrotik luas. Pola penyebaran penyakit ini dimulai dari daun bagian bawah dan menyebar ke atas melalui spora yang terbawa angin dan percikan air hujan. Dampak penyakit ini sangat destruktif karena dapat menyebabkan defoliasi (gugur daun) hingga 50%, menurunkan hasil panen 30-40%, bahkan pada serangan berat dapat mencapai 80%. Kerugian ekonomi akibat penyakit ini diestimasi mencapai Rp 2-3 triliun per tahun di Indonesia.
 
 **b. Bercak Daun Cercospora (Cercospora Leaf Spot)**
-- **Penyebab**: Jamur *Cercospora coffeicola*
-- **Gejala Visual**: Bercak coklat kemerahan dengan tepi lebih gelap dan pusat berwarna abu-abu, berdiameter 2-10 mm. Sering disebut "brown eye spot" karena pola konsentrisnya.
-- **Pola Penyebaran**: Berkembang pada kondisi kelembaban tinggi (>80%) dan suhu 20-28°C.
-- **Dampak**: Menurunkan luas daun efektif 15-25%, mengurangi kualitas biji kopi, dan menyebabkan defoliasi prematur pada infeksi berat.
-- **Kerugian Ekonomi**: Penurunan produktivitas 10-20% dan penurunan kualitas grade biji hingga 30%.
+
+Bercak Daun Cercospora disebabkan oleh jamur *Cercospora coffeicola* dengan gejala visual berupa bercak coklat kemerahan yang memiliki tepi lebih gelap dan pusat berwarna abu-abu, berdiameter 2-10 mm. Penyakit ini sering disebut "brown eye spot" karena pola konsentrisnya yang khas. Pola penyebaran penyakit ini berkembang pada kondisi kelembaban tinggi (>80%) dan suhu 20-28°C. Dampak penyakit ini adalah menurunkan luas daun efektif 15-25%, mengurangi kualitas biji kopi, dan menyebabkan defoliasi prematur pada infeksi berat. Kerugian ekonomi yang ditimbulkan meliputi penurunan produktivitas 10-20% dan penurunan kualitas grade biji hingga 30%.
 
 **c. Bercak Daun Phoma (Phoma Leaf Spot)**
-- **Penyebab**: Jamur *Phoma costarricensis*
-- **Gejala Visual**: Bercak coklat gelap hingga hitam berbentuk tidak beraturan, ukuran 3-15 mm, dengan tepi tegas. Pada stadium lanjut, bagian tengah bercak mengering dan berlubang.
-- **Pola Penyebaran**: Menyerang tanaman yang stress akibat kekurangan nutrisi atau kondisi lingkungan ekstrem.
-- **Dampak**: Menurunkan hasil panen 10-15%, meningkatkan kerentanan terhadap infeksi sekunder.
-- **Kerugian Ekonomi**: Kerugian tahunan sekitar Rp 500 miliar di sentra kopi nasional.
+
+Bercak Daun Phoma disebabkan oleh jamur *Phoma costarricensis* yang menunjukkan gejala visual berupa bercak coklat gelap hingga hitam berbentuk tidak beraturan dengan ukuran 3-15 mm dan tepi yang tegas. Pada stadium lanjut, bagian tengah bercak mengering dan berlubang. Pola penyebaran penyakit ini cenderung menyerang tanaman yang mengalami stress akibat kekurangan nutrisi atau kondisi lingkungan ekstrem. Dampak penyakit ini adalah menurunkan hasil panen 10-15% dan meningkatkan kerentanan tanaman terhadap infeksi sekunder. Kerugian ekonomi yang ditimbulkan diperkirakan mencapai Rp 500 miliar per tahun di sentra kopi nasional.
 
 Ketiga penyakit ini sering muncul bersamaan (infeksi kompleks), mempersulit diagnosis visual manual dan membutuhkan pendekatan deteksi otomatis berbasis AI untuk identifikasi yang akurat dan cepat.
 
 #### 2.1.3 Computer Vision
 Computer Vision adalah cabang ilmu komputer dan kecerdasan buatan yang mempelajari bagaimana sistem komputer dapat memperoleh pemahaman tingkat tinggi dari citra atau video digital. Teknologi ini memungkinkan mesin untuk "melihat" dan menginterpretasikan informasi visual layaknya manusia, bahkan dengan tingkat akurasi yang lebih tinggi dalam tugas-tugas spesifik.
 
-Dalam konteks pertanian, Computer Vision telah diaplikasikan untuk berbagai tujuan:
-- **Deteksi dan Klasifikasi Penyakit Tanaman**: Mengidentifikasi jenis penyakit berdasarkan gejala visual pada daun, batang, atau buah.
-- **Monitoring Pertumbuhan Tanaman**: Mengukur tinggi, luas daun, dan biomassa secara non-destruktif.
-- **Estimasi Hasil Panen**: Menghitung jumlah buah atau prediksi produktivitas berdasarkan analisis citra.
-- **Deteksi Hama**: Identifikasi keberadaan dan jenis hama secara real-time.
-- **Sortir dan Grading Hasil Panen**: Klasifikasi otomatis berdasarkan ukuran, warna, dan kualitas.
+Dalam konteks pertanian, Computer Vision telah diaplikasikan untuk berbagai tujuan seperti deteksi dan klasifikasi penyakit tanaman dengan mengidentifikasi jenis penyakit berdasarkan gejala visual pada daun, batang, atau buah. Teknologi ini juga digunakan untuk monitoring pertumbuhan tanaman dengan mengukur tinggi, luas daun, dan biomassa secara non-destruktif. Aplikasi lainnya meliputi estimasi hasil panen dengan menghitung jumlah buah atau prediksi produktivitas berdasarkan analisis citra, deteksi hama untuk identifikasi keberadaan dan jenis hama secara real-time, serta sortir dan grading hasil panen secara otomatis berdasarkan ukuran, warna, dan kualitas.
 
-Keunggulan Computer Vision untuk deteksi penyakit tanaman meliputi:
-1. **Kecepatan**: Diagnosis dalam hitungan detik dibandingkan observasi manual yang membutuhkan waktu lama.
-2. **Konsistensi**: Tidak dipengaruhi faktor subjektif manusia seperti kelelahan atau bias pengalaman.
-3. **Skalabilitas**: Dapat memproses ribuan citra dalam waktu singkat untuk monitoring area luas.
-4. **Aksesibilitas**: Dapat diimplementasikan pada perangkat mobile untuk digunakan petani di lapangan.
-5. **Deteksi Dini**: Mampu mendeteksi gejala penyakit pada stadium awal yang sulit diamati mata manusia.
+Keunggulan Computer Vision untuk deteksi penyakit tanaman sangat signifikan dibandingkan metode konvensional. Dari segi kecepatan, teknologi ini mampu melakukan diagnosis dalam hitungan detik dibandingkan observasi manual yang membutuhkan waktu lama. Computer Vision juga menawarkan konsistensi tinggi karena tidak dipengaruhi faktor subjektif manusia seperti kelelahan atau bias pengalaman. Skalabilitas menjadi keunggulan lain dimana sistem dapat memproses ribuan citra dalam waktu singkat untuk monitoring area luas. Dari segi aksesibilitas, teknologi ini dapat diimplementasikan pada perangkat mobile sehingga dapat digunakan langsung oleh petani di lapangan. Keunggulan penting lainnya adalah kemampuan deteksi dini, dimana sistem mampu mendeteksi gejala penyakit pada stadium awal yang sulit diamati mata manusia.
 
 #### 2.1.4 Convolutional Neural Network (CNN)
 Convolutional Neural Network (CNN) adalah arsitektur deep learning yang dirancang khusus untuk memproses data dengan struktur grid seperti citra. CNN terinspirasi dari sistem visual korteks pada mamalia dan telah menjadi standar de facto untuk tugas-tugas computer vision sejak keberhasilan AlexNet pada kompetisi ImageNet 2012.
 
 **Arsitektur Dasar CNN:**
 
-1. **Convolutional Layer**: 
-   - Mengekstraksi fitur lokal menggunakan filter/kernel yang bergerak melintasi citra.
-   - Layer awal mendeteksi fitur sederhana (tepi, sudut, tekstur).
-   - Layer dalam mendeteksi fitur kompleks (bentuk, pola, objek).
-   - Parameter: jumlah filter, ukuran kernel (3×3, 5×5), stride, padding.
-
-2. **Activation Function (ReLU)**:
-   - Memperkenalkan non-linearitas: $f(x) = \max(0, x)$
-   - Memungkinkan model mempelajari pola kompleks.
-
-3. **Pooling Layer**:
-   - Mengurangi dimensi spatial (downsampling) untuk efisiensi komputasi.
-   - Max Pooling: mengambil nilai maksimum dari region.
-   - Average Pooling: mengambil nilai rata-rata.
-   - Memberikan invarian terhadap translasi kecil.
-
-4. **Fully Connected Layer**:
-   - Menggabungkan fitur dari semua lokasi spatial.
-   - Menghasilkan probabilitas kelas output.
+Arsitektur CNN terdiri dari beberapa komponen utama yang bekerja secara hierarkis. Convolutional Layer berfungsi mengekstraksi fitur lokal menggunakan filter atau kernel yang bergerak melintasi citra, dimana layer awal mendeteksi fitur sederhana seperti tepi, sudut, dan tekstur, sementara layer dalam mendeteksi fitur kompleks seperti bentuk, pola, dan objek dengan parameter berupa jumlah filter, ukuran kernel (3×3 atau 5×5), stride, dan padding. Activation Function terutama ReLU memperkenalkan non-linearitas dengan formula $f(x) = \max(0, x)$ yang memungkinkan model mempelajari pola kompleks. Pooling Layer berperan mengurangi dimensi spatial (downsampling) untuk efisiensi komputasi melalui Max Pooling yang mengambil nilai maksimum dari region atau Average Pooling yang mengambil nilai rata-rata, serta memberikan invarian terhadap translasi kecil. Fully Connected Layer menggabungkan fitur dari semua lokasi spatial dan menghasilkan probabilitas kelas output.
 
 **Keunggulan CNN untuk Klasifikasi Citra:**
-- **Parameter Sharing**: Filter yang sama digunakan di seluruh citra, mengurangi jumlah parameter drastis dibanding neural network biasa.
-- **Spatial Hierarchy**: Membangun representasi fitur secara hierarkis dari sederhana ke kompleks.
-- **Translation Invariance**: Mampu mengenali objek terlepas dari posisinya dalam citra.
-- **Automatic Feature Learning**: Tidak memerlukan feature engineering manual.
+
+CNN memiliki beberapa keunggulan utama dalam klasifikasi citra. Parameter sharing memungkinkan filter yang sama digunakan di seluruh citra sehingga mengurangi jumlah parameter drastis dibanding neural network biasa. Spatial hierarchy membangun representasi fitur secara hierarkis dari sederhana ke kompleks. Translation invariance membuat CNN mampu mengenali objek terlepas dari posisinya dalam citra. Automatic feature learning menghilangkan kebutuhan feature engineering manual sehingga model dapat mempelajari representasi optimal secara otomatis.
 
 **Tantangan CNN:**
-- Membutuhkan dataset besar (ribuan hingga jutaan citra) untuk training efektif.
-- Komputasi intensif, memerlukan GPU untuk training model dalam.
-- Rentan overfitting pada dataset kecil.
-- Model besar (ResNet, VGG) tidak efisien untuk deployment pada perangkat mobile.
+
+Meskipun powerful, CNN menghadapi beberapa tantangan. Arsitektur CNN membutuhkan dataset besar dengan ribuan hingga jutaan citra untuk training yang efektif. Komputasi intensif menjadi kendala karena training model dalam memerlukan GPU dengan spesifikasi tinggi. CNN juga rentan terhadap overfitting terutama pada dataset berukuran kecil. Model besar seperti ResNet dan VGG tidak efisien untuk deployment pada perangkat mobile karena ukuran model yang besar dan kebutuhan komputasi yang tinggi.
 
 Untuk mengatasi tantangan tersebut, dikembangkan arsitektur efisien seperti MobileNet yang menjadi basis penelitian ini.
 
@@ -183,36 +142,15 @@ MobileNetV2 adalah arsitektur CNN efisien yang dikembangkan oleh Google (Sandler
 | VGG16 | 138M | 71% | Lambat | 528 MB |
 
 **Alasan Pemilihan MobileNetV2:**
-1. **Efisiensi Komputasi**: Cocok untuk implementasi pada perangkat dengan keterbatasan resource (laptop standar, smartphone).
-2. **Keseimbangan Performa**: Akurasi kompetitif dengan ukuran model sangat kecil.
-3. **Transfer Learning**: Pre-trained weights dari ImageNet dapat digunakan untuk mempercepat training dan meningkatkan akurasi pada dataset kecil.
-4. **Feature Extraction**: Layer Global Average Pooling menghasilkan representasi fitur 1280 dimensi yang kaya informasi untuk klasifikasi lanjutan dengan XGBoost.
-5. **Proven Track Record**: Telah terbukti efektif pada berbagai aplikasi pertanian (Hughes & Salathé, 2015; Mohanty et al., 2016).
-6. **Dokumentasi & Support**: Library TensorFlow/Keras menyediakan implementasi siap pakai dengan pre-trained weights.
+
+Pemilihan MobileNetV2 dalam penelitian ini didasarkan pada beberapa pertimbangan strategis. Efisiensi komputasi menjadi faktor utama karena arsitektur ini cocok untuk implementasi pada perangkat dengan keterbatasan resource seperti laptop standar dan smartphone. Keseimbangan performa yang ditawarkan sangat ideal dimana MobileNetV2 menghasilkan akurasi kompetitif dengan ukuran model yang sangat kecil. Transfer learning memungkinkan penggunaan pre-trained weights dari ImageNet untuk mempercepat training dan meningkatkan akurasi pada dataset berukuran kecil. Kapabilitas feature extraction menjadi kunci utama karena layer Global Average Pooling menghasilkan representasi fitur 1280 dimensi yang kaya informasi untuk klasifikasi lanjutan dengan XGBoost. MobileNetV2 memiliki proven track record yang telah terbukti efektif pada berbagai aplikasi pertanian seperti yang ditunjukkan dalam penelitian Hughes & Salathé (2015) dan Mohanty et al. (2016). Dokumentasi dan support yang lengkap dari library TensorFlow/Keras menyediakan implementasi siap pakai dengan pre-trained weights yang memudahkan pengembangan.
 
 #### 2.1.6 XGBoost (Extreme Gradient Boosting)
 XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikembangkan oleh Chen & Guestrin (2016). XGBoost mengimplementasikan gradient boosting decision tree dengan optimasi canggih yang membuatnya menjadi salah satu algoritma paling powerful untuk tugas klasifikasi dan regresi.
 
 **Prinsip Kerja XGBoost:**
 
-1. **Gradient Boosting Framework**:
-   - Membangun model secara sekuensial, setiap model baru memperbaiki kesalahan model sebelumnya.
-   - Fungsi objektif: $Obj(\theta) = \sum_{i=1}^{n} L(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)$
-   - $L$: Loss function (mengukur error prediksi)
-   - $\Omega$: Regularization term (mencegah overfitting)
-
-2. **Tree Boosting Process**:
-   - Inisialisasi prediksi awal (biasanya rata-rata kelas).
-   - Untuk setiap iterasi $t$:
-     - Hitung gradient dan hessian dari loss function.
-     - Bangun decision tree yang memprediksi residual.
-     - Update model: $\hat{y}^{(t)} = \hat{y}^{(t-1)} + \eta \cdot f_t(x)$
-     - $\eta$ adalah learning rate untuk mengontrol kontribusi setiap tree.
-
-3. **Regularization**:
-   - **L1 (Lasso)**: $\alpha \sum_{j=1}^{T} |w_j|$
-   - **L2 (Ridge)**: $\lambda \sum_{j=1}^{T} w_j^2$
-   - Mencegah overfitting dengan memberikan penalti pada kompleksitas model.
+XGBoost bekerja berdasarkan Gradient Boosting Framework yang membangun model secara sekuensial dimana setiap model baru memperbaiki kesalahan model sebelumnya. Fungsi objektif yang dioptimasi adalah $Obj(\theta) = \sum_{i=1}^{n} L(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)$ dimana $L$ adalah loss function yang mengukur error prediksi dan $\Omega$ adalah regularization term yang mencegah overfitting. Tree Boosting Process dimulai dengan inisialisasi prediksi awal (biasanya rata-rata kelas), kemudian untuk setiap iterasi $t$ dilakukan perhitungan gradient dan hessian dari loss function, membangun decision tree yang memprediksi residual, dan update model dengan formula $\hat{y}^{(t)} = \hat{y}^{(t-1)} + \eta \cdot f_t(x)$ dimana $\eta$ adalah learning rate untuk mengontrol kontribusi setiap tree. Regularization diterapkan melalui L1 (Lasso) dengan formula $\alpha \sum_{j=1}^{T} |w_j|$ dan L2 (Ridge) dengan formula $\lambda \sum_{j=1}^{T} w_j^2$ untuk mencegah overfitting dengan memberikan penalti pada kompleksitas model.
 
 **Hyperparameter Penting:**
 
@@ -229,40 +167,11 @@ XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikemb
 
 **Keunggulan XGBoost:**
 
-1. **Performa Tinggi**:
-   - Konsisten menjadi algoritma pemenang di kompetisi machine learning (Kaggle).
-   - Efektif pada berbagai jenis data dan ukuran dataset.
-
-2. **Regularization Kuat**:
-   - Implementasi L1/L2 regularization mencegah overfitting.
-   - Pruning: Memangkas cabang tree yang tidak memberikan gain signifikan.
-
-3. **Handling Missing Values**:
-   - Otomatis menangani data missing tanpa imputation manual.
-   - Mempelajari arah optimal untuk missing values.
-
-4. **Feature Importance**:
-   - Menyediakan informasi fitur mana yang paling berkontribusi pada prediksi.
-   - Membantu interpretability model.
-
-5. **Efisiensi Komputasi**:
-   - **Parallelization**: Training multi-threaded untuk percepatan.
-   - **Cache Optimization**: Mengurangi akses memori.
-   - **Out-of-Core Computing**: Dapat menangani dataset yang tidak muat di RAM.
-
-6. **Fleksibilitas**:
-   - Mendukung custom loss function dan evaluation metrics.
-   - Dapat diintegrasikan dengan pipeline machine learning.
+XGBoost memiliki berbagai keunggulan yang membuatnya menjadi algoritma populer dalam machine learning. Performa tinggi menjadi keunggulan utama dimana XGBoost konsisten menjadi algoritma pemenang di kompetisi machine learning seperti Kaggle dan efektif pada berbagai jenis data dan ukuran dataset. Regularization kuat melalui implementasi L1/L2 regularization mencegah overfitting, ditambah dengan pruning yang memangkas cabang tree yang tidak memberikan gain signifikan. Handling missing values dilakukan secara otomatis tanpa imputation manual dengan mempelajari arah optimal untuk missing values. Feature importance menyediakan informasi tentang fitur mana yang paling berkontribusi pada prediksi sehingga membantu interpretability model. Efisiensi komputasi diwujudkan melalui parallelization dengan training multi-threaded untuk percepatan, cache optimization untuk mengurangi akses memori, dan out-of-core computing yang dapat menangani dataset yang tidak muat di RAM. Fleksibilitas algoritma ditunjukkan dengan dukungan terhadap custom loss function dan evaluation metrics serta kemudahan integrasi dengan pipeline machine learning.
 
 **Alasan Pemilihan XGBoost sebagai Classifier:**
 
-1. **Efektif pada Fitur Dimensi Tinggi**: MobileNetV2 menghasilkan 1280 fitur, XGBoost mampu mengelola dimensi tinggi tanpa curse of dimensionality.
-2. **Dataset Kecil-Menengah**: XGBoost berkinerja sangat baik pada dataset 1.800 citra, lebih baik dari fine-tuning full CNN yang rentan overfitting.
-3. **Regularization**: Mengurangi risiko overfitting yang sering terjadi pada CNN tunggal dengan dataset terbatas.
-4. **Interpretability**: Feature importance dapat mengidentifikasi region citra mana yang paling informatif.
-5. **Training Cepat**: Training XGBoost pada 1280 fitur jauh lebih cepat dibanding fine-tuning CNN layers.
-6. **Hyperparameter Tuning**: Grid search XGBoost lebih feasible dibanding neural architecture search pada CNN.
-7. **Proven Hybrid Approach**: Studi Wang et al. (2021) menunjukkan CNN-XGBoost unggul 3-5% dibanding CNN end-to-end pada medical imaging.
+Pemilihan XGBoost sebagai classifier dalam penelitian ini didasarkan pada beberapa keunggulan spesifik untuk konteks hybrid dengan MobileNetV2. XGBoost efektif pada fitur dimensi tinggi dimana MobileNetV2 menghasilkan 1280 fitur dan XGBoost mampu mengelola dimensi tinggi tanpa curse of dimensionality. Untuk dataset kecil-menengah seperti 1.800 citra dalam penelitian ini, XGBoost berkinerja sangat baik dan lebih baik dari fine-tuning full CNN yang rentan overfitting. Regularization yang kuat mengurangi risiko overfitting yang sering terjadi pada CNN tunggal dengan dataset terbatas. Interpretability melalui feature importance dapat mengidentifikasi region citra mana yang paling informatif untuk diagnosis. Training cepat menjadi keunggulan praktis karena training XGBoost pada 1280 fitur jauh lebih cepat dibanding fine-tuning CNN layers. Hyperparameter tuning dengan grid search XGBoost lebih feasible dibanding neural architecture search pada CNN. Proven hybrid approach didukung oleh studi Wang et al. (2021) yang menunjukkan CNN-XGBoost unggul 3-5% dibanding CNN end-to-end pada medical imaging.
 
 ### 2.2 Penelitian Terdahulu
 Berikut adalah tinjauan komprehensif penelitian terdahulu yang relevan dengan deteksi penyakit tanaman menggunakan deep learning dan machine learning:
