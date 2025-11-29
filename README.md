@@ -83,22 +83,11 @@ MobileNetV2 memiliki 3,4 juta parameter (94% lebih kecil dari ResNet50), menghas
 
 #### 2.1.6 XGBoost (Extreme Gradient Boosting)
 
-XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikembangkan oleh Chen & Guestrin (2016) menggunakan gradient boosting decision tree. XGBoost bekerja secara sekuensial dimana setiap model baru memperbaiki kesalahan model sebelumnya dengan fungsi objektif $Obj(\theta) = \sum_{i=1}^{n} L(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)$ yang mengkombinasikan loss function ($L$) dan regularization term ($\Omega$) untuk mencegah overfitting.
+XGBoost adalah algoritma machine learning berbasis ensemble learning yang dikembangkan oleh Chen & Guestrin (2016) menggunakan gradient boosting decision tree. XGBoost bekerja dengan membangun model secara sekuensial atau bertahap, dimana setiap model baru yang dibuat berfungsi untuk memperbaiki kesalahan prediksi dari model sebelumnya. Proses ini terus berlanjut hingga mencapai performa optimal atau batas iterasi yang ditentukan. XGBoost mengoptimasi fungsi objektif yang mengkombinasikan loss function untuk mengukur error prediksi dan regularization term untuk mencegah overfitting, sehingga model tidak hanya akurat pada data training tetapi juga dapat generalisasi dengan baik pada data baru.
 
-**Hyperparameter Penting:**
+XGBoost memiliki beberapa keunggulan signifikan yang menjadikannya algoritma populer dalam machine learning. Pertama, performa tinggi dimana XGBoost konsisten menjadi algoritma pemenang di berbagai kompetisi data science seperti Kaggle dan efektif pada berbagai jenis data. Kedua, regularization kuat melalui implementasi L1 dan L2 regularization yang mencegah overfitting, ditambah dengan tree pruning yang memangkas cabang yang tidak memberikan kontribusi signifikan. Ketiga, kemampuan handling missing values secara otomatis tanpa memerlukan imputasi manual. Keempat, feature importance yang menyediakan informasi tentang fitur mana yang paling berkontribusi pada prediksi sehingga membantu interpretability model. Kelima, efisiensi komputasi melalui parallelization yang mempercepat proses training.
 
-| Parameter | Fungsi | Rentang Optimal |
-|-----------|--------|----------------|
-| `n_estimators` | Jumlah boosting rounds (trees) | 100-1000 |
-| `max_depth` | Kedalaman maksimal tree | 3-10 |
-| `learning_rate` (η) | Kecepatan learning | 0.01-0.3 |
-| `subsample` | Fraksi sampel untuk setiap tree | 0.6-1.0 |
-| `colsample_bytree` | Fraksi fitur untuk setiap tree | 0.6-1.0 |
-| `gamma` | Minimum loss reduction untuk split | 0-5 |
-| `reg_alpha` | L1 regularization | 0-1 |
-| `reg_lambda` | L2 regularization | 0-1 |
-
-XGBoost memiliki keunggulan berupa performa tinggi di kompetisi machine learning, regularization kuat dengan L1/L2 dan pruning, handling missing values otomatis, feature importance untuk interpretability, serta efisiensi komputasi melalui parallelization. Pemilihan XGBoost sebagai classifier dalam penelitian ini didasarkan pada kemampuannya mengelola fitur dimensi tinggi (1280 fitur dari MobileNetV2), performa baik pada dataset kecil-menengah (1.800 citra), regularization kuat untuk mencegah overfitting, training cepat, dan proven hybrid approach yang unggul 3-5% dibanding CNN end-to-end (Wang et al., 2021).
+Pemilihan XGBoost sebagai classifier dalam penelitian ini didasarkan pada beberapa keunggulan spesifik untuk konteks hybrid dengan MobileNetV2. XGBoost efektif dalam mengelola fitur dimensi tinggi seperti 1280 fitur yang dihasilkan oleh MobileNetV2 tanpa mengalami curse of dimensionality. Untuk dataset kecil-menengah seperti 1.800 citra dalam penelitian ini, XGBoost berkinerja lebih baik dibandingkan fine-tuning full CNN yang rentan overfitting. Regularization yang kuat pada XGBoost mengurangi risiko overfitting yang sering terjadi pada CNN tunggal dengan dataset terbatas. Proses training XGBoost pada 1280 fitur jauh lebih cepat dibandingkan fine-tuning layer CNN, sehingga lebih efisien dari segi waktu dan sumber daya komputasi. Pendekatan hybrid CNN-XGBoost telah terbukti efektif dalam penelitian Wang et al. (2021) yang menunjukkan keunggulan 3-5% dibanding CNN end-to-end pada domain medical imaging.
 
 ### 2.2 Penelitian Terdahulu
 Berikut adalah tinjauan komprehensif penelitian terdahulu yang relevan dengan deteksi penyakit tanaman menggunakan deep learning dan machine learning:
