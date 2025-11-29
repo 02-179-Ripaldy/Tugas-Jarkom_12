@@ -31,14 +31,7 @@ Tujuan penelitian ini adalah untuk:
 
 ### 1.4 Batasan Masalah
 
-Penelitian ini dibatasi pada:
-
-1. Dataset publik RoboFlow Coffee Leaf Disease Dataset dengan total 1.800 citra yang sudah terlabeli.
-2. Empat kategori klasifikasi: daun sehat (Healthy), Karat Daun Kopi (Coffee Leaf Rust), Bercak Daun Cercospora (Cercospora Leaf Spot), dan Bercak Daun Phoma (Phoma Leaf Spot).
-3. Tanaman kopi Arabika (*Coffea arabica*) sebagai fokus penelitian.
-4. Pendekatan hybrid MobileNetV2 sebagai feature extractor dan XGBoost sebagai classifier, dengan ResNet50 sebagai baseline pembanding.
-5. Klasifikasi penyakit daun (disease classification) tanpa mencakup segmentasi area lesi atau prediksi perkembangan penyakit.
-6. Evaluasi menggunakan metrik akurasi, presisi, recall, F1-score, dan validasi dengan 5-Fold Cross-Validation.
+Penelitian ini menggunakan dataset publik RoboFlow Coffee Leaf Disease Dataset dengan total 1.800 citra yang sudah terlabeli, mencakup empat kategori klasifikasi yaitu daun sehat (Healthy), Karat Daun Kopi (Coffee Leaf Rust), Bercak Daun Cercospora (Cercospora Leaf Spot), dan Bercak Daun Phoma (Phoma Leaf Spot). Penelitian difokuskan pada tanaman kopi Arabika (*Coffea arabica*) sebagai varietas dominan di Indonesia. Lingkup analisis dibatasi pada klasifikasi penyakit daun (disease classification) tanpa mencakup segmentasi area lesi atau prediksi perkembangan penyakit. Evaluasi performa model dilakukan menggunakan metrik akurasi, presisi, recall, F1-score, dan validasi dengan metode 5-Fold Cross-Validation.
 
 ### 1.5 Manfaat Penelitian
 
