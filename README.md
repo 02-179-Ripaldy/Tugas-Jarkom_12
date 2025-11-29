@@ -31,13 +31,23 @@ Tujuan penelitian ini adalah untuk:
 
 ### 1.4 Batasan Masalah
 
-Penelitian ini menggunakan dataset publik RoboFlow Coffee Leaf Disease Dataset dengan total 1.800 citra yang sudah terlabeli, mencakup empat kategori klasifikasi yaitu daun sehat (Healthy), Karat Daun Kopi (Coffee Leaf Rust), Bercak Daun Cercospora (Cercospora Leaf Spot), dan Bercak Daun Phoma (Phoma Leaf Spot). Penelitian difokuskan pada tanaman kopi Arabika (*Coffea arabica*) sebagai varietas dominan di Indonesia. Lingkup analisis dibatasi pada klasifikasi penyakit daun (disease classification) tanpa mencakup segmentasi area lesi atau prediksi perkembangan penyakit. Evaluasi performa model dilakukan menggunakan metrik akurasi, presisi, recall, F1-score, dan validasi dengan metode 5-Fold Cross-Validation.
+Penelitian ini memiliki beberapa batasan masalah. Batasan masalah ditujukan agar penelitian yang dilakukan tidak terlalu luas, dan menjadi lebih realistis dan fokus untuk diselesaikan.
+
+1. Penelitian ini difokuskan pada pengembangan sistem diagnosis penyakit daun kopi menggunakan dataset publik RoboFlow Coffee Leaf Disease Dataset dengan total 1.800 citra yang sudah terlabeli dan hanya melibatkan empat kategori klasifikasi yaitu daun sehat (Healthy), Karat Daun Kopi (Coffee Leaf Rust), Bercak Daun Cercospora (Cercospora Leaf Spot), dan Bercak Daun Phoma (Phoma Leaf Spot).
+
+2. Penelitian ini hanya difokuskan pada tanaman kopi Arabika (*Coffea arabica*) sebagai objek penelitian dan tidak melibatkan varietas kopi lainnya seperti Robusta.
+
+3. Penelitian ini hanya melibatkan proses klasifikasi penyakit daun (disease classification) dan tidak mencakup segmentasi area lesi, deteksi lokasi kerusakan, atau prediksi perkembangan penyakit.
+
+4. Penelitian ini hanya memfokuskan pada evaluasi performa model menggunakan metrik akurasi, presisi, recall, F1-score dengan validasi 5-Fold Cross-Validation.
 
 ### 1.5 Manfaat Penelitian
 
-Secara **teoritis**, penelitian ini berkontribusi pada pengembangan literatur ilmiah tentang penerapan arsitektur hybrid CNN-XGBoost untuk klasifikasi penyakit tanaman, khususnya dalam konteks pertanian tropis. Penelitian ini memberikan bukti empiris tentang efektivitas kombinasi transfer learning dengan gradient boosting dalam mengatasi keterbatasan dataset dan risiko overfitting, serta menjadi referensi metodologi bagi penelitian lanjutan di bidang computer vision untuk pertanian presisi.
+Penelitian ini diharapkan akan mendatangkan manfaat sebagai berikut:
 
-Secara **praktis**, penelitian ini menghasilkan prototipe sistem diagnosis penyakit daun kopi yang cepat dan akurat berbasis AI, yang dapat dimanfaatkan oleh petani untuk deteksi dini penyakit sehingga penanganan dapat dilakukan tepat waktu. Sistem ini juga bermanfaat bagi penyuluh pertanian sebagai decision support system, pengembang teknologi sebagai baseline untuk aplikasi mobile pertanian, serta pembuat kebijakan dalam mendukung program pertanian digital dan sistem early warning penyebaran penyakit tanaman di tingkat regional.
+1. Penelitian akan menghasilkan sistem diagnosis penyakit daun kopi berbasis hybrid MobileNetV2 dan XGBoost yang dapat membantu petani dalam mendeteksi penyakit dengan lebih cepat dan akurat, sehingga penanganan dapat dilakukan tepat waktu tanpa harus menunggu konfirmasi manual dari penyuluh pertanian atau laboratorium.
+
+2. Penelitian ini akan menghasilkan bukti empiris tentang efektivitas pendekatan hybrid CNN-XGBoost dalam klasifikasi penyakit tanaman yang diharapkan dapat menjadi acuan atau referensi bagi penelitian lanjutan dengan topik yang serupa di bidang computer vision untuk pertanian presisi.
 
 ---
 
