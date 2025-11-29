@@ -111,65 +111,62 @@ Penelitian ini mengisi gap yang telah diidentifikasi dengan mengombinasikan bebe
 Kerangka pemikiran penelitian ini dapat digambarkan dalam alur berikut:
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        MASALAH PENELITIAN                            │
-├─────────────────────────────────────────────────────────────────────┤
-│ 1. Diagnosis manual penyakit daun kopi tidak akurat & lambat       │
-│ 2. CNN tunggal: overfitting pada dataset kecil & komputasi berat   │
-│ 3. Performa drop signifikan pada kondisi lapangan                  │
-│ 4. Belum ada sistem diagnosis mobile untuk petani Indonesia         │
-└─────────────────────────────────────────────────────────────────────┘
-                                  ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│                     SOLUSI: MODEL HYBRID                             │
-├─────────────────────────────────────────────────────────────────────┤
-│         MobileNetV2 (Feature Extractor)                             │
-│         ├─ Pre-trained ImageNet                                     │
-│         ├─ Efficient architecture (3.4M params)                     │
-│         ├─ Ekstrak fitur visual 1280 dimensi                        │
-│         └─ Transfer learning untuk dataset kecil                    │
-│                           +                                          │
-│         XGBoost (Classifier)                                        │
-│         ├─ Gradient boosting ensemble                               │
-│         ├─ Regularization kuat (L1/L2)                              │
-│         ├─ Efektif pada fitur dimensi tinggi                        │
-│         └─ Mencegah overfitting                                     │
-└─────────────────────────────────────────────────────────────────────┘
-                                  ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│                      ALUR KERJA SISTEM                               │
-├─────────────────────────────────────────────────────────────────────┤
-│ INPUT: Citra daun kopi (224×224 RGB)                               │
-│   ↓                                                                  │
-│ PREPROCESSING: Resize, normalisasi, augmentasi                     │
-│   ↓                                                                  │
-│ FEATURE EXTRACTION: MobileNetV2 (frozen conv layers)               │
-│   → Output: Feature vector 1280 dimensi                             │
-│   ↓                                                                  │
-│ CLASSIFICATION: XGBoost (hyperparameter tuned)                     │
-│   → Output: Probabilitas 4 kelas penyakit                           │
-│   ↓                                                                  │
-│ OUTPUT: Diagnosis (Sehat/CLR/Cercospora/Phoma) + Confidence        │
-└─────────────────────────────────────────────────────────────────────┘
-                                  ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│                          EVALUASI                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│ • Metrik: Akurasi, Presisi, Recall, F1-Score                       │
-│ • Validasi: 5-Fold Cross-Validation                                │
-│ • Perbandingan: ResNet50 end-to-end & MobileNetV2 end-to-end       │
-│ • Uji lapangan: Citra real-world dengan variasi kondisi            │
-└─────────────────────────────────────────────────────────────────────┘
-                                  ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│                    HASIL YANG DIHARAPKAN                             │
-├─────────────────────────────────────────────────────────────────────┤
-│ ✓ Akurasi ≥90% dengan dataset publik (1.800 citra)                  │
-│ ✓ Generalisasi baik pada kondisi lapangan beragam                  │
-│ ✓ Efisiensi tinggi (inferensi <2 detik, model <50 MB)              │
-│ ✓ Mengatasi overfitting dibanding CNN tunggal                       │
-│ ✓ Prototipe siap deployment untuk aplikasi mobile                  │
-└─────────────────────────────────────────────────────────────────────┘
+MASALAH PENELITIAN
+├─ Diagnosis manual penyakit daun kopi tidak akurat & lambat
+├─ CNN tunggal: overfitting pada dataset kecil & komputasi berat
+├─ Performa drop signifikan pada kondisi lapangan
+└─ Belum ada sistem diagnosis mobile untuk petani Indonesia
+
+↓
+
+SOLUSI: MODEL HYBRID
+│
+├─ MobileNetV2 (Feature Extractor)
+│  ├─ Pre-trained ImageNet
+│  ├─ Efficient architecture (3.4M params)
+│  ├─ Ekstrak fitur visual 1280 dimensi
+│  └─ Transfer learning untuk dataset kecil
+│
+│  +
+│
+└─ XGBoost (Classifier)
+   ├─ Gradient boosting ensemble
+   ├─ Regularization kuat (L1/L2)
+   ├─ Efektif pada fitur dimensi tinggi
+   └─ Mencegah overfitting
+
+↓
+
+ALUR KERJA SISTEM
+
+INPUT: Citra daun kopi (224×224 RGB)
+   ↓
+PREPROCESSING: Resize, normalisasi, augmentasi
+   ↓
+FEATURE EXTRACTION: MobileNetV2 (frozen conv layers)
+   → Output: Feature vector 1280 dimensi
+   ↓
+CLASSIFICATION: XGBoost (hyperparameter tuned)
+   → Output: Probabilitas 4 kelas penyakit
+   ↓
+OUTPUT: Diagnosis (Sehat/CLR/Cercospora/Phoma) + Confidence
+
+↓
+
+EVALUASI
+├─ Metrik: Akurasi, Presisi, Recall, F1-Score
+├─ Validasi: 5-Fold Cross-Validation
+├─ Perbandingan: ResNet50 end-to-end & MobileNetV2 end-to-end
+└─ Uji lapangan: Citra real-world dengan variasi kondisi
+
+↓
+
+HASIL YANG DIHARAPKAN
+├─ Akurasi ≥90% dengan dataset publik (1.800 citra)
+├─ Generalisasi baik pada kondisi lapangan beragam
+├─ Efisiensi tinggi (inferensi <2 detik, model <50 MB)
+├─ Mengatasi overfitting dibanding CNN tunggal
+└─ Prototipe siap deployment untuk aplikasi mobile
 ```
 
 **Justifikasi Pendekatan Hybrid:**
