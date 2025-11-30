@@ -1,8 +1,7 @@
-# PROPOSAL PENELITIAN
 
+# PROPOSAL PENELITIAN
 **"Sistem Diagnosis Penyakit Daun Kopi Menggunakan Hybrid MobileNetV2 dan XGBoost Berbasis Citra"**
 
----
 
 ## BAB I
 
@@ -11,14 +10,18 @@
 ### 1.1 Latar Belakang
 
 Tanaman kopi merupakan salah satu komoditas perkebunan strategis di Indonesia. Data Badan Pusat Statistik (2023) menunjukkan bahwa luas areal perkebunan kopi mencapai lebih dari 1,23 juta hektar dengan produksi tahunan sekitar 773 ribu ton, menjadikan Indonesia sebagai produsen kopi keempat terbesar di dunia. Jenis kopi yang dominan dibudidayakan adalah Coffea arabica (Arabika) dan Coffea canephora (Robusta). Namun, produktivitas perkebunan kopi nasional masih tergolong rendah, yaitu rata-rata 700 kg/ha, jauh di bawah potensi produktivitas optimal 1.500-2.000 kg/ha (Direktorat Jenderal Perkebunan, 2022).
+Tanaman kopi merupakan salah satu komoditas perkebunan strategis di Indonesia. Data Badan Pusat Statistik [1] menunjukkan bahwa luas areal perkebunan kopi mencapai lebih dari 1,23 juta hektar dengan produksi tahunan sekitar 773 ribu ton, menjadikan Indonesia sebagai produsen kopi keempat terbesar di dunia. Jenis kopi yang dominan dibudidayakan adalah Coffea arabica (Arabika) dan Coffea canephora (Robusta). Namun, produktivitas perkebunan kopi nasional masih tergolong rendah, yaitu rata-rata 700 kg/ha, jauh di bawah potensi produktivitas optimal 1.500-2.000 kg/ha [3].
 
 Salah satu penyebab utama rendahnya produktivitas adalah serangan penyakit daun, seperti Karat Daun Kopi atau Coffee Leaf Rust (CLR) yang disebabkan oleh jamur _Hemileia vastatrix_, Cercospora Leaf Spot (_Cercospora coffeicola_), dan Phoma Leaf Spot (_Phoma costarricensis_). Menurut Kementerian Pertanian (2022), serangan CLR dapat menurunkan hasil panen hingga 30–40 persen pada perkebunan kopi rakyat, bahkan pada kasus berat dapat mencapai 50 persen. Kerugian ekonomi akibat penyakit daun kopi diperkirakan mencapai miliaran rupiah per tahun, terutama di sentra produksi kopi Jawa Timur, Lampung, dan Sumatera Selatan.
+
 
 Selama ini, diagnosis penyakit daun kopi masih mengandalkan pengamatan visual manual oleh petani atau penyuluh pertanian lapangan. Metode konvensional ini rentan terhadap kesalahan identifikasi karena bergantung pada pengalaman dan pengetahuan individu, serta memerlukan waktu yang lama untuk konfirmasi laboratorium. Akibatnya, penanganan penyakit sering terlambat dilakukan, infeksi menyebar lebih luas, dan kerugian ekonomi meningkat signifikan. Kondisi ini menegaskan perlunya sistem diagnosis otomatis yang mampu melakukan deteksi penyakit daun kopi secara cepat, akurat, dan efisien, terutama di tingkat petani.
 
 Perkembangan pesat teknologi kecerdasan buatan (Artificial Intelligence), khususnya pada bidang Computer Vision dan Deep Learning, membuka peluang besar untuk mengembangkan sistem deteksi penyakit tanaman berbasis citra digital. Studi Ferentinos (2018) pada 25 spesies tanaman dengan 58 kelas penyakit menunjukkan bahwa Convolutional Neural Network (CNN) mampu mendeteksi penyakit tanaman dengan akurasi hingga 99,53%, namun membutuhkan sumber daya komputasi yang sangat besar dan waktu training yang lama. Ramcharan dkk. (2019) dalam penelitiannya pada penyakit tanaman pisang menemukan bahwa performa CNN dapat menurun drastis hingga 15-20% ketika diuji pada citra lapangan dengan variasi pencahayaan, latar belakang kompleks, dan sudut pengambilan yang tidak terkontrol. Sementara itu, penelitian Prasetyo dan Rahmadani (2022) yang menerapkan arsitektur ResNet50 untuk klasifikasi penyakit daun kopi mengalami masalah overfitting dengan gap akurasi training-testing mencapai 18%, terutama akibat keterbatasan jumlah dan keragaman dataset.
 
+
 Untuk mengatasi berbagai kelemahan model CNN tunggal tersebut, penelitian ini menawarkan pendekatan hybrid yang mengombinasikan MobileNetV2 sebagai ekstraktor fitur visual dan XGBoost sebagai classifier. MobileNetV2 dipilih karena arsitekturnya yang ringan (hanya 3,4 juta parameter) dengan efisiensi tinggi melalui mekanisme depthwise separable convolution dan inverted residual blocks, sehingga dapat mengekstraksi fitur visual secara efektif bahkan pada perangkat dengan keterbatasan komputasi. Sementara itu, XGBoost dipilih karena kemampuannya dalam mengelola fitur berdimensi tinggi, regularisasi yang kuat untuk mencegah overfitting, serta performa yang konsisten pada dataset berukuran kecil hingga menengah. Kombinasi hybrid CNN-XGBoost telah terbukti efektif pada berbagai domain klasifikasi citra (Wang et al., 2021; Zhang et al., 2023), namun penerapannya masih sangat jarang dieksplorasi dalam konteks diagnosis penyakit daun kopi, khususnya di Indonesia. Oleh karena itu, penelitian ini memiliki nilai kebaruan dan kontribusi penting bagi pengembangan teknologi pertanian presisi berbasis AI.
+
 
 ### 1.2 Rumusan Masalah
 
@@ -188,7 +191,9 @@ Penelitian ini berangkat dari permasalahan diagnosis penyakit daun kopi yang mas
 
 MobileNetV2 dipilih karena arsitekturnya yang efisien dengan pre-trained weights ImageNet sehingga dapat mengatasi keterbatasan dataset kecil melalui transfer learning. Fitur visual berdimensi tinggi (1280-D) yang diekstrak kemudian diklasifikasikan menggunakan XGBoost yang memiliki regularization kuat untuk mencegah overfitting dan efektif pada dataset berukuran menengah.
 
+
 Faktor pendukung meliputi dataset publik RoboFlow dengan 1.800 citra berlabel, teknik preprocessing (augmentasi dan normalisasi), serta optimasi hyperparameter melalui grid search dan cross-validation. Sistem diagnosis yang dihasilkan akan dievaluasi menggunakan metrik akurasi standar dan dibandingkan dengan baseline model CNN end-to-end. Hasil akhir yang diharapkan adalah sistem diagnosis akurat (≥90%), efisien untuk deployment mobile, dan mampu membantu petani dalam deteksi dini penyakit daun kopi.
+
 
 ---
 
@@ -198,19 +203,17 @@ Faktor pendukung meliputi dataset publik RoboFlow dengan 1.800 citra berlabel, t
 
 ---
 
+
 ## DAFTAR PUSTAKA
 
-Badan Pusat Statistik. (2023). Statistik Kopi Indonesia 2023. Jakarta: BPS.
-Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794). ACM.
-Direktorat Jenderal Perkebunan. (2022). Statistik Perkebunan Indonesia 2021-2023: Kopi. Jakarta: Kementerian Pertanian Republik Indonesia.
-Kementerian Pertanian Republik Indonesia. (2022). Outlook Kopi: Komoditas Pertanian Subsektor Perkebunan. Jakarta: Pusat Data dan Sistem Informasi Pertanian.
-Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., & Chen, L. C. (2018). MobileNetV2: Inverted residuals and linear bottlenecks. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (pp. 4510-4520).
-Ferentinos, K. P. (2018). Deep learning models for plant disease detection and diagnosis. Computers and Electronics in Agriculture, 145, 311-318. https://doi.org/10.1016/j.compag.2018.01.009
-Kamilaris, A., & Prenafeta-Boldú, F. X. (2018). Deep learning in agriculture: A survey. Computers and Electronics in Agriculture, 147, 70-90. https://doi.org/10.1016/j.compag.2018.02.016
-Mohanty, S. P., Hughes, D. P., & Salathé, M. (2016). Using deep learning for image-based plant disease detection. Frontiers in Plant Science, 7, 1419. https://doi.org/10.3389/fpls.2016.01419
-Prasetyo, B., & Rahmadani, S. (2022). Klasifikasi penyakit daun kopi menggunakan deep learning berbasis ResNet50. Jurnal Teknologi Informasi dan Ilmu Komputer (JTIIK), 9(3), 567-574. https://doi.org/10.25126/jtiik.2022935467
-Ramcharan, A., McCloskey, P., Baranowski, K., Mbilinyi, N., Mrisho, L., Ndalahwa, M., ... & Hughes, D. P. (2019). A mobile-based deep learning model for cassava disease diagnosis. Frontiers in Plant Science, 10, 272. https://doi.org/10.3389/fpls.2019.00272
-Saleem, M. H., Potgieter, J., & Arif, K. M. (2020). Plant disease classification: A comparative evaluation of convolutional neural networks and deep learning optimizers. Plants, 9(10), 1319. https://doi.org/10.3390/plants9101319
-Wang, L., Zhang, Y., & Wang, J. (2021). A hybrid deep learning model combining CNN and XGBoost for medical image classification. IEEE Access, 9, 73156-73166. https://doi.org/10.1109/ACCESS.2021.3080234
-Zhang, K., Wu, Q., Liu, A., & Meng, X. (2023). Hybrid deep learning and machine learning models for crop disease identification. Computers and Electronics in Agriculture, 207, 107715. https://doi.org/10.1016/j.compag.2023.107715
-RoboFlow. (2024). Coffee Leaf Disease Dataset. Diakses dari https://universe.roboflow.com/coffee-disease-detection [Diakses 29 November 2025]
+[1] Badan Pusat Statistik, "Statistik Kopi Indonesia 2023," Jakarta: BPS, 2023.
+[2] Direktorat Jenderal Perkebunan, "Statistik Perkebunan Indonesia 2021-2023: Kopi," Jakarta: Kementerian Pertanian Republik Indonesia, 2022.
+[3] Kementerian Pertanian Republik Indonesia, "Outlook Kopi: Komoditas Pertanian Subsektor Perkebunan," Jakarta: Pusat Data dan Sistem Informasi Pertanian, 2022.
+[4] K. P. Ferentinos, "Deep learning models for plant disease detection and diagnosis," Computers and Electronics in Agriculture, vol. 145, pp. 311-318, 2018.
+[5] M. Sandler, A. Howard, M. Zhu, A. Zhmoginov, and L. C. Chen, "MobileNetV2: Inverted residuals and linear bottlenecks," in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4510-4520, 2018.
+[6] T. Chen and C. Guestrin, "XGBoost: A scalable tree boosting system," in Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 785-794, 2016.
+[7] B. Prasetyo and S. Rahmadani, "Klasifikasi penyakit daun kopi menggunakan deep learning berbasis ResNet50," Jurnal Teknologi Informasi dan Ilmu Komputer (JTIIK), vol. 9, no. 3, pp. 567-574, 2022.
+[8] A. Ramcharan, P. McCloskey, K. Baranowski, N. Mbilinyi, L. Mrisho, M. Ndalahwa, et al., "A mobile-based deep learning model for cassava disease diagnosis," Frontiers in Plant Science, vol. 10, p. 272, 2019.
+[9] L. Wang, Y. Zhang, and J. Wang, "A hybrid deep learning model combining CNN and XGBoost for medical image classification," IEEE Access, vol. 9, pp. 73156-73166, 2021.
+[10] K. Zhang, Q. Wu, A. Liu, and X. Meng, "Hybrid deep learning and machine learning models for crop disease identification," Computers and Electronics in Agriculture, vol. 207, p. 107715, 2023.
+[11] RoboFlow, "Coffee Leaf Disease Dataset," 2024. [Online]. Available: https://universe.roboflow.com/coffee-disease-detection
