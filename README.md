@@ -11,7 +11,7 @@
 
 ### 📍 POST `/api/auth/register` - Register User Baru
 
-**Deskripsi:** Mendaftarkan user baru (Admin, Trainer, atau Member)
+**Deskripsi:** Endpoint ini digunakan untuk mendaftarkan user baru ke dalam sistem. User dapat memiliki 3 role berbeda: Admin (mengelola sistem), Trainer (mengelola class), atau Member (mengikuti class). Saat user dengan role Member mendaftar, sistem otomatis membuat profil member dengan membership plan yang dipilih dan masa aktif selama 1 tahun. Password user di-hash menggunakan SHA256 untuk keamanan, dan sistem mengembalikan JWT token yang dapat digunakan untuk autentikasi di request berikutnya.
 
 **Potongan Kode:**
 ```python
@@ -126,7 +126,7 @@ def register(request):
 
 ### 📍 POST `/api/auth/login` - Login User
 
-**Deskripsi:** Login dan mendapatkan JWT token
+**Deskripsi:** Endpoint ini memproses login user dengan melakukan verifikasi email dan password. Sistem akan mencari user berdasarkan email yang diberikan, kemudian membandingkan password yang di-hash dengan password tersimpan di database. Jika berhasil, endpoint mengembalikan JWT token yang berlaku selama 1 jam beserta informasi user (id, name, email, role). Untuk user dengan role Member, response juga menyertakan member_id yang digunakan untuk melakukan booking class.
 
 **Potongan Kode:**
 ```python
@@ -232,7 +232,7 @@ def login(request):
 
 ### 📍 GET `/api/classes` - List Semua Classes
 
-**Deskripsi:** Mendapatkan daftar semua gym classes dengan informasi booked count
+**Deskripsi:** Endpoint ini menampilkan daftar lengkap semua gym classes yang tersedia di sistem. Menggunakan LEFT JOIN dengan tabel bookings untuk menghitung jumlah member yang sudah booking setiap class (booked_count). Response juga menampilkan slot tersedia (available_slots) dengan mengurangi capacity dengan booked_count. Informasi trainer juga disertakan untuk setiap class, memudahkan member mengetahui siapa yang akan mengajar.
 
 **Potongan Kode:**
 ```python
@@ -307,7 +307,7 @@ def get_classes(request):
 
 ### 📍 POST `/api/classes` - Create Class Baru
 
-**Deskripsi:** Membuat class baru (Trainer/Admin only)
+**Deskripsi:** Endpoint ini memungkinkan Trainer atau Admin untuk membuat class baru. Sistem melakukan validasi untuk memastikan semua field yang required (trainer_id, name, schedule, capacity) tersedia. Endpoint juga memverifikasi bahwa trainer_id yang diberikan valid dan benar-benar user dengan role TRAINER. Schedule di-parse menjadi datetime object untuk disimpan di database. Setelah berhasil dibuat, class baru akan tersedia untuk di-booking oleh member.
 
 **Potongan Kode:**
 ```python
@@ -410,7 +410,7 @@ def create_class(request):
 
 ### 📍 POST `/api/bookings` - Create Booking
 
-**Deskripsi:** Member melakukan booking ke suatu class
+**Deskripsi:** Endpoint ini memproses booking member ke class tertentu dengan menerapkan validasi berlapis. Layer pertama memeriksa keberadaan class dan member di database. Layer kedua memastikan class belum penuh dengan menghitung jumlah booking dan membandingkannya dengan capacity. Layer ketiga mencegah duplicate booking dengan mengecek apakah member sudah pernah booking class yang sama. Jika semua validasi lolos, booking baru dibuat dengan status berhasil dan member akan terdaftar sebagai peserta class tersebut.
 
 **Potongan Kode:**
 ```python
@@ -537,7 +537,7 @@ def create_booking(request):
 
 ### 📍 POST `/api/attendance` - Mark Attendance
 
-**Deskripsi:** Mark kehadiran member di class (Trainer/Admin only)
+**Deskripsi:** Endpoint ini digunakan oleh Trainer atau Admin untuk mencatat kehadiran member di class. Sistem menerima booking_id dan status kehadiran (attended: true/false). Jika attendance record untuk booking tersebut sudah ada, sistem akan mengupdate statusnya. Jika belum ada, sistem membuat attendance record baru. Fitur ini penting untuk tracking kehadiran member dan dapat digunakan untuk analisis statistik keaktifan member di gym.
 
 **Potongan Kode:**
 ```python
@@ -647,7 +647,7 @@ def mark_attendance(request):
 
 ### **File:** `backend/app/models/user.py`
 
-**Deskripsi:** Menyimpan data user (Admin, Trainer, Member)
+**Deskripsi:** Model ini merupakan tabel utama yang menyimpan semua user dalam sistem. Setiap user memiliki role yang menentukan hak aksesnya: Admin dapat mengelola seluruh sistem, Trainer dapat membuat dan mengelola class, sedangkan Member dapat melakukan booking class. Model ini menggunakan SQLAlchemy Enum untuk role yang memastikan hanya nilai valid yang dapat disimpan. Email dijadikan unique dan diindeks untuk mempercepat pencarian saat login. Password disimpan dalam bentuk hash untuk keamanan. Model ini memiliki relationship dengan Member (One-to-One) dan Classes (One-to-Many sebagai trainer).
 
 **Potongan Kode:**
 ```python
@@ -725,7 +725,7 @@ CREATE INDEX idx_users_email ON users(email);
 
 ### **File:** `backend/app/models/member.py`
 
-**Deskripsi:** Menyimpan profil member dengan membership plan
+**Deskripsi:** Model ini menyimpan informasi profil lengkap member yang merupakan extension dari User. Setiap member memiliki user_id yang unique (satu user hanya bisa punya satu member profile). Model ini menyimpan membership_plan (Basic, Premium, VIP) yang menentukan fasilitas yang dapat diakses member, dan expiry_date untuk menandai masa aktif membership. Relationship dengan User bersifat One-to-One melalui user_id dengan cascade delete, artinya jika User dihapus, Member profile juga otomatis terhapus. Model ini juga berelasi One-to-Many dengan Bookings untuk tracking semua class yang pernah di-booking member.
 
 **Potongan Kode:**
 ```python
@@ -788,7 +788,7 @@ CREATE TABLE members (
 
 ### **File:** `backend/app/models/gym_class.py`
 
-**Deskripsi:** Menyimpan data gym classes (Yoga, HIIT, dll)
+**Deskripsi:** Model ini menyimpan informasi lengkap tentang class-class yang ditawarkan gym seperti Yoga, HIIT, Pilates, dan lainnya. Setiap class memiliki trainer_id yang mereferensi ke User dengan role TRAINER. Field schedule menyimpan waktu pelaksanaan class, capacity menentukan maksimal peserta, dan description berisi penjelasan detail tentang class. Model ini memiliki method is_full() untuk mengecek apakah class sudah mencapai kapasitas maksimal. Relationship dengan User (sebagai trainer) dan Bookings memungkinkan tracking siapa yang mengajar dan siapa saja pesertanya. Cascade delete memastikan jika class dihapus, semua booking terkait juga terhapus.
 
 **Potongan Kode:**
 ```python
@@ -866,7 +866,7 @@ CREATE TABLE classes (
 
 ### **File:** `backend/app/models/booking.py`
 
-**Deskripsi:** Menyimpan data booking member ke class
+**Deskripsi:** Model ini adalah junction table yang menghubungkan Member dengan Class, mencatat siapa saja yang booking class tertentu. Unique constraint pada kombinasi (member_id, class_id) mencegah member melakukan double booking pada class yang sama. Booking_date mencatat kapan booking dilakukan, berguna untuk tracking dan reporting. Model ini menggunakan cascade delete pada kedua foreign key-nya, artinya jika member atau class dihapus, booking-nya otomatis ikut terhapus menjaga integritas data. Relationship One-to-One dengan Attendance memungkinkan tracking apakah member yang booking benar-benar hadir atau tidak.
 
 **Potongan Kode:**
 ```python
@@ -939,7 +939,7 @@ CREATE TABLE bookings (
 
 ### **File:** `backend/app/models/attendance.py`
 
-**Deskripsi:** Tracking kehadiran member di class
+**Deskripsi:** Model ini berfungsi untuk mencatat kehadiran aktual member pada class yang sudah di-booking. Setiap booking memiliki maksimal satu attendance record (unique constraint pada booking_id). Field attended bertipe boolean menandai apakah member hadir (true) atau tidak hadir (false). Created_at mencatat waktu attendance di-mark, berguna untuk audit trail. Model ini membantu gym dalam menganalisis tingkat kehadiran member, mengidentifikasi member yang sering absen, dan dapat digunakan sebagai dasar untuk program retention atau reward untuk member yang aktif.
 
 **Potongan Kode:**
 ```python
@@ -1090,10 +1090,13 @@ def cors_tween_factory(handler, registry):
 ```
 
 **Penjelasan:**
-- **Access-Control-Allow-Origin: \***: Mengizinkan request dari domain mana saja
-- **Access-Control-Allow-Methods**: HTTP methods yang diizinkan
-- **Access-Control-Allow-Headers**: Headers yang diizinkan dalam request
-- **Access-Control-Max-Age**: Cache preflight request selama 1 jam
+
+CORS (Cross-Origin Resource Sharing) adalah mekanisme keamanan browser yang membatasi request HTTP dari origin yang berbeda. Karena frontend React (localhost:5173) dan backend Pyramid (localhost:6543) berjalan di port berbeda, browser menganggap keduanya sebagai origin berbeda dan memblokir request. CORS tween ini menyelesaikan masalah tersebut dengan menambahkan headers khusus ke setiap response dari server.
+
+- **Access-Control-Allow-Origin: \***: Mengizinkan request dari domain mana saja. Dalam production, sebaiknya diganti dengan domain spesifik (contoh: http://localhost:5173) untuk keamanan lebih baik.
+- **Access-Control-Allow-Methods**: Mendefinisikan HTTP methods yang diizinkan (GET untuk read data, POST untuk create, PUT untuk update, DELETE untuk hapus data, OPTIONS untuk preflight request).
+- **Access-Control-Allow-Headers**: Mengizinkan headers Content-Type (untuk JSON data) dan Authorization (untuk JWT token) dalam request.
+- **Access-Control-Max-Age**: Browser akan cache hasil preflight request selama 3600 detik (1 jam), mengurangi jumlah preflight request dan meningkatkan performa.
 
 ---
 
@@ -1131,11 +1134,15 @@ def main(global_config, **settings):
     
     # ... route definitions ...
     
-    return config.make_wsgi_app()
-```
-
 **Penjelasan:**
-- **Request-scoped session**: Setiap HTTP request mendapat database session sendiri
+
+Database session management adalah pola penting untuk mengelola koneksi database dengan efisien dan aman. Sistem ini menggunakan pattern "request-scoped session" yang artinya setiap HTTP request mendapat database session tersendiri yang independen.
+
+- **Request-scoped session**: Setiap HTTP request mendapat database session sendiri yang terpisah dari request lain. Ini mencegah konflik transaksi antar request dan memastikan isolasi data yang tepat.
+- **Automatic cleanup**: Session otomatis di-close menggunakan finished callback setelah request selesai diproses (baik sukses maupun error). Ini mencegah memory leak dan connection pool exhaustion yang dapat menyebabkan server crash.
+- **reify=True**: Session di-cache per request (hanya dibuat sekali) menggunakan property reify dari Pyramid. Meskipun dipanggil berkali-kali dalam satu request, hanya satu session yang dibuat, meningkatkan efisiensi.
+- **Cara pakai:** `db = request.dbsession` di view functions untuk mendapatkan session yang sudah dikonfigurasi dengan cleanup otomatis.
+- **Connection pooling**: SQLAlchemy engine menggunakan connection pool untuk reuse koneksi database, menghindari overhead membuka/menutup koneksi untuk setiap request.atabase session sendiri
 - **Automatic cleanup**: Session otomatis di-close setelah request selesai
 - **reify=True**: Session di-cache per request (hanya dibuat sekali)
 - **Cara pakai:** `db = request.dbsession` di view functions
@@ -1171,26 +1178,36 @@ def main(global_config, **settings):
     
     # === KATEGORI 5: MEMBERSHIP (3 endpoints) ===
     config.add_route('api_membership_plans', '/api/membership/plans')  # GET
-    config.add_route('api_my_membership', '/api/membership/my')        # GET
-    config.add_route('api_members', '/api/members')                    # GET/POST
-    
-    # Scan views
+**Penjelasan:**
+
+Route definitions menentukan mapping antara URL endpoint dengan handler function (view) yang akan memproses request. Aplikasi ini menggunakan RESTful API design pattern yang merupakan standar industri untuk web services.
+
+- **RESTful Design**: URL dirancang mengikuti convention REST API yang intuitif dan konsisten. Resource direpresentasikan sebagai noun (bookings, classes) dan action ditentukan oleh HTTP method. Contoh: GET /api/classes (list), POST /api/classes (create), PUT /api/classes/{id} (update), DELETE /api/classes/{id} (delete).
+- **Dynamic Segments**: `{id}` dalam URL adalah placeholder untuk parameter dinamis yang akan di-extract oleh Pyramid. Contoh: URL /api/classes/5 akan match route /api/classes/{id} dengan id=5.
+- **Multiple Methods**: Satu route dapat handle berbagai HTTP methods dengan view function yang berbeda. Contoh: route 'api_classes' (/api/classes) memiliki 2 view functions: satu untuk GET (list classes) dan satu untuk POST (create class).
+- **Resource Grouping**: Endpoints dikelompokkan berdasarkan resource (authentication, classes, bookings, attendance, membership) untuk memudahkan maintenance dan pemahaman API structure.
+- **CORS Preflight**: Route OPTIONS catch-all menangani preflight request dari browser untuk CORS.
     config.scan('.views')
+```
+### 🔐 Password Hashing
+
+```python
+import hashlib
+
+def hash_password(password):
+    """Hash password menggunakan SHA256"""
+    return hashlib.sha256(password.encode()).hexdigest()
 ```
 
 **Penjelasan:**
-- **RESTful Design**: URL mengikuti convention REST API
-- **Dynamic Segments**: `{id}` untuk parameter dinamis
-- **Multiple Methods**: Satu route bisa handle GET/POST/PUT/DELETE
 
----
+Password hashing adalah praktik keamanan fundamental untuk melindungi kredensial user. Sistem ini menggunakan SHA256, sebuah cryptographic hash function yang mengubah password menjadi string fixed-length yang tidak dapat di-reverse.
 
-## 3.3 Authentication System
-
-### **File:** `backend/app/views/auth_views.py`
-
-### 🔐 Password Hashing
-
+- **Menggunakan SHA256**: Algoritma SHA (Secure Hash Algorithm) 256-bit menghasilkan hash 64 karakter hexadecimal. SHA256 adalah one-way function, artinya dari hash tidak bisa dikembalikan ke password asli.
+- **Password tidak disimpan plain text**: Menyimpan password dalam bentuk asli sangat berbahaya. Jika database bocor, semua password user akan terekspos. Dengan hashing, meskipun database bocor, attacker hanya mendapat hash yang sulit di-crack.
+- **Hash sebelum simpan**: Saat register, password langsung di-hash sebelum disimpan ke database. Saat login, password yang diinput di-hash kemudian dibandingkan dengan hash tersimpan.
+- **Collision resistance**: SHA256 memiliki collision resistance tinggi, artinya sangat kecil kemungkinan dua password berbeda menghasilkan hash yang sama.
+- **Catatan**: Dalam production yang lebih aman, gunakan bcrypt atau argon2 yang memiliki salt dan adaptive hashing untuk melawan rainbow table attacks.
 ```python
 import hashlib
 
@@ -1211,38 +1228,21 @@ def hash_password(password):
 ```python
 import jwt
 from datetime import datetime, timedelta
+**Penjelasan:**
 
-JWT_SECRET = "your-secret-key-change-this-in-production"
-JWT_ALGORITHM = "HS256"
-JWT_EXP_DELTA_SECONDS = 3600  # 1 hour
+JWT (JSON Web Token) adalah standar open (RFC 7519) untuk transmisi informasi secara aman antara parties sebagai JSON object. Token ini digunakan untuk stateless authentication, artinya server tidak perlu menyimpan session di memori atau database.
 
+- **Payload**: Berisi claims (informasi) tentang user dalam bentuk JSON: `user_id` untuk identifikasi user, `email` untuk display, `role` untuk authorization, dan `exp` (expiration time) untuk keamanan. Payload di-encode tapi tidak di-encrypt, jadi jangan simpan data sensitif.
+- **Algorithm HS256**: HMAC (Hash-based Message Authentication Code) dengan SHA-256 digunakan untuk sign token. Secret key di-combine dengan payload, lalu di-hash untuk menghasilkan signature yang memverifikasi token tidak dimodifikasi.
+- **Expiration 1 jam**: Token expire setelah 1 jam untuk membatasi window of opportunity jika token dicuri. User harus login ulang setelah 1 jam. Dalam production, biasanya ada refresh token untuk renew access token tanpa login ulang.
+- **Secret Key**: String rahasia yang hanya diketahui server, digunakan untuk sign dan verify token. Jika secret key bocor, attacker dapat membuat token palsu. Dalam production, gunakan environment variable untuk secret key.
+- **Token Structure**: JWT terdiri dari 3 bagian dipisah titik: Header.Payload.Signature, semuanya di-encode base64url.
+- **Stateless**: Server tidak perlu menyimpan session, cukup verify signature token. Ini meningkatkan scalability karena request bisa ditangani server mana saja tanpa shared session storage.
 def create_jwt_token(user_id, email, role):
     """Create JWT token for authenticated user"""
     payload = {
         'user_id': user_id,
         'email': email,
-        'role': role,
-        'exp': datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS)
-    }
-    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
-    return token
-```
-
-**Penjelasan:**
-- **Payload:** Berisi `user_id`, `email`, `role`, dan `exp` (expiration)
-- **Algorithm:** HS256 (HMAC with SHA-256)
-- **Expiration:** Token berlaku selama 1 jam
-- **Secret Key:** Digunakan untuk sign dan verify token
-
-**Contoh Token:**
-```
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1lbWJlckBneW0uY29tIiwicm9sZSI6Im1lbWJlciIsImV4cCI6MTcwMjMxMjgwMH0.abc123def456
-```
-
----
-
-## 3.4 Database Query Patterns
-
 ### Pattern 1: Simple Query
 
 ```python
@@ -1256,8 +1256,11 @@ user = db.query(User).filter(User.id == user_id).first()
 user = db.query(User).filter(User.email == email).first()
 ```
 
----
+**Penjelasan:** Pattern ini digunakan untuk query sederhana tanpa JOIN atau agregasi. Method `.all()` mengembalikan list semua records, berguna untuk menampilkan daftar lengkap. Method `.first()` mengembalikan satu record pertama yang match atau None jika tidak ada, cocok untuk mencari berdasarkan unique field seperti ID atau email. Method `.filter()` menambahkan WHERE clause ke SQL query untuk filtering data.*Secret Key:** Digunakan untuk sign dan verify token
 
+**Contoh Token:**
+```
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1lbWJlckBneW0uY29tIiwicm9sZSI6Im1lbWJlciIsImV4cCI6MTcwMjMxMjgwMH0.abc123def456
 ### Pattern 2: Query dengan JOIN
 
 ```python
@@ -1276,8 +1279,8 @@ for gym_class, booked_count in classes:
     print(f"Class: {gym_class.name}, Booked: {booked_count}")
 ```
 
----
-
+**Penjelasan:** Pattern ini menggunakan JOIN untuk menggabungkan data dari multiple tables dan agregasi untuk menghitung statistik. LEFT JOIN (outerjoin) memastikan semua classes ditampilkan meskipun belum ada booking (booked_count akan 0). Function `func.count()` adalah SQL COUNT() yang menghitung jumlah bookings per class. `group_by(Class.id)` mengelompokkan hasil berdasarkan class sehingga COUNT menghitung per class. Pattern ini efisien karena menggunakan satu query SQL saja dibanding query berulang dalam loop.r = db.query(User).filter(User.email == email).first()
+```
 ### Pattern 3: Query dengan Multiple Filters
 
 ```python
@@ -1293,10 +1296,37 @@ trainer_classes = db.query(Class).filter(
 ).all()
 ```
 
----
+**Penjelasan:** Pattern ini mendemonstrasikan filtering dengan multiple conditions. Multiple arguments dalam `.filter()` otomatis digabungkan dengan AND operator dalam SQL WHERE clause. Query pertama mencari booking spesifik dengan 2 kondisi (member_id DAN class_id), berguna untuk deteksi duplicate booking. Query kedua filter berdasarkan satu kondisi untuk mendapatkan semua classes yang diajar oleh trainer tertentu. Method ini efisien karena filtering dilakukan di database level, bukan di aplikasi setelah fetch semua data. Booking, Class.id == Booking.class_id
+).group_by(Class.id).all()
 
+# Hasilnya: [(Class object, booked_count), ...]
+for gym_class, booked_count in classes:
+    print(f"Class: {gym_class.name}, Booked: {booked_count}")
 ### Pattern 4: Create, Update, Delete
 
+```python
+# CREATE
+new_user = User(
+    name="John Doe",
+    email="john@example.com",
+    password=hashed_password,
+    role=UserRole.MEMBER
+)
+db.add(new_user)
+db.flush()  # Get ID tanpa commit
+db.commit()
+db.refresh(new_user)  # Refresh object dari database
+
+# UPDATE
+user.name = "Jane Doe"
+db.commit()
+
+# DELETE
+db.delete(user)
+db.commit()
+```
+
+**Penjelasan:** Pattern CRUD (Create, Read, Update, Delete) adalah operasi dasar database. **CREATE**: Buat object model baru, `db.add()` menambahkan ke session (belum tersimpan), `db.flush()` execute SQL INSERT dan assign ID tanpa commit transaction (berguna jika butuh ID untuk operasi selanjutnya), `db.commit()` permanenkan perubahan ke database, `db.refresh()` reload object dari database untuk sync dengan data terbaru (seperti timestamps yang di-set database). **UPDATE**: Cukup modify attribute object, SQLAlchemy auto-detect changes (dirty tracking), lalu `db.commit()` untuk simpan. **DELETE**: `db.delete()` tandai object untuk dihapus, `db.commit()` execute SQL DELETE. Cascade delete di foreign key akan otomatis hapus related records.
 ```python
 # CREATE
 new_user = User(
@@ -1341,12 +1371,15 @@ except ValueError as e:
     return Response(
         json.dumps({'status': 'error', 'message': str(e)}),
         status=400,
-        content_type='application/json'
-    )
-except NotFoundError as e:
-    # Resource not found (404 Not Found)
-    return Response(
-        json.dumps({'status': 'error', 'message': str(e)}),
+**HTTP Status Codes:**
+
+HTTP status codes adalah standar komunikasi antara client dan server untuk menginformasikan hasil request. Kode 3 digit ini dibagi dalam 5 kategori (1xx Info, 2xx Success, 3xx Redirect, 4xx Client Error, 5xx Server Error).
+
+- **200 OK**: Request berhasil diproses dan response berisi data yang diminta atau konfirmasi operasi sukses. Ini adalah status code paling umum untuk successful requests.
+- **400 Bad Request**: Client mengirim request dengan format salah atau data tidak valid (validation error). Contoh: missing required fields, invalid email format, atau constraint violation. Client harus memperbaiki request sebelum retry.
+- **401 Unauthorized**: Authentication gagal karena credentials salah atau token expired/invalid. Client harus login ulang untuk mendapat token baru. Berbeda dengan 403 Forbidden yang berarti authenticated tapi tidak punya permission.
+- **404 Not Found**: Resource yang diminta tidak ditemukan di server. Contoh: mencari class dengan ID yang tidak ada di database. Berbeda dengan 400 yang merupakan bad request format.
+- **500 Internal Server Error**: Error terjadi di server yang tidak terduga (unhandled exception, database connection failed, dll). Ini bukan kesalahan client. Developer harus investigate server logs untuk fix issue.ge': str(e)}),
         status=404,
         content_type='application/json'
     )
@@ -1412,38 +1445,22 @@ def create_booking(request):
             json.dumps({'status': 'error', 'message': 'Class is full'}),
             status=400,
             content_type='application/json'
-        )
-    
-    # Layer 5: Check duplicate booking
-    existing_booking = db.query(Booking).filter(
-        Booking.member_id == member_id,
-        Booking.class_id == class_id
+**Validation Layers:**
+
+Validasi berlapis (layered validation) adalah best practice untuk memastikan data integrity dan business rules. Setiap layer menangani aspek validasi berbeda, dari yang paling basic hingga complex business logic.
+
+1. **Input Validation**: Layer pertama memeriksa apakah semua required fields tersedia dan formatnya benar. Ini mencegah null pointer errors dan memastikan data minimal ada sebelum proses lebih lanjut. Contoh: email tidak boleh kosong, password minimal 6 karakter.
+
+2. **Foreign Key Validation**: Memverifikasi bahwa ID yang direferensi benar-benar exist di tabel lain. Ini penting karena meskipun database punya foreign key constraint, lebih baik memberikan error message yang jelas ke user daripada database error. Contoh: memastikan trainer_id exist di tabel users sebelum create class.
+
+3. **Business Logic Validation**: Memeriksa rules bisnis yang spesifik untuk aplikasi. Ini bukan sekedar format data, tapi logika bisnis yang harus dipenuhi. Contoh: class capacity tidak boleh melebihi maksimal peserta, membership tidak boleh expired, booking tidak bisa dilakukan untuk class yang sudah lewat.
+
+4. **Uniqueness Validation**: Mencegah duplicate data yang seharusnya unique. Meskipun database punya unique constraint, lebih baik check dulu dan return error message yang friendly. Contoh: email tidak boleh digunakan oleh 2 user, member tidak bisa booking class yang sama 2x.
+
+5. **Authorization Validation**: Memastikan user punya hak akses untuk melakukan operasi. Ini berbeda dengan authentication (siapa kamu) - authorization adalah apa yang boleh kamu lakukan. Contoh: hanya trainer yang bisa create/update class, hanya admin yang bisa delete user, member hanya bisa lihat bookings miliknya sendiri.
     ).first()
     
     if existing_booking:
-        return Response(
-            json.dumps({'status': 'error', 'message': 'You have already booked this class'}),
-            status=400,
-            content_type='application/json'
-        )
-    
-    # All validations passed, create booking
-    new_booking = Booking(...)
-    db.add(new_booking)
-    db.commit()
-```
-
-**Validation Layers:**
-1. **Input Validation**: Check required fields
-2. **Foreign Key Validation**: Check if related entities exist
-3. **Business Logic Validation**: Check capacity, expiry date, etc.
-4. **Uniqueness Validation**: Check duplicate bookings
-5. **Authorization Validation**: Check user permissions
-
----
-
-## 3.7 Cara Menjalankan Server
-
 ### **File:** `backend/development.ini`
 
 **Konfigurasi:**
@@ -1457,6 +1474,54 @@ pyramid.debug_notfound = false
 pyramid.debug_routematch = false
 pyramid.default_locale_name = en
 
+sqlalchemy.url = postgresql://postgres:ripaldy@localhost/gym_booking_db
+
+[server:main]
+use = egg:waitress#main
+listen = 127.0.0.1:6543
+```
+
+**Penjelasan Konfigurasi:**
+
+File `development.ini` adalah konfigurasi utama Pyramid application yang menggunakan format INI (key=value). File ini memisahkan konfigurasi dari code, memudahkan deployment ke environment berbeda (development, staging, production).
+
+- **[app:main]**: Section untuk konfigurasi aplikasi.
+- **use = egg:gym-booking-backend**: Menentukan package Python yang akan di-load sebagai aplikasi WSGI.
+- **pyramid.reload_templates = true**: Dalam development mode, template otomatis reload saat diubah tanpa restart server, mempercepat development cycle.
+- **pyramid.debug_*** = false**: Debug flags dimatikan untuk performa. Dalam production, semua harus false untuk keamanan.
+- **pyramid.default_locale_name = en**: Bahasa default untuk internationalization (i18n).
+- **sqlalchemy.url**: Connection string database PostgreSQL dengan format `postgresql://username:password@host/database_name`.
+
+- **[server:main]**: Section untuk konfigurasi web server.
+- **use = egg:waitress#main**: Menggunakan Waitress sebagai WSGI server (production-ready, pure Python).
+- **listen = 127.0.0.1:6543**: Server listen pada localhost port 6543. Hanya accessible dari komputer lokal (127.0.0.1), aman untuk development.
+
+**Command untuk menjalankan:**
+```powershell
+cd C:\Users\User\uas_pengweb\backend
+C:/Users/User/uas_pengweb/.venv/Scripts/pserve.exe development.ini --reload
+```
+
+**Penjelasan Command:**
+**Connection String:**
+```
+postgresql://postgres:ripaldy@localhost/gym_booking_db
+```
+
+**Format:**
+```
+postgresql://<username>:<password>@<host>/<database_name>
+```
+
+**Components:**
+- **Username:** `postgres` - User PostgreSQL dengan superuser privileges (dalam production, gunakan user dengan limited privileges untuk keamanan)
+- **Password:** `ripaldy` - Password untuk authenticate ke database server (dalam production, simpan di environment variable, jangan hardcode di config file)
+- **Host:** `localhost` (127.0.0.1) - Database server location, localhost berarti database running di komputer yang sama dengan aplikasi
+- **Database:** `gym_booking_db` - Nama database spesifik yang akan digunakan, harus sudah dibuat sebelumnya menggunakan CREATE DATABASE
+- **Port:** Default PostgreSQL port (5432) - Tidak perlu ditulis karena menggunakan default, tapi bisa ditambahkan jika PostgreSQL running di port non-standard (contoh: localhost:5433)
+
+**Keamanan Connection String:**
+Dalam production environment, jangan pernah simpan credentials dalam plaintext di file konfigurasi. Gunakan environment variables atau secret management tools seperti HashiCorp Vault. Contoh: `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`
 sqlalchemy.url = postgresql://postgres:ripaldy@localhost/gym_booking_db
 
 [server:main]
